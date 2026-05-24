@@ -1,9 +1,13 @@
+import logging
+
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
 from app.database import get_db
 from app.models import Lead
 from app.schemas import LeadCreate, LeadResponse
+
+logger = logging.getLogger("ejeclick")
 
 router = APIRouter()
 
@@ -19,9 +23,12 @@ def create_lead(lead_data: LeadCreate, db: Session = Depends(get_db)):
     db.add(lead)
     db.commit()
     db.refresh(lead)
+    logger.info("New lead created: id=%d email=%s business=%s", lead.id, lead.email, lead.business_type)
     return lead
 
 
 @router.get("/leads", response_model=list[LeadResponse])
 def list_leads(db: Session = Depends(get_db)):
-    return db.query(Lead).order_by(Lead.created_at.desc()).all()
+    leads = db.query(Lead).order_by(Lead.created_at.desc()).all()
+    logger.info("Leads listed: count=%d", len(leads))
+    return leads
