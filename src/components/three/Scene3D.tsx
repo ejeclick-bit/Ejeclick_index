@@ -30,7 +30,7 @@ export function Scene3D() {
         dpr={[1, 2]}
         gl={{ powerPreference: "high-performance", antialias: false }}
       >
-        <color attach="background" args={['#0A0A0F']} />
+        <color attach="background" args={['#0A0F1A']} />
         <ambientLight intensity={0.5} />
         <directionalLight position={[10, 10, 5]} intensity={1} />
         
