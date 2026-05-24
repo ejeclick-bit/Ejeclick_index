@@ -20,7 +20,7 @@ Landing page de alta conversión para EjeClick (agencia de desarrollo web). Cons
 
 ## Skills (Auto-loading)
 
-Each skill is in its own directory under `skills/<skill-name>/`. Load the relevant skill before starting any task:
+Each skill is in its own directory under `skills/<skill-name>/SKILL.md`. Load the relevant skill before starting any task:
 
 | Task | Skill |
 |---|---|
