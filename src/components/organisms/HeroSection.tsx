@@ -1,14 +1,20 @@
+import { lazy, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { Typography } from '@/components/atoms/Typography';
 import { Button } from '@/components/atoms/Button';
 import { Badge } from '@/components/atoms/Badge';
-import { Scene3D } from '@/components/three/Scene3D';
+
+const Scene3D = lazy(() =>
+  import('@/components/three/Scene3D').then((m) => ({ default: m.Scene3D }))
+);
 
 export function HeroSection() {
   return (
     <section className="relative min-h-screen w-full overflow-hidden flex items-center justify-center pt-20 pb-16">
-      {/* 3D Scene Layer (Behind everything) */}
-      <Scene3D />
+      {/* 3D Scene Layer (Lazy loaded: Three.js solo se descarga al hacer scroll al Hero) */}
+      <Suspense fallback={null}>
+        <Scene3D />
+      </Suspense>
 
       {/* Aurora Background (Handled globally in App or Layout, but we ensure the container is transparent) */}
       

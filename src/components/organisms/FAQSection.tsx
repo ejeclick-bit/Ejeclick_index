@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Typography } from '@/components/atoms/Typography';
 import { AccordionItem } from '@/components/molecules/AccordionItem';
 
@@ -24,7 +25,26 @@ const faqs = [
   }
 ];
 
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.question,
+    acceptedAnswer: { '@type': 'Answer', text: f.answer },
+  })),
+};
+
 export function FAQSection() {
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'faq-schema';
+    script.textContent = JSON.stringify(faqSchema);
+    document.head.appendChild(script);
+    return () => { document.getElementById('faq-schema')?.remove(); };
+  }, []);
+
   return (
     <section id="faq" className="py-24 relative w-full z-10">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
