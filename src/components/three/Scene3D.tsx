@@ -25,10 +25,9 @@ export function Scene3D() {
 
   return (
     <div className="absolute inset-0 z-0 h-full w-full pointer-events-none" aria-hidden="true">
-      <Canvas 
+      <Canvas
         camera={{ position: [0, 0, 8], fov: 45 }}
-        dpr={[1, 2]} // limit pixel ratio for performance
-        frameloop="demand" // Only render on updates
+        dpr={[1, 2]}
         gl={{ powerPreference: "high-performance", antialias: false }}
       >
         <color attach="background" args={['#0A0A0F']} />
