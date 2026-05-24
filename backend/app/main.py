@@ -17,8 +17,6 @@ logging.basicConfig(
 )
 logger = logging.getLogger("ejeclick")
 
-Base.metadata.create_all(bind=engine)
-
 limiter = Limiter(key_func=get_remote_address)
 
 app = FastAPI(
@@ -31,8 +29,32 @@ app = FastAPI(
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
+
+@app.on_event("startup")
+def on_startup():
+    for attempt in range(15):
+        try:
+            Base.metadata.create_all(bind=engine)
+            logger.info("Database tables created successfully")
+            return
+        except Exception as e:
+            logger.warning("Waiting for database... (attempt %d/15): %s", attempt + 1, e)
+            time.sleep(2)
+    logger.error("Could not connect to database after 15 attempts")
+
+
+@app.get("/api/health")
+def health():
+    return {"status": "ok", "version": "1.0.0"}
+
+
 origins = {
-    "development": ["http://localhost:5173", "http://localhost:5174", "http://localhost"],
+    "development": [
+        "http://localhost:3000",
+        "http://localhost:3001",
+        "http://localhost:5173",
+        "http://localhost:5174",
+    ],
     "production": ["https://ejeclick.com"],
 }
 env = os.getenv("APP_ENV", "development")

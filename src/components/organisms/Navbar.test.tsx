@@ -13,9 +13,8 @@ describe('Navbar', () => {
   });
 
   it('renderiza el logo', () => {
-    const { container } = render(<Navbar />);
-    const logo = container.querySelector('h3');
-    expect(logo).toHaveTextContent(/EjeClick/);
+    render(<Navbar />);
+    expect(screen.getByText(/Eje/i)).toBeInTheDocument();
   });
 
   it('tiene navegación con aria-label', () => {

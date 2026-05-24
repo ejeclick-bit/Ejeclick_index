@@ -4,7 +4,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "80:80"
+      - "3000:80"
     depends_on:
       backend:
         condition: service_started
@@ -14,7 +14,7 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     ports:
-      - "8000:8000"
+      - "3001:8000"
     environment:
       - DATABASE_URL=postgresql://ejeclick:ejeclick@db:5432/ejeclick
     depends_on:
@@ -24,7 +24,7 @@ services:
   db:
     image: postgres:16-alpine
     ports:
-      - "5432:5432"
+      - "3002:5432"
     environment:
       - POSTGRES_USER=ejeclick
       - POSTGRES_PASSWORD=ejeclick
