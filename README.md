@@ -1,73 +1,79 @@
-# React + TypeScript + Vite
+# EjeClick — Landing Page de Conversión
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[![CI](https://github.com/ejeclick/ejeclick_index/actions/workflows/ci.yml/badge.svg)](https://github.com/ejeclick/ejeclick_index/actions/workflows/ci.yml)
 
-Currently, two official plugins are available:
+Landing page de alta conversión para **EjeClick**, agencia de desarrollo web para microempresas. Construida bajo estándares Silicon Valley.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Stack
 
-## React Compiler
+| Capa | Tecnología |
+|---|---|
+| Frontend | React 19 + TypeScript 6 + Vite 8 + Tailwind v4 |
+| 3D | Three.js + React Three Fiber + Postprocessing |
+| Animación | Framer Motion + Lenis |
+| Backend | FastAPI + Python 3.12 + SQLAlchemy 2.0 |
+| Base de datos | PostgreSQL 16 |
+| Infra | Docker + nginx + GitHub Actions |
+| Monitoreo | Sentry (frontend) + logging estructurado (backend) |
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Requisitos
 
-## Expanding the ESLint configuration
+- Node.js 22+
+- Docker + Docker Compose (para stack completo)
+- Python 3.12 (para backend local)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Desarrollo rápido
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+```bash
+# Frontend
+npm install
+npm run dev            # http://localhost:5173
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+# Backend (segunda terminal)
+cd backend
+pip install -r requirements.txt
+uvicorn app.main:app --reload  # http://localhost:8000/api/docs
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# Stack completo (Docker)
+docker compose up -d   # http://localhost
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Comandos
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run build          # Build producción
+npm test               # Tests (27 tests, 6 suites)
+npm run lint           # ESLint
+npm run typecheck      # TypeScript
+npm run optimize:images # Convertir imágenes a WebP/AVIF
 ```
+
+## Calidad
+
+- TypeScript strict + `verbatimModuleSyntax`
+- ESLint + Husky pre-commit
+- WCAG AA accesibilidad (skip-link, ARIA, roles, reduced-motion)
+- Code splitting (vendor chunks separados)
+- Lazy loading (Three.js diferido)
+- Rate limiting (10 POST/min)
+- CSP + HSTS + security headers
+- Docker multi-stage (~50MB imagen final)
+
+## Estructura
+
+```
+src/
+├── components/
+│   ├── atoms/          # 5 componentes base
+│   ├── molecules/      # 5 componentes compuestos
+│   ├── organisms/      # 8 secciones completas
+│   ├── templates/      # 1 layout
+│   ├── pages/          # 1 página
+│   └── three/          # 3 componentes 3D
+backend/
+└── app/                # FastAPI + SQLAlchemy + Pydantic
+```
+
+## Licencia
+
+Privado — EjeClick © 2026
