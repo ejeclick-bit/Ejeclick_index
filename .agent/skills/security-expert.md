@@ -1,5 +1,13 @@
 # Skill: Experto en Seguridad — EjeClick
 
+## When to use
+- Configurar o auditar Content Security Policy (CSP)
+- Revisar headers HTTP de seguridad (HSTS, XFO, CORS)
+- Implementar rate limiting, autenticación, autorización
+- Auditar dependencias (npm audit, pip-audit)
+- Revisar seguridad de API, base de datos, formularios
+- Preparar checklist pre-deploy de seguridad
+
 ## Stack y configuración actual
 - **Frontend**: React + Vite, servido por nginx en producción
 - **Backend**: FastAPI + PostgreSQL, detrás de nginx reverse proxy

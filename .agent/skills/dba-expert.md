@@ -1,5 +1,12 @@
 # Skill: Experto DBA — EjeClick Database
 
+## When to use
+- Diseñar o modificar esquemas de base de datos
+- Crear índices, migraciones (Alembic)
+- Optimizar consultas lentas (EXPLAIN ANALYZE)
+- Configurar backups, monitoreo de performance
+- Migrar datos o modelos (particionamiento, nuevos campos)
+
 ## Stack específico del proyecto
 - **PostgreSQL 16** (Alpine, dockerizada)
 - **SQLAlchemy 2.0** como ORM

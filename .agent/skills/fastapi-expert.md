@@ -1,5 +1,12 @@
 # Skill: Experto en FastAPI — EjeClick Backend
 
+## When to use
+- Crear o modificar endpoints REST de la API
+- Definir modelos SQLAlchemy y schemas Pydantic
+- Configurar base de datos, migraciones (Alembic)
+- Implementar lógica de negocio del backend
+- Manejar validación de datos, CORS, rate limiting
+
 ## Stack específico del proyecto
 - **FastAPI 0.115+** con Python 3.12
 - **SQLAlchemy 2.0** como ORM asíncrono

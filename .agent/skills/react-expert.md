@@ -1,5 +1,13 @@
 # Skill: Experto en React — EjeClick Frontend
 
+## When to use
+- Crear o modificar componentes React (atoms, molecules, organisms, templates, pages)
+- Implementar animaciones con framer-motion
+- Integrar Three.js / R3F (React Three Fiber)
+- Manejar estado, formularios, eventos
+- Optimizar performance frontend (code splitting, lazy loading)
+- Implementar accesibilidad WCAG en componentes
+
 ## Stack específico del proyecto
 - **React 19.2** con JSX auto-runtime (no importar `React`)
 - **TypeScript 6.0** estricto: `verbatimModuleSyntax`, `noUnusedLocals`, `erasableSyntaxOnly`

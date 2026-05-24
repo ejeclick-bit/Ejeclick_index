@@ -1,5 +1,12 @@
 # Skill: Experto en Testing — EjeClick
 
+## When to use
+- Escribir tests unitarios para componentes React
+- Escribir tests de integración para APIs
+- Configurar o modificar Vitest, Testing Library
+- Ejecutar suite de tests y analizar cobertura
+- Verificar accesibilidad (aria, roles) mediante tests
+
 ## Stack de testing actual
 - **Vitest 4.1+** con jsdom environment
 - **@testing-library/react 16+** (testing-library/user-event 14+)
