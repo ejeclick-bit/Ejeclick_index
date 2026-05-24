@@ -10,82 +10,86 @@ const Scene3D = lazy(() =>
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-screen w-full overflow-hidden flex items-center justify-center pt-20 pb-16">
-      {/* 3D Scene Layer — behind everything */}
-      <Suspense fallback={null}>
-        <Scene3D />
-      </Suspense>
-
-      {/* Content Overlay — above 3D */}
-      <div className="container relative z-20 mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center pointer-events-none">
+    <section className="relative min-h-screen w-full overflow-hidden pt-24 pb-16">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center gap-12 h-full min-h-[calc(100vh-8rem)]">
         
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="pointer-events-auto"
-        >
-          <Badge variant="glow" className="mb-6">
-            <span className="mr-2">🚀</span> +50 negocios digitalizados
-          </Badge>
-        </motion.div>
+        {/* Left: Text Content */}
+        <div className="w-full lg:w-1/2 flex flex-col items-start text-left z-20">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+          >
+            <Badge variant="glow" className="mb-6">
+              <span className="mr-2">🚀</span> +50 negocios digitalizados
+            </Badge>
+          </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="max-w-4xl pointer-events-auto"
-        >
-          <Typography variant="h1" className="mb-6">
-            Tu negocio local en Internet, <span className="text-gradient">vendiendo en automático.</span>
-          </Typography>
-        </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="max-w-4xl"
+          >
+            <Typography variant="h1" className="mb-6 text-left">
+              Tu negocio local en Internet, <span className="text-gradient">vendiendo en automático.</span>
+            </Typography>
+          </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="max-w-2xl pointer-events-auto"
-        >
-          <Typography variant="lead" className="mb-10">
-            Diseñamos tu web profesional y activamos tus campañas en menos de 7 días. Elevamos microempresas a estándares de Silicon Valley.
-          </Typography>
-        </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="max-w-2xl"
+          >
+            <Typography variant="lead" className="mb-10 text-left">
+              Diseñamos tu web profesional y activamos tus campañas en menos de 7 días. Elevamos microempresas a estándares de Silicon Valley.
+            </Typography>
+          </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className="flex flex-col sm:flex-row gap-4 items-center pointer-events-auto"
-        >
-          <Button size="lg" variant="primary">
-            Digitalizar mi Negocio
-          </Button>
-          <Button size="lg" variant="outline">
-            Ver Demo Interactiva
-          </Button>
-        </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            className="flex flex-col sm:flex-row gap-4 items-start"
+          >
+            <Button size="lg" variant="primary">
+              Digitalizar mi Negocio
+            </Button>
+            <Button size="lg" variant="outline">
+              Ver Demo Interactiva
+            </Button>
+          </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="mt-8 flex items-center gap-2 text-sm font-medium text-text-muted pointer-events-auto"
-        >
-          <svg className="w-4 h-4 text-accent-primary" aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-          </svg>
-          Sin contratos forzosos
-          <span className="mx-2" aria-hidden="true">•</span>
-          <svg className="w-4 h-4 text-accent-primary" aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-          </svg>
-          Diagnóstico inicial gratuito
-        </motion.div>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="mt-8 flex items-center gap-2 text-sm font-medium text-text-muted"
+          >
+            <svg className="w-4 h-4 text-accent-primary" aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+            Sin contratos forzosos
+            <span className="mx-2" aria-hidden="true">•</span>
+            <svg className="w-4 h-4 text-accent-primary" aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+            Diagnóstico inicial gratuito
+          </motion.div>
+        </div>
+
+        {/* Right: 3D Scene */}
+        <div className="relative w-full lg:w-1/2 h-[400px] lg:h-[500px] xl:h-[600px] z-10">
+          <Suspense fallback={null}>
+            <Scene3D />
+          </Suspense>
+        </div>
+
       </div>
       
       {/* Bottom Gradient */}
-      <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-bg-primary to-transparent z-10" />
+      <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-bg-primary to-transparent z-10 pointer-events-none" />
     </section>
   );
 }
