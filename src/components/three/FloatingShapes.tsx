@@ -125,43 +125,108 @@ function GridStructure() {
 }
 
 function BrowserUI() {
+  const dotColors = ['#EF4444', '#F59E0B', '#22C55E'];
   return (
     <group>
-      <RoundedBox args={[2.8, 2, 0.06]} radius={0.08} smoothness={4}>
-        <meshStandardMaterial color="#0F172A" emissive="#0F172A" emissiveIntensity={0.1} toneMapped={false} />
+      {/* Window frame */}
+      <RoundedBox args={[3, 2.2, 0.06]} radius={0.1} smoothness={6}>
+        <meshStandardMaterial color="#0A0F1A" emissive="#0A0F1A" emissiveIntensity={0.15} toneMapped={false} />
       </RoundedBox>
 
-      <mesh position={[0, 0.88, 0.07]}>
-        <boxGeometry args={[2.5, 0.06, 0.02]} />
-        <meshStandardMaterial color="#1E293B" emissive="#1E293B" emissiveIntensity={0.2} toneMapped={false} />
+      {/* Window glow */}
+      <RoundedBox args={[3, 2.2, 0.04]} radius={0.1} smoothness={6}>
+        <meshStandardMaterial color="#1E293B" transparent opacity={0.5} side={THREE.BackSide} />
+      </RoundedBox>
+
+      {/* Title bar */}
+      <mesh position={[0, 1, 0.07]}>
+        <boxGeometry args={[2.9, 0.16, 0.02]} />
+        <meshStandardMaterial color="#1E293B" emissive="#1E293B" emissiveIntensity={0.3} toneMapped={false} />
       </mesh>
 
-      <mesh position={[0, 0.5, 0.07]}>
-        <planeGeometry args={[2.2, 0.6]} />
-        <meshStandardMaterial color="#1E293B" emissive="#1E293B" emissiveIntensity={0.15} toneMapped={false} transparent opacity={0.8} />
+      {/* Traffic lights */}
+      {dotColors.map((color, i) => (
+        <mesh key={i} position={[-1.25 + i * 0.15, 1, 0.1]}>
+          <sphereGeometry args={[0.045, 12, 12]} />
+          <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.3} toneMapped={false} />
+        </mesh>
+      ))}
+
+      {/* URL bar */}
+      <mesh position={[0.2, 0.78, 0.07]}>
+        <planeGeometry args={[1.8, 0.1]} />
+        <meshStandardMaterial color="#334155" emissive="#334155" emissiveIntensity={0.1} toneMapped={false} />
       </mesh>
-      <mesh position={[-0.5, 0.5, 0.09]}>
-        <planeGeometry args={[0.8, 0.06]} />
-        <meshStandardMaterial color="#3B82F6" emissive="#3B82F6" emissiveIntensity={0.5} toneMapped={false} />
+      <mesh position={[-0.3, 0.78, 0.09]}>
+        <planeGeometry args={[0.5, 0.04]} />
+        <meshStandardMaterial color="#94A3B8" emissive="#94A3B8" emissiveIntensity={0.2} toneMapped={false} transparent opacity={0.6} />
+      </mesh>
+      <mesh position={[0.7, 0.78, 0.09]}>
+        <planeGeometry args={[0.7, 0.04]} />
+        <meshStandardMaterial color="#94A3B8" emissive="#94A3B8" emissiveIntensity={0.2} toneMapped={false} transparent opacity={0.6} />
       </mesh>
 
+      {/* Hero section preview */}
+      <mesh position={[0, 0.3, 0.07]}>
+        <planeGeometry args={[2.6, 0.5]} />
+        <meshStandardMaterial color="#0A0F1A" transparent opacity={0.6} />
+      </mesh>
+
+      {/* Heading line */}
+      <mesh position={[-0.4, 0.5, 0.09]}>
+        <planeGeometry args={[1.6, 0.06]} />
+        <meshStandardMaterial color="#F8FAFC" emissive="#F8FAFC" emissiveIntensity={0.15} toneMapped={false} />
+      </mesh>
+      <mesh position={[-0.3, 0.38, 0.09]}>
+        <planeGeometry args={[1.0, 0.04]} />
+        <meshStandardMaterial color="#F8FAFC" emissive="#F8FAFC" emissiveIntensity={0.1} toneMapped={false} transparent opacity={0.5} />
+      </mesh>
+
+      {/* CTA button */}
+      <mesh position={[0, 0.18, 0.09]}>
+        <planeGeometry args={[0.7, 0.1]} />
+        <meshStandardMaterial color="#3B82F6" emissive="#3B82F6" emissiveIntensity={0.6} toneMapped={false} />
+      </mesh>
+
+      {/* Features row */}
       {[0, 1, 2].map((i) => (
-        <mesh key={i} position={[-0.8 + i * 0.8, 0, 0.07]}>
-          <planeGeometry args={[0.5, 0.3]} />
+        <mesh key={i} position={[-0.8 + i * 0.8, -0.25, 0.07]}>
+          <RoundedBox args={[0.6, 0.4, 0.03]} radius={0.04} smoothness={4}>
+            <meshStandardMaterial
+              color="#1E293B"
+              emissive="#1E293B"
+              emissiveIntensity={0.15}
+              toneMapped={false}
+            />
+          </RoundedBox>
+        </mesh>
+      ))}
+
+      {/* Feature icons */}
+      {[0, 1, 2].map((i) => (
+        <mesh key={i} position={[-0.8 + i * 0.8, -0.18, 0.09]}>
+          <planeGeometry args={[0.12, 0.12]} />
           <meshStandardMaterial
-            color="#334155"
-            emissive="#334155"
-            emissiveIntensity={0.2}
+            color={['#3B82F6', '#0EA5E9', '#6366F1'][i]}
+            emissive={['#3B82F6', '#0EA5E9', '#6366F1'][i]}
+            emissiveIntensity={0.5}
             toneMapped={false}
-            transparent
-            opacity={0.6}
           />
         </mesh>
       ))}
 
-      <mesh position={[0, -0.5, 0.07]}>
-        <planeGeometry args={[1.2, 0.1]} />
-        <meshStandardMaterial color="#3B82F6" emissive="#3B82F6" emissiveIntensity={1} toneMapped={false} />
+      {/* Feature text lines */}
+      {[0, 1, 2].map((i) => (
+        <mesh key={`t${i}`} position={[-0.8 + i * 0.8, -0.35, 0.09]}>
+          <planeGeometry args={[0.35, 0.03]} />
+          <meshStandardMaterial color="#64748B" emissive="#64748B" emissiveIntensity={0.1} toneMapped={false} transparent opacity={0.5} />
+        </mesh>
+      ))}
+
+      {/* Bottom bar */}
+      <mesh position={[0, -0.9, 0.07]}>
+        <boxGeometry args={[2.9, 0.06, 0.02]} />
+        <meshStandardMaterial color="#1E293B" emissive="#1E293B" emissiveIntensity={0.2} toneMapped={false} transparent opacity={0.5} />
       </mesh>
     </group>
   );

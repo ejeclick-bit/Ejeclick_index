@@ -80,7 +80,8 @@ export function HeroSection() {
         </div>
 
         {/* Right: 3D Scene */}
-        <div className="relative w-full lg:w-1/2 h-[400px] lg:h-[500px] xl:h-[600px] z-10">
+        <div className="relative w-full lg:w-1/2 h-[400px] lg:h-[500px] xl:h-[600px] z-10 glass-card rounded-3xl border border-white/10 overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-br from-accent-primary/5 to-transparent pointer-events-none" />
           <Suspense fallback={null}>
             <Scene3D />
           </Suspense>
