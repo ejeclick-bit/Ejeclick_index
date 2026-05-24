@@ -23,7 +23,7 @@ const FormField = forwardRef<HTMLInputElement, FormFieldProps>(
           id={fieldId}
           ref={ref} 
           hasError={!!error} 
-          aria-invalid={!!error}
+          aria-invalid={error ? true : undefined}
           aria-describedby={error ? errorId : undefined}
           {...props} 
         />

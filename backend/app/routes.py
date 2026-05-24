@@ -1,11 +1,15 @@
 import logging
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, Request, HTTPException, status
 from sqlalchemy.orm import Session
+from slowapi import Limiter
+from slowapi.util import get_remote_address
 
 from app.database import get_db
 from app.models import Lead
 from app.schemas import LeadCreate, LeadResponse
+
+limiter = Limiter(key_func=get_remote_address)
 
 logger = logging.getLogger("ejeclick")
 
@@ -13,7 +17,8 @@ router = APIRouter()
 
 
 @router.post("/leads", response_model=LeadResponse, status_code=status.HTTP_201_CREATED)
-def create_lead(lead_data: LeadCreate, db: Session = Depends(get_db)):
+@limiter.limit("10/minute")
+def create_lead(request: Request, lead_data: LeadCreate, db: Session = Depends(get_db)):
     lead = Lead(
         name=lead_data.name,
         email=lead_data.email,
