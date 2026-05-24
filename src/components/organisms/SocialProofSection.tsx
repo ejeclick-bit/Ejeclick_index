@@ -45,33 +45,35 @@ export function SocialProofSection() {
           </div>
 
           <GlassCard className="p-0 overflow-hidden" glowOnHover={false}>
-            <div className="grid grid-cols-2 bg-white/5 border-b border-white/10">
-              <div className="p-6 text-center">
-                <Typography className="font-semibold text-text-secondary text-lg">Agencias Tradicionales</Typography>
-              </div>
-              <div className="p-6 text-center bg-accent-primary/10">
-                <Typography className="font-bold text-accent-primary text-lg">EjeClick</Typography>
-              </div>
-            </div>
-
-            <div className="divide-y divide-white/5">
-              {[
-                { label: "Tiempo de entrega", bad: "Semanas o Meses", good: "Menos de 7 días" },
-                { label: "Performance Web", bad: "Lento y sobrecargado", good: "Score >95 garantizado" },
-                { label: "Diseño y UX", bad: "Plantillas genéricas", good: "Premium & Custom UI" },
-                { label: "Transparencia", bad: "Costos ocultos", good: "Suscripciones Claras" },
-              ].map((row, i) => (
-                <div key={i} className="grid grid-cols-2 relative">
-                  <div className="p-6 flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-3">
-                    <X className="w-5 h-5 text-red-500 shrink-0" />
-                    <Typography className="text-text-muted text-sm sm:text-base text-center sm:text-left">{row.bad}</Typography>
-                  </div>
-                  <div className="p-6 flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-3 bg-accent-primary/5">
-                    <Check className="w-5 h-5 text-accent-primary shrink-0" />
-                    <Typography className="text-white font-medium text-sm sm:text-base text-center sm:text-left">{row.good}</Typography>
-                  </div>
+            <div role="table" aria-label="Comparativa EjeClick vs Agencias Tradicionales">
+              <div role="row" className="grid grid-cols-2 bg-white/5 border-b border-white/10">
+                <div role="columnheader" className="p-6 text-center">
+                  <Typography className="font-semibold text-text-secondary text-lg">Agencias Tradicionales</Typography>
                 </div>
-              ))}
+                <div role="columnheader" className="p-6 text-center bg-accent-primary/10">
+                  <Typography className="font-bold text-accent-primary text-lg">EjeClick</Typography>
+                </div>
+              </div>
+
+              <div role="rowgroup" className="divide-y divide-white/5">
+                {[
+                  { label: "Tiempo de entrega", bad: "Semanas o Meses", good: "Menos de 7 días" },
+                  { label: "Performance Web", bad: "Lento y sobrecargado", good: "Score >95 garantizado" },
+                  { label: "Diseño y UX", bad: "Plantillas genéricas", good: "Premium & Custom UI" },
+                  { label: "Transparencia", bad: "Costos ocultos", good: "Suscripciones Claras" },
+                ].map((row, i) => (
+                  <div key={i} role="row" className="grid grid-cols-2 relative">
+                    <div role="cell" className="p-6 flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-3">
+                      <X className="w-5 h-5 text-red-500 shrink-0" aria-hidden="true" />
+                      <Typography className="text-text-muted text-sm sm:text-base text-center sm:text-left">{row.bad}</Typography>
+                    </div>
+                    <div role="cell" className="p-6 flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-3 bg-accent-primary/5">
+                      <Check className="w-5 h-5 text-accent-primary shrink-0" aria-hidden="true" />
+                      <Typography className="text-white font-medium text-sm sm:text-base text-center sm:text-left">{row.good}</Typography>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </GlassCard>
         </div>

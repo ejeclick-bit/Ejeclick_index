@@ -41,31 +41,31 @@ export function ProcessSection() {
 
         <div className="max-w-4xl mx-auto relative">
           {/* Vertical Line */}
-          <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-px bg-white/10 transform md:-translate-x-1/2" />
+          <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-px bg-white/10 transform md:-translate-x-1/2" aria-hidden="true" />
 
-          <div className="space-y-12">
+          <ol className="space-y-12" role="list">
             {steps.map((step, index) => {
               const Icon = step.icon;
               const isEven = index % 2 === 0;
 
               return (
-                <motion.div 
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="relative flex flex-col md:flex-row items-start md:items-center w-full"
-                >
+                <li key={index} className="relative flex flex-col md:flex-row items-start md:items-center w-full">
                   {/* Left Side (Empty on odd, Content on even) */}
-                  <div className={`hidden md:block w-1/2 pr-12 text-right ${!isEven && 'opacity-0'}`}>
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: isEven ? 1 : 0, x: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    className={`hidden md:block w-1/2 pr-12 text-right ${!isEven && 'invisible'}`}
+                    aria-hidden={!isEven}
+                  >
                     {isEven && (
                       <>
                         <Typography variant="h3" className="text-white mb-2">{step.title}</Typography>
                         <Typography className="text-text-secondary">{step.description}</Typography>
                       </>
                     )}
-                  </div>
+                  </motion.div>
 
                   {/* Center Node */}
                   <div className="absolute left-8 md:left-1/2 transform -translate-x-1/2 flex items-center justify-center w-12 h-12 rounded-full bg-bg-card border-4 border-bg-primary z-10 shadow-glow-primary">
@@ -75,15 +75,21 @@ export function ProcessSection() {
                   </div>
 
                   {/* Right Side (Content on odd, Empty on even) */}
-                  <div className={`w-full md:w-1/2 pl-24 md:pl-12 ${isEven && 'md:opacity-0'}`}>
-                    {/* Mobile content always visible on the right side */}
-                    <div className="md:hidden">
+                  <motion.div
+                    initial={{ opacity: 0, x: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    className={`w-full md:w-1/2 pl-24 md:pl-12 ${isEven && 'md:invisible'}`}
+                  >
+                    {/* Mobile content always visible */}
+                    <div className="md:hidden" aria-hidden={isEven ? undefined : undefined}>
                       <Typography variant="h3" className="text-white mb-2 text-xl">{step.title}</Typography>
                       <Typography className="text-text-secondary">{step.description}</Typography>
                     </div>
 
                     {/* Desktop right content */}
-                    <div className="hidden md:block">
+                    <div className="hidden md:block" aria-hidden={!isEven ? undefined : true}>
                       {!isEven && (
                         <>
                           <Typography variant="h3" className="text-white mb-2">{step.title}</Typography>
@@ -91,11 +97,11 @@ export function ProcessSection() {
                         </>
                       )}
                     </div>
-                  </div>
-                </motion.div>
+                  </motion.div>
+                </li>
               );
             })}
-          </div>
+          </ol>
         </div>
 
       </div>

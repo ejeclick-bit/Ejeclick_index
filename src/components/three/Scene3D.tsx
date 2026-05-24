@@ -24,7 +24,7 @@ export function Scene3D() {
   }
 
   return (
-    <div className="absolute inset-0 z-0 h-full w-full pointer-events-none">
+    <div className="absolute inset-0 z-0 h-full w-full pointer-events-none" aria-hidden="true">
       <Canvas 
         camera={{ position: [0, 0, 8], fov: 45 }}
         dpr={[1, 2]} // limit pixel ratio for performance

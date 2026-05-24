@@ -25,7 +25,7 @@ export function Footer() {
             </div>
           </div>
 
-          <div>
+          <nav aria-label="Servicios">
             <Typography variant="h4" className="text-white text-lg mb-4">Servicios</Typography>
             <ul className="space-y-3">
               <li><a href="#" className="text-text-secondary hover:text-accent-primary transition-colors">Diseño Web</a></li>
@@ -33,9 +33,9 @@ export function Footer() {
               <li><a href="#" className="text-text-secondary hover:text-accent-primary transition-colors">Marketing Digital</a></li>
               <li><a href="#" className="text-text-secondary hover:text-accent-primary transition-colors">Landing Pages</a></li>
             </ul>
-          </div>
+          </nav>
 
-          <div>
+          <nav aria-label="Compañía">
             <Typography variant="h4" className="text-white text-lg mb-4">Compañía</Typography>
             <ul className="space-y-3">
               <li><a href="#proceso" className="text-text-secondary hover:text-accent-primary transition-colors">Proceso</a></li>
@@ -43,7 +43,7 @@ export function Footer() {
               <li><a href="#faq" className="text-text-secondary hover:text-accent-primary transition-colors">FAQ</a></li>
               <li><a href="#contacto" className="text-text-secondary hover:text-accent-primary transition-colors">Contacto</a></li>
             </ul>
-          </div>
+          </nav>
         </div>
 
         <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">

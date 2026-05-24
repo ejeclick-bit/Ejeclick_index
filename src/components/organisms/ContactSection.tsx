@@ -89,7 +89,7 @@ export function ContactSection() {
 
           <div className="w-full lg:w-1/2">
             <GlassCard className="p-8" glowOnHover={false}>
-              <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+              <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-5">
                 <FormField
                   label="Nombre Completo"
                   name="name"
@@ -132,7 +132,7 @@ export function ContactSection() {
                 />
 
                 {status === 'success' && (
-                  <div className="rounded-lg bg-green-500/10 border border-green-500/30 p-4 text-center">
+                  <div role="alert" className="rounded-lg bg-green-500/10 border border-green-500/30 p-4 text-center">
                     <Typography className="text-green-400 font-medium">
                       ¡Gracias! Te contactaremos en menos de 24 horas.
                     </Typography>
@@ -140,7 +140,7 @@ export function ContactSection() {
                 )}
 
                 {status === 'error' && (
-                  <div className="rounded-lg bg-red-500/10 border border-red-500/30 p-4 text-center">
+                  <div role="alert" className="rounded-lg bg-red-500/10 border border-red-500/30 p-4 text-center">
                     <Typography className="text-red-400 font-medium">
                       {errorMessage}
                     </Typography>
