@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/ejeclick/ejeclick_index/actions/workflows/ci.yml/badge.svg)](https://github.com/ejeclick/ejeclick_index/actions/workflows/ci.yml)
 
-Landing page de alta conversión para **EjeClick**, agencia de desarrollo web para microempresas. Construida bajo estándares Silicon Valley.
+Landing page de alta conversión para **EjeClick** — tecnología real para pequeñas empresas. Automatiza ventas y envíos, sin tecnicismos.
 
 ## Stack
 

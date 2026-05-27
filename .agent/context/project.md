@@ -1,8 +1,8 @@
 # Project Context: EjeClick - High-Conversion Platform
 
 ## 1. Executive Summary & Core Objective
-**EjeClick** es una agencia de tecnología y desarrollo web de élite diseñada para transformar microempresas y pequeños negocios locales mediante soluciones digitales profesionales y marketing digital de alto rendimiento.
-* **Meta Inmediata:** Construir una Landing Page de conversión masiva en tiempo récord bajo estándares técnicos de Silicon Valley.
+**EjeClick** lleva tecnología real a pequeñas empresas para que vendan y envíen en automático. Sin tecnicismos, sin promesas falsas, solo herramientas que funcionan.
+* **Meta Inmediata:** Construir una Landing Page de conversión masiva en tiempo récord con velocidad y confiabilidad enterprise.
 * **Propósito del Archivo:** Actuar como la "fuente única de la verdad" (SSOT) para agentes de IA, asegurando que cada línea de código frontend y backend responda a criterios estrictos de Conversión (CRO), Accesibilidad (WCAG) y Rendimiento.
 
 ---
@@ -34,7 +34,7 @@ Cualquier componente UI/UX generado por la IA debe cumplir rigurosamente con est
 
 ### Hero Section (Pliegue Inicial - Sin Scroll)
 * **Titular:** Enfoque directo en el beneficio (evitar jerga técnica abstracta). Ej: *"Tu negocio local en Internet, vendiendo en automático."*
-* **Subtítulo:** Mapeo semántico del valor (ej. *"Diseñamos tu web profesional y activamos tus campañas en menos de 7 días"*).
+* **Subtítulo:** Mapeo semántico del valor (ej. *"Llevamos tecnología real a pequeñas empresas para que vendan y envíen en automático"*).
 * **CTA Principal:** Botón de alto contraste con texto orientado al beneficio (*"Quiero Digitalizar mi Negocio"*).
 * **Fricción Cero:** Texto adyacente: *"Sin contratos forzosos • Diagnóstico inicial gratuito"*.
 

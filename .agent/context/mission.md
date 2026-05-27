@@ -1,7 +1,7 @@
 # Misión del Proyecto EjeClick (Metodología Scrum & Atomic Design)
 
 ## 1. Product Vision (Visión del Producto)
-Posicionar a **EjeClick** como la agencia de desarrollo web de referencia para microempresas y negocios locales. Proveer una **Landing Page de conversión masiva** que funcione como el principal vendedor 24/7, diseñada bajo estándares de Silicon Valley (Performance >95, animaciones fluidas, 3D interactivo, Dark Premium).
+Posicionar a **EjeClick** como quien lleva tecnología real a pequeñas empresas para que vendan y envíen en automático. Proveer una **Landing Page de conversión masiva** que funcione como el principal vendedor 24/7, diseñada con velocidad enterprise (Performance >95, animaciones fluidas, 3D interactivo, Dark Premium). Sin tecnicismos, sin promesas falsas, solo herramientas que funcionan.
 
 ## 2. Scrum Roles
 *   **Product Owner**: El usuario / fundador de EjeClick (prioriza el backlog y define los requerimientos de negocio y diseño).

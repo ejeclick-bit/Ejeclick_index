@@ -1,0 +1,4 @@
+Read CLAUDE.md at root.
+Read AGENTS.md at root.
+Run typecheck + lint + test + build before completing tasks.
+Update .agent/context/task.md after each task.

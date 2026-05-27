@@ -1,20 +1,27 @@
 {
-  "name": "ejeclick_index",
+  "name": "ejeclick",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
+  "workspaces": [
+    "apps/*",
+    "apps/*/*",
+    "packages/*"
+  ],
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview",
-    "test": "vitest run",
-    "test:watch": "vitest",
-    "typecheck": "tsc -b",
-    "optimize:images": "./scripts/optimize-images.sh",
-    "format": "prettier --write \"src/**/*.{ts,tsx,css}\"",
-    "format:check": "prettier --check \"src/**/*.{ts,tsx,css}\"",
-    "lighthouse": "./scripts/lighthouse-audit.sh",
+    "dev": "npm run dev -w apps/landing-ejeclick",
+    "dev:barberia": "npm run dev -w apps/flow-flow/landing",
+    "dev:admin": "npm run dev -w apps/flow-flow/admin",
+    "dev:admin:backend": "cd apps/flow-flow/admin && test -d .venv || python3 -m venv .venv && .venv/bin/pip install -q -r backend/requirements.txt && .venv/bin/uvicorn backend.app.main:app --reload --host 0.0.0.0 --port 8001",
+    "dev:all": "npm run dev -w apps/landing-ejeclick & npm run dev -w apps/flow-flow/landing & npm run dev -w apps/flow-flow/admin",
+    "build": "npm run build -w apps/landing-ejeclick",
+    "build:barberia": "npm run build -w apps/flow-flow/landing",
+    "build:all": "npm run build -w apps/landing-ejeclick && npm run build -w apps/flow-flow/landing",
+    "test": "npm run test -w apps/landing-ejeclick",
+    "lint": "npm run lint -w apps/landing-ejeclick",
+    "typecheck": "npm run typecheck -w apps/landing-ejeclick",
+    "format": "npm run format -w apps/landing-ejeclick",
+    "format:check": "npm run format:check -w apps/landing-ejeclick",
     "prepare": "husky"
   },
   "lint-staged": {
@@ -22,46 +29,28 @@
       "eslint --fix"
     ]
   },
-  "dependencies": {
-    "@fontsource/inter": "^5.2.8",
-    "@react-three/drei": "^10.7.7",
-    "@react-three/fiber": "^9.6.1",
-    "@react-three/postprocessing": "^3.0.4",
-    "@sentry/react": "^10.53.1",
-    "clsx": "^2.1.1",
-    "framer-motion": "^12.40.0",
-    "lenis": "^1.3.23",
-    "lucide-react": "^1.16.0",
-    "react": "^19.2.6",
-    "react-dom": "^19.2.6",
-    "tailwind-merge": "^3.6.0",
-    "three": "^0.184.0"
+  "commitlint": {
+    "extends": ["@commitlint/config-conventional"],
+    "rules": {
+      "type-enum": [2, "always", ["feat", "fix", "chore", "docs", "style", "refactor", "test", "perf", "ci", "build"]],
+      "scope-case": [2, "always", "lower-case"],
+      "subject-case": [2, "always", "lower-case"],
+      "subject-empty": [2, "never"]
+    }
+  },
+  "prettier": {
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "all",
+    "printWidth": 100,
+    "tabWidth": 2,
+    "arrowParens": "always",
+    "endOfLine": "lf"
   },
   "devDependencies": {
     "@commitlint/cli": "^21.0.1",
     "@commitlint/config-conventional": "^21.0.1",
-    "@eslint/js": "^10.0.1",
-    "@tailwindcss/vite": "^4.3.0",
-    "@testing-library/jest-dom": "^6.9.1",
-    "@testing-library/react": "^16.3.2",
-    "@testing-library/user-event": "^14.6.1",
-    "@types/node": "^24.12.3",
-    "@types/react": "^19.2.14",
-    "@types/react-dom": "^19.2.3",
-    "@types/three": "^0.184.1",
-    "@vitejs/plugin-react": "^6.0.1",
-    "eslint": "^10.3.0",
-    "eslint-plugin-react-hooks": "^7.1.1",
-    "eslint-plugin-react-refresh": "^0.5.2",
-    "globals": "^17.6.0",
     "husky": "^9.1.7",
-    "jsdom": "^29.1.1",
-    "lint-staged": "^17.0.5",
-    "prettier": "^3.8.3",
-    "tailwindcss": "^4.3.0",
-    "typescript": "~6.0.2",
-    "typescript-eslint": "^8.59.2",
-    "vite": "^8.0.12",
-    "vitest": "^4.1.7"
+    "lint-staged": "^17.0.5"
   }
 }

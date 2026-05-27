@@ -1,0 +1,14 @@
+{
+  "name": "@ejeclick/flow-flow",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev:landing": "npm run dev -w landing",
+    "dev:admin": "npm run dev -w admin",
+    "dev:admin:backend": "cd admin && test -d .venv || python3 -m venv .venv && .venv/bin/pip install -q -r backend/requirements.txt && .venv/bin/uvicorn backend.app.main:app --reload --host 0.0.0.0 --port 8001",
+    "build:landing": "npm run build -w landing",
+    "build:admin": "npm run build -w admin"
+  },
+  "workspaces": ["landing", "admin"]
+}

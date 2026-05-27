@@ -1,78 +1,57 @@
 ---
 description: >
-  Entry point for any AI agent working on EjeClick. Read this first to
-  understand the project structure, current state, and which skill to load.
-version: 1.0.0
+  Entry point for any AI agent working on EjeClick monorepo. Read this first
+  to understand the structure, projects, and which skill to load.
+version: 3.0.0
 ---
 
-# EjeClick — AI Agent Context
+# EjeClick — Monorepo
 
-**Read this first.** This file is the universal entry point for any AI agent or engineer working on this project.
+## Estructura
 
-## Project Overview
-
-Landing page de alta conversión para **EjeClick** (agencia de desarrollo web para microempresas). Construida bajo estándares Silicon Valley: React 19 + Vite 8 + Three.js + FastAPI + PostgreSQL + Docker.
-
-**Estado:** ~95% completo. Ver `context/task.md` para backlog detallado.
-
----
+```
+apps/
+  landing-ejeclick/     # Landing page principal
+packages/               # Librerias compartidas (pendiente)
+.claude/skills/         # Skills transversales
+.claude/rules/          # Reglas path-scoped
+.agent/context/         # Backlog, decisiones, estado
+```
 
 ## Entry Points
 
-| File | Purpose | Required reading |
+| File | Location | Purpose |
 |---|---|---|
-| `context/mission.md` | Product vision, Scrum methodology, Atomic Design rules | Always |
-| `context/project.md` | Single Source of Truth: tech stack, conversion rules (AIDCA model) | Always |
-| `context/task.md` | Scrum backlog with 100% current completion status | Always |
+| `CLAUDE.md` | Root | Orchestrator — entry point principal |
+| `AGENTS.md` | Root | Autonomous execution protocol |
+| `context/mission.md` | `.agent/context/` | Product vision |
+| `context/project.md` | `.agent/context/` | Tech stack & architecture |
+| `context/task.md` | `.agent/context/` | Monorepo backlog |
+| `context/decisions/` | `.agent/context/` | ADRs |
 
----
+## Skills
 
-## Skills (Auto-loading)
-
-Each skill is a `SKILL.md` file inside its own directory under `skills/<name>/`. **Load the matching skill before starting any task:**
-
-| When the task is about... | Load skill |
+| Task | Skill |
 |---|---|
-| React components, UI, animations, 3D, Atomic Design, Tailwind | `skills/react-expert/SKILL.md` |
-| FastAPI endpoints, SQLAlchemy models, Pydantic schemas | `skills/fastapi-expert/SKILL.md` |
-| PostgreSQL schema, indexes, migrations, query optimization | `skills/dba-expert/SKILL.md` |
-| CSP, CORS, rate limiting, security audit, pre-deploy checklist | `skills/security-expert/SKILL.md` |
-| Vitest, React Testing Library, test patterns, coverage | `skills/testing-expert/SKILL.md` |
-| Docker, CI/CD, nginx, SSL, deploy, monitoring | `skills/devops-expert/SKILL.md` |
-| SEO, CRO, JSON-LD, Lighthouse, analytics, A/B testing | `skills/seo-cro-expert/SKILL.md` |
+| Architecture decisions | `.claude/skills/software-architect/SKILL.md` |
+| React, UI, 3D | `.claude/skills/react-expert/SKILL.md` |
+| FastAPI, endpoints | `.claude/skills/fastapi-expert/SKILL.md` |
+| PostgreSQL, DB | `.claude/skills/dba-expert/SKILL.md` |
+| Security | `.claude/skills/security-expert/SKILL.md` |
+| Tests | `.claude/skills/testing-expert/SKILL.md` |
+| Docker, CI/CD | `.claude/skills/devops-expert/SKILL.md` |
+| SEO, CRO | `.claude/skills/seo-cro-expert/SKILL.md` |
 
-**Workflow for any AI agent:**
-```mermaid
-flowchart TD
-    A[Start] --> B[Read README.md]
-    B --> C[Read context/task.md]
-    C --> D{Task matches a skill?}
-    D -->|Yes| E[Load skill/SKILL.md]
-    D -->|No| F[Read context/project.md]
-    E --> G[Execute task following skill workflow]
-    G --> H[Update context/task.md]
-    H --> I[Commit changes]
-```
-
----
-
-## Quick Commands
+## Commands
 
 ```bash
-npm run dev              # Frontend dev server (Vite)
-npm run build            # Production build (tsc + Vite)
-npm test                 # Run all tests (Vitest)
-npm run lint             # ESLint
-npm run typecheck        # TypeScript check
-docker compose up -d     # Full stack (frontend + backend + PostgreSQL)
+npm run dev              # Dev: landing-ejeclick (:3000)
+npm run dev:barberia     # Dev: barberia-flow-flow (:3002)
+npm run dev:all          # Ambos simultáneamente
+npm run build            # Build: landing-ejeclick
+npm run build:barberia   # Build: barberia-flow-flow
+npm run build:all        # Ambos builds
+npm test                 # Tests: landing-ejeclick
 ```
 
----
-
-## Git
-
-Branch default: `main` — 7 commits, clean history. Husky pre-commit: lints staged files.
-
-```bash
-git log --oneline  # View commit history
-```
+Al agregar una app nueva, crear script `dev:<name>` y puerto único en `vite.config.ts`.
