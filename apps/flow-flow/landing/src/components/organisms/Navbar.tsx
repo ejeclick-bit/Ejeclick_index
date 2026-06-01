@@ -3,8 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { Container } from '../atoms/Container';
 import { Button } from '../atoms/Button';
-import { SITE } from '../../lib/data';
 import { cn } from '../../utils/cn';
+import { useTenant } from '../../lib/tenant';
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,6 +15,16 @@ export function Navbar() {
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  const navItems = [
+    { label: 'Reservar', href: '#reservas' },
+    { label: 'Cancelar Cita', href: '#cancelar' },
+    { label: 'Servicios', href: '#servicios' },
+    { label: 'Galería', href: '#galeria' },
+    { label: 'Testimonios', href: '#testimonios' },
+  ];
+
+  const { tenant } = useTenant();
 
   return (
     <header
@@ -28,11 +38,11 @@ export function Navbar() {
       <Container>
         <nav className="flex h-16 items-center justify-between" aria-label="Navegación principal">
           <a href="#" className="text-lg font-bold tracking-tight text-white">
-            <span className="text-brand-gold">✦</span> {SITE.name}
+            <span className="text-brand-gold">✦</span> {tenant?.name || 'Barbería'}
           </a>
 
           <ul className="hidden items-center gap-6 md:flex">
-            {SITE.nav.map((item) => (
+            {navItems.map((item) => (
               <li key={item.href}>
                 <a
                   href={item.href}
@@ -48,7 +58,7 @@ export function Navbar() {
             variant="primary"
             size="sm"
             className="hidden md:inline-flex"
-            onClick={() => window.open(`https://wa.me/${SITE.whatsapp}`, '_blank')}
+            onClick={() => window.open(`https://wa.me/${tenant?.whatsapp || ""}`, '_blank')}
           >
             Agenda tu Cita
           </Button>
@@ -74,7 +84,7 @@ export function Navbar() {
           >
             <Container className="py-4">
               <ul className="flex flex-col gap-2">
-                {SITE.nav.map((item) => (
+                {navItems.map((item) => (
                   <li key={item.href}>
                     <a
                       href={item.href}
@@ -89,7 +99,7 @@ export function Navbar() {
                   <Button
                     variant="primary"
                     className="w-full"
-                    onClick={() => window.open(`https://wa.me/${SITE.whatsapp}`, '_blank')}
+                    onClick={() => window.open(`https://wa.me/${tenant?.whatsapp || ""}`, '_blank')}
                   >
                     Agenda tu Cita
                   </Button>

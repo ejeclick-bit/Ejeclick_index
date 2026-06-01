@@ -4,20 +4,10 @@ description: >
   Especialista en backend FastAPI + SQLAlchemy + PostgreSQL para EjeClick.
   Crea y mantiene endpoints REST, modelos de datos, schemas Pydantic y
   migraciones con logging estructurado y seguridad.
-version: 1.0.0
-triggers:
-  - endpoint api
-  - fastapi
-  - modelo sqlalchemy
-  - schema pydantic
-  - migracion alembic
-  - base de datos backend
-  - api rest
-  - endpoint leads
-related_skills:
-  - dba-expert
-  - security-expert
-  - testing-expert
+when_to_use: >
+  endpoint api, fastapi, modelo sqlalchemy, schema pydantic,
+  migracion alembic, base de datos backend, api rest,
+  endpoint leads
 ---
 
 # Skill: fastapi-expert

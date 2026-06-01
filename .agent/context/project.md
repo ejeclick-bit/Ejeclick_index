@@ -1,74 +1,66 @@
-# Project Context: EjeClick - High-Conversion Platform
+# Project Context: EjeClick - Multi-Tenant SaaS Platform
 
 ## 1. Executive Summary & Core Objective
-**EjeClick** lleva tecnología real a pequeñas empresas para que vendan y envíen en automático. Sin tecnicismos, sin promesas falsas, solo herramientas que funcionan.
-* **Meta Inmediata:** Construir una Landing Page de conversión masiva en tiempo récord con velocidad y confiabilidad enterprise.
-* **Propósito del Archivo:** Actuar como la "fuente única de la verdad" (SSOT) para agentes de IA, asegurando que cada línea de código frontend y backend responda a criterios estrictos de Conversión (CRO), Accesibilidad (WCAG) y Rendimiento.
+**EjeClick** es una plataforma SaaS multi-tenant para barberías. Una sola instancia sirve a N barberías, cada una con su propio subdominio, branding personalizado, landing page y panel administrativo. Sin desarrollo por cliente — solo configuración.
 
----
+- **Meta Inmediata:** Migrar la barbería Flow Flow de hardcodeada a multi-tenant, con modelo Barbershop y tenant isolation.
+- **Meta de Mediano Plazo:** Permitir al super admin crear nuevas barberías desde el panel, con auto-provisioning.
+- **Propósito del Archivo:** SSOT para agentes de IA. Cada línea de código debe respetar tenancy isolation y Clean Architecture.
 
 ## 2. Technical Stack
-El sistema debe ser modular, escalable, ultra-rápido e inmune a la sobrecarga cognitiva.
 
-* **Frontend:** React (Última versión estable) + Vite (para builds instantáneos) + Tailwind CSS (para maquetación Bento Grid fluida).
-* **Backend:** FastAPI (Python, última versión) para un manejo asíncrono de alto rendimiento, documentación automática (OpenAPI/Swagger) y enrutamiento veloz.
-* **Base de Datos:** PostgreSQL (para almacenamiento analítico, leads, datos geográficos y configuraciones dinámicas).
-* **Optimización de Assets:** Imágenes en formato WebP/AVIF con Lazy Loading nativo.
+| Capa | Tecnología | Propósito |
+|---|---|---|
+| Frontend Landing | React 19 + Vite 8 + Tailwind v4 + Framer Motion | Landing dinámica por tenant |
+| Frontend Admin | React 19 + Vite 8 + React Router v7 | Panel multi-tenant con super admin |
+| Backend | FastAPI + Python 3.12 + SQLAlchemy 2.0 | API REST con middleware de tenant |
+| Base de Datos | PostgreSQL 16 | Tenant isolation por barbershop_id |
+| Infra | Docker + nginx | Wildcard subdominios |
+| Monorepo | npm workspaces | apps/ + packages/ |
 
----
+## 3. Multi-Tenant Architecture Rules
 
-## 3. Conversion Engineering Rules (Strict Constraints)
-Cualquier componente UI/UX generado por la IA debe cumplir rigurosamente con estas métricas analíticas:
+| Regla | Explicación |
+|---|---|
+| **Tenant Isolation** | barbershop_id en TODAS las tablas. Un tenant nunca ve datos de otro. |
+| **Resolución por subdominio** | Host header → slug → barbershop_id en request.state |
+| **Super Admin** | Usuario con barbershop_id = null. Acceso total a todas las barberías. |
+| **Auto-Provisioning** | Al crear Barbershop: schedule + sections + admin user + servicios base por defecto. |
+| **Landing dinámica** | Paleta de colores, logo, textos desde GET /api/tenant. Zero hardcode. |
+| **Branding Configurable** | Colores vía CSS custom properties desde BD. Admin elige con color picker. |
+| **Subdominios** | `[slug].ejeclickbarber.com` → landing. `admin.[slug].ejeclickbarber.com` → admin panel. |
 
-| Métrica / Parámetro | Restricción Técnica / Límite Estricto |
-| :--- | :--- |
-| **Tiempo de Carga (LCP)** | < 2.4 segundos (Compresión agresiva, scripts diferidos). |
-| **Densidad Visual** | Máximo 400 elementos en el DOM para evitar fatiga cognitiva. |
-| **Longitud de Copys** | Entre 250 y 725 palabras totales en toda la landing. |
-| **Campos de Formulario** | Máximo 3 a 4 campos (Captura progresiva: Nombre, Email, WhatsApp, Negocio). |
-| **Tráfico Objetivo** | Mobile-First (80%+ del tráfico estimado proviene de smartphones). |
+## 4. Database Schema (Core Entities)
 
----
+```
+Barbershop (slug, name, tagline, logo, palette JSON, social JSON, domain, contact)
+├── users.barbershop_id
+├── services.barbershop_id
+├── appointments.barbershop_id
+├── schedules.barbershop_id
+├── testimonials.barbershop_id
+├── gallery_images.barbershop_id
+├── day_overrides.barbershop_id
+└── time_blocks.barbershop_id
+```
 
-## 4. Persuasive Architecture & UI Components (AIDCA Model)
+## 5. Implementation Roadmap
 
-### Hero Section (Pliegue Inicial - Sin Scroll)
-* **Titular:** Enfoque directo en el beneficio (evitar jerga técnica abstracta). Ej: *"Tu negocio local en Internet, vendiendo en automático."*
-* **Subtítulo:** Mapeo semántico del valor (ej. *"Llevamos tecnología real a pequeñas empresas para que vendan y envíen en automático"*).
-* **CTA Principal:** Botón de alto contraste con texto orientado al beneficio (*"Quiero Digitalizar mi Negocio"*).
-* **Fricción Cero:** Texto adyacente: *"Sin contratos forzosos • Diagnóstico inicial gratuito"*.
+### Phase 1: Multi-Tenancy Core (Sprint 12)
+1. Barbershop model + barbershop_id en todas las tablas
+2. Tenant middleware (resolución por subdominio)
+3. Super admin (CRUD barberías, acceso sin restricciones)
+4. Auto-provisioning
+5. Endpoint público GET /api/tenant
 
-### Bento Grid Showcase
-* Sección modular usando CSS Grid para fragmentar las capacidades de EjeClick (Desarrollo Web, SEO Local, Campañas de Tráfico, Soporte Técnico) en bloques independientes y proporcionales.
-* Cada bloque combina micro-animaciones interactivas o capturas de interfaces reales en modo oscuro/claro nativo.
+### Phase 2: Dynamic Landing + Branding (Sprint 13)
+1. Landing renderiza todo desde API (sin hardcode)
+2. CSS custom properties desde paleta del tenant
+3. Admin > Apariencia: color pickers, logo upload
+4. Previsualización de cambios
 
-### Social Proof & Credibilidad (Sección Wrike / Aragon AI)
-* Tabla comparativa directa que contraste los problemas de las agencias tradicionales lentas vs. la agilidad y soporte directo de **EjeClick**.
-* Sección para alojar métricas contundentes o testimonios con validación social en tiempo real.
-
----
-
-## 5. Accessibility & Performance Standards (POUR)
-* **P - Perceptibilidad:** Contraste de color AA/AAA garantizado vía Tailwind. Texto alternativo estricto (`alt=""`) en cada recurso visual.
-* **O - Operabilidad:** Navegación por teclado 100% funcional. Formularios interactivos sin trampas de foco. Sticky-bar móvil para mantener el CTA accesible en todo momento.
-* **U - Comprensibilidad:** Validaciones de errores en tiempo real en los inputs del backend (FastAPI `Pydantic ValidationError` traducido a mensajes de interfaz claros).
-* **R - Robustez:** Código semántico HTML5 válido. Datos estructurados implementados mediante JSON-LD (`FAQPage` y `LocalBusiness` Schema) para indexación SEO inteligente.
-
----
-
-## 6. Implementation Roadmap (Phases for the Agent)
-
-### Phase 1: Backend & Data Architecture (FastAPI + Postgres)
-1. Configurar entorno FastAPI con soporte CORS para el frontend de React.
-2. Diseñar modelos de datos en PostgreSQL para la captura de leads, logs de analítica básica y geolocalización por IP.
-3. Crear endpoints asíncronos (`/api/v1/leads`) optimizados para respuestas en milisegundos.
-
-### Phase 2: Frontend Core & Bento Architecture (React + Tailwind)
-1. Setup de React con Vite y configuración de rutas limpias (recorrido cerrado sin menús de escape).
-2. Construcción de la interfaz móvil inteligente y layouts Bento Grid responsivos.
-3. Integración de animaciones ligeras disparadas por scroll.
-
-### Phase 3: Sincronización, Personalización Dinámica y Deploy
-1. Implementar scripts frontend para ajustar copys o números telefónicos según parámetros de URL o geolocalización (Message Match).
-2. Auditoría final de rendimiento con Lighthouse (Objetivo: >95% en Performance y Accesibilidad).
-3. Preparación para pruebas A/B de titulares en la fase post-lanzamiento.
+### Phase 3: Production (Sprint 14)
+1. nginx wildcard subdomain routing
+2. SSL wildcard (Cloudflare / Let's Encrypt)
+3. Docker compose multi-tenant
+4. DNS configuration

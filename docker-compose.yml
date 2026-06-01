@@ -1,8 +1,8 @@
 services:
   frontend:
     build:
-      context: ./apps/landing-ejeclick
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: apps/landing-ejeclick/Dockerfile
     ports:
       - "3000:80"
     depends_on:
@@ -46,5 +46,36 @@ services:
     depends_on:
       - db
 
+  admin-backend:
+    build:
+      context: ./apps/flow-flow/admin
+      dockerfile: backend/Dockerfile
+    ports:
+      - "8001:8000"
+    env_file:
+      - .env
+    environment:
+      - FLOW_DATABASE_URL=postgresql://flow_flow:flow_flow@db-flow:5432/flow_flow
+    depends_on:
+      db-flow:
+        condition: service_healthy
+
+  db-flow:
+    image: postgres:16-alpine
+    ports:
+      - "3004:5432"
+    environment:
+      - POSTGRES_USER=flow_flow
+      - POSTGRES_PASSWORD=flow_flow
+      - POSTGRES_DB=flow_flow
+    volumes:
+      - pgdata_flow:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U flow_flow"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
 volumes:
   pgdata:
+  pgdata_flow:

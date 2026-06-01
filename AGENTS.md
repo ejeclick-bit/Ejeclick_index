@@ -1,43 +1,45 @@
----
-description: >
-  Autonomous execution protocol for AI agents. Defines the agent loop,
-  validation gates, self-correction rules, human-in-the-loop boundaries,
-  and decision logging requirements.
-version: 1.0.0
----
+# 🚨 REGLAS OBLIGATORIAS — LEER ANTES DE CUALQUIER ACCIÓN
 
-# AGENTS.md — Autonomous Execution Protocol
+## 1. Paso Inmediato: Cargar el Skill Correcto
 
-This document defines the rules, guardrails, and boundaries that **any AI agent** must follow when operating on this repository. It is the single source of truth for agent autonomy.
+**Antes de leer cualquier archivo, antes de escribir cualquier código, la PRIMERA acción debe ser cargar el skill.**
 
----
+Usa esta tabla para decidir cuál cargar:
 
-## 1. Agent Loop (Execution Cycle)
+| Si la tarea trata sobre... | Carga este skill con `/skill` |
+|---|---|
+| React, componentes, UI, animaciones, 3D, Tailwind, Atomic Design | `react-expert` |
+| FastAPI, endpoints, modelos SQLAlchemy, schemas Pydantic | `fastapi-expert` |
+| PostgreSQL, migraciones, índices, optimización de queries | `dba-expert` |
+| Seguridad, CSP, CORS, rate limiting, auditoría | `security-expert` |
+| Tests Vitest, React Testing Library, cobertura | `testing-expert` |
+| Docker, CI/CD, nginx, deploy, monitoreo | `devops-expert` |
+| SEO, CRO, JSON-LD, Lighthouse, analítica | `seo-cro-expert` |
+| Decisiones arquitectónicas, trade-offs, ADRs | `software-architect` |
+| Clean Code, SOLID, DRY, refactorización, calidad, errores | `clean-code-expert` |
 
-Every task must follow this deterministic loop. No shortcuts.
+Si la tarea NO coincide con ningún skill → leer `.agent/context/project.md`.
 
-```mermaid
-flowchart TD
-    A[Receive Task] --> B[Read context/task.md]
-    B --> C{Task matches a skill?}
-    C -->|Yes| D[Load skills/name/SKILL.md]
-    C -->|No| E[Read context/project.md]
-    D --> F[Plan: define files to create/modify]
-    E --> F
-    F --> G[Implement changes]
-    G --> H[Run Validation Gate]
-    H -->|PASS| I[Log decision if architectural]
-    H -->|FAIL| J{Retry count < 3?}
-    J -->|Yes| K[Self-correct and retry]
-    K --> G
-    J -->|No| L[STOP — Request human help]
-    I --> M[Update context/task.md]
-    M --> N[Commit with conventional message]
+## 2. Ciclo de Ejecución Obligatorio (sin shortcuts)
+
+```
+1. CARGAR  → el skill de la tabla de arriba (con /skill)
+2. LEER    → .agent/context/task.md
+3. PLAN    → definir archivos a modificar
+4. IMPLEMENTAR
+5. VALIDAR → npm run typecheck && npm run lint && npm test && npm run build
+             Si falla → máximo 3 intentos de corrección
+             Si no puedes → STOP y pide ayuda
+6. ADR     → si la decisión es arquitectónica, crear ADR
+7. UPDATE  → .agent/context/task.md
+8. COMMIT  → mensaje convencional
 ```
 
+**Incumplir este ciclo = falla del sistema. No hay excepciones.**
+
 ---
 
-## 2. Validation Gate
+## 3. Validation Gate
 
 Before marking **any** task as complete, the agent **must** run all of the following commands and verify they pass:
 

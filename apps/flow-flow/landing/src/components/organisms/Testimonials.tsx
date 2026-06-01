@@ -1,9 +1,17 @@
+import { useState, useEffect } from 'react';
 import { Container } from '../atoms/Container';
 import { Badge } from '../atoms/Badge';
 import { TestimonialCard } from '../molecules/TestimonialCard';
-import { SITE } from '../../lib/data';
+import { api, type Testimonial } from '../../lib/api';
 
 export function Testimonials() {
+  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    api.testimonials().then(setTestimonials).finally(() => setLoading(false));
+  }, []);
+
   return (
     <section id="testimonios" className="bg-brand-dark py-24">
       <Container>
@@ -17,11 +25,17 @@ export function Testimonials() {
           </p>
         </div>
 
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {SITE.testimonials.map((t, i) => (
-            <TestimonialCard key={t.author} {...t} index={i} />
-          ))}
-        </div>
+        {loading ? (
+          <p className="text-center text-neutral-500">Cargando testimonios...</p>
+        ) : testimonials.length === 0 ? (
+          <p className="text-center text-neutral-500">Próximamente</p>
+        ) : (
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {testimonials.map((t, i) => (
+              <TestimonialCard key={t.id} quote={t.quote} author={t.author} role={t.role} index={i} />
+            ))}
+          </div>
+        )}
       </Container>
     </section>
   );

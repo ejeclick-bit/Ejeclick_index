@@ -29,18 +29,21 @@ packages/               # Librerias compartidas (pendiente)
 | `context/task.md` | `.agent/context/` | Monorepo backlog |
 | `context/decisions/` | `.agent/context/` | ADRs |
 
-## Skills
+## Skills (cargar antes de cada tarea)
 
-| Task | Skill |
-|---|---|
-| Architecture decisions | `.claude/skills/software-architect/SKILL.md` |
-| React, UI, 3D | `.claude/skills/react-expert/SKILL.md` |
-| FastAPI, endpoints | `.claude/skills/fastapi-expert/SKILL.md` |
-| PostgreSQL, DB | `.claude/skills/dba-expert/SKILL.md` |
-| Security | `.claude/skills/security-expert/SKILL.md` |
-| Tests | `.claude/skills/testing-expert/SKILL.md` |
-| Docker, CI/CD | `.claude/skills/devops-expert/SKILL.md` |
-| SEO, CRO | `.claude/skills/seo-cro-expert/SKILL.md` |
+| Task | Skill | Cómo cargar |
+|---|---|---|
+| Architecture decisions | `software-architect` | `/skill software-architect` o leer `.claude/skills/software-architect/SKILL.md` |
+| Clean Code, SOLID, DRY, quality | `clean-code-expert` | Leer `.claude/skills/clean-code-expert/SKILL.md` |
+| React, UI, 3D | `react-expert` | `/skill react-expert` o leer `.claude/skills/react-expert/SKILL.md` |
+| FastAPI, endpoints | `fastapi-expert` | `/skill fastapi-expert` o leer `.claude/skills/fastapi-expert/SKILL.md` |
+| PostgreSQL, DB | `dba-expert` | `/skill dba-expert` o leer `.claude/skills/dba-expert/SKILL.md` |
+| Security | `security-expert` | `/skill security-expert` o leer `.claude/skills/security-expert/SKILL.md` |
+| Tests | `testing-expert` | `/skill testing-expert` o leer `.claude/skills/testing-expert/SKILL.md` |
+| Docker, CI/CD | `devops-expert` | `/skill devops-expert` o leer `.claude/skills/devops-expert/SKILL.md` |
+| SEO, CRO | `seo-cro-expert` | `/skill seo-cro-expert` o leer `.claude/skills/seo-cro-expert/SKILL.md` |
+
+Si `/skill` no reconoce un skill, leer el archivo `SKILL.md` directamente desde `.claude/skills/<nombre>/SKILL.md`.
 
 ## Commands
 

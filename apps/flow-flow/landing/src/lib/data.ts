@@ -16,31 +16,10 @@ export const SITE = {
     tiktok: 'https://tiktok.com/@barberiaflowflow',
   },
   nav: [
+    { label: 'Reservar', href: '#reservas' },
+    { label: 'Cancelar Cita', href: '#cancelar' },
     { label: 'Servicios', href: '#servicios' },
     { label: 'Galería', href: '#galeria' },
     { label: 'Testimonios', href: '#testimonios' },
-    { label: 'Contacto', href: '#contacto' },
   ],
-  services: [
-    { icon: '✂️', title: 'Corte Clásico', description: 'Corte con tijera y máquina, acabado perfecto.', price: '$25.000' },
-    { icon: '💈', title: 'Corte Moderno', description: 'Degradados, texturas y estilos contemporáneos.', price: '$35.000' },
-    { icon: '🧔', title: 'Arreglo de Barba', description: 'Perfilado con navaja, toalla caliente y crema.', price: '$15.000' },
-    { icon: '⭐', title: 'Corte + Barba', description: 'Combo completo de corte y arreglo de barba.', price: '$40.000' },
-    { icon: '👑', title: 'Corte Premium', description: 'Corte + barba + lavado + masaje capilar.', price: '$55.000' },
-    { icon: '🧒', title: 'Corte Infantil', description: 'Corte para niños hasta 12 años.', price: '$18.000' },
-  ],
-  testimonials: [
-    { quote: 'Desde que voy a Flow Flow no dejo que nadie más me corte. La atención y el resultado son increíbles.', author: 'Carlos M.', role: 'Cliente habitual' },
-    { quote: 'El mejor degradado de Medellín. Ambiente relajado, música buena y profesionales.', author: 'Andrés P.', role: 'Cliente 2 años' },
-    { quote: 'Llevé a mi hijo por primera vez y salió feliz. El trato con los niños es excelente.', author: 'María G.', role: 'Madre de familia' },
-    { quote: 'El servicio premium es otra experiencia. Corte, barba y masaje capilar — sales renovado.', author: 'Felipe R.', role: 'Cliente premium' },
-  ],
-  gallery: [
-    { src: 'https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=400&q=80&auto=format', alt: 'Corte degradado' },
-    { src: 'https://images.unsplash.com/photo-1596728325488-58c87691e9af?w=400&q=80&auto=format', alt: 'Arreglo de barba' },
-    { src: 'https://placehold.co/400x400/1a1a1a/c9953c?text=Barberia', alt: 'Barbería interior' },
-    { src: 'https://placehold.co/400x400/1a1a1a/c9953c?text=Corte+Clasico', alt: 'Corte con navaja' },
-    { src: 'https://placehold.co/400x400/1a1a1a/c9953c?text=Estilo', alt: 'Detalle de barbería' },
-    { src: 'https://images.unsplash.com/photo-1621607512214-68297480165e?w=400&q=80&auto=format', alt: 'Estilo moderno' },
-  ],
-} as const;
+};

@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
-import { Calendar, Scissors, Clock, Users } from 'lucide-react';
-import { api, type Appointment } from '../../lib/api';
+import { useState, useEffect, useCallback } from 'react';
+import { Calendar, Scissors, Clock, Users, RefreshCw } from 'lucide-react';
+import { api, type Appointment, ApiError } from '../../lib/api';
 import { cn } from '../../utils/cn';
 
 const statusColors: Record<string, string> = {
@@ -17,13 +17,41 @@ const statusLabels: Record<string, string> = {
 export function DashboardPage() {
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
-  useEffect(() => {
-    api.getDashboard().then(setData).finally(() => setLoading(false));
+  const load = useCallback(() => {
+    setLoading(true);
+    setError('');
+    api.getDashboard()
+      .then(setData)
+      .catch((e: ApiError) => setError(e.message || 'Error al cargar el dashboard'))
+      .finally(() => setLoading(false));
   }, []);
 
-  if (loading) return <p className="text-neutral-400">Cargando...</p>;
-  if (!data) return <p className="text-red-400">Error al cargar</p>;
+  useEffect(() => { load(); }, [load]);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <div className="h-8 w-8 animate-spin rounded-full border-2 border-brand-gold border-t-transparent" role="status">
+          <span className="sr-only">Cargando...</span>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="text-center py-20">
+        <p className="text-red-400 mb-4" role="alert">{error}</p>
+        <button onClick={load} className="inline-flex items-center gap-2 rounded-lg bg-brand-gold px-4 py-2 text-sm font-medium text-brand-dark hover:bg-brand-gold-light transition-colors">
+          <RefreshCw size={16} /> Reintentar
+        </button>
+      </div>
+    );
+  }
+
+  if (!data) return null;
 
   const cards = [
     { icon: Calendar, label: 'Citas Hoy', value: data.today_appointments, color: 'text-brand-gold' },
@@ -53,7 +81,7 @@ export function DashboardPage() {
       <div className="rounded-xl border border-neutral-800 bg-brand-card p-5">
         <h3 className="font-semibold text-white mb-4">Próximas Citas</h3>
         {data.upcoming_appointments.length === 0 ? (
-          <p className="text-sm text-neutral-500">No hay citas próximas</p>
+          <p className="text-sm text-neutral-500 py-8 text-center">No hay citas próximas</p>
         ) : (
           <div className="space-y-3">
             {data.upcoming_appointments.map((a: Appointment) => (

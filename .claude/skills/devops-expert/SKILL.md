@@ -4,23 +4,9 @@ description: >
   Especialista en DevOps e infraestructura para EjeClick. Configura Docker,
   CI/CD con GitHub Actions, nginx, SSL, deploy a producción, backups de BD
   y monitoreo de infraestructura.
-version: 1.0.0
-triggers:
-  - docker
-  - docker compose
-  - ci/cd
-  - github actions
-  - nginx
-  - ssl / https
-  - deploy
-  - produccion
-  - backup
-  - monitoreo infra
-  - devops
-related_skills:
-  - security-expert
-  - dba-expert
-  - fastapi-expert
+when_to_use: >
+  docker, docker compose, ci/cd, github actions, nginx, ssl, https,
+  deploy, produccion, backup, monitoreo infra, devops
 ---
 
 # Skill: devops-expert

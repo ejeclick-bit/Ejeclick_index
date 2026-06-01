@@ -42,3 +42,13 @@ __pycache__/
 
 # SQLite databases
 *.db
+
+# Project env files
+apps/**/.env
+
+# Build artifacts (compiled JS from TS)
+apps/**/*.js
+!apps/**/eslint.config.js
+
+# TypeScript build info
+*.tsbuildinfo

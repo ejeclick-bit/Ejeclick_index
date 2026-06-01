@@ -7,6 +7,16 @@ export default defineConfig({
   server: {
     host: true,
     port: 3002,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8001',
+        changeOrigin: true,
+      },
+      '/uploads': {
+        target: 'http://localhost:8001',
+        changeOrigin: true,
+      },
+    },
   },
   resolve: {
     alias: {

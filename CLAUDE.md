@@ -1,6 +1,6 @@
-# CLAUDE.md — EjeClick Monorepo Orchestrator
-
 @AGENTS.md
+
+---
 
 ## Project
 
@@ -23,7 +23,7 @@ packages/                  # Librerías compartidas (pendiente)
 |---|---|---|
 | `apps/landing-ejeclick` | React 19 + Vite 8 + FastAPI + Postgres | `npm run dev -w apps/landing-ejeclick` |
 | `apps/flow-flow/landing` | React 19 + Vite 8 + Tailwind v4 | `npm run dev -w apps/flow-flow/landing` |
-| `apps/flow-flow/admin` | React 19 + Vite 8 + FastAPI + SQLite | `npm run dev -w apps/flow-flow/admin` + `npm run dev:admin:backend` |
+| `apps/flow-flow/admin` | React 19 + Vite 8 + FastAPI + PostgreSQL | `npm run dev -w apps/flow-flow/admin` + `npm run dev:admin:backend` |
 
 ## Commands (from root)
 
@@ -58,6 +58,7 @@ When adding a new app, set its port in `vite.config.ts` under `server.port` and 
 | Task type | Skill location |
 |---|---|
 | Architecture, decisions, trade-offs | `.claude/skills/software-architect/SKILL.md` |
+| Clean Code, SOLID, DRY, refactoring, error handling | `.claude/skills/clean-code-expert/SKILL.md` |
 | React, UI, 3D, animations | `.claude/skills/react-expert/SKILL.md` |
 | FastAPI, endpoints, models | `.claude/skills/fastapi-expert/SKILL.md` |
 | PostgreSQL, DB, migrations | `.claude/skills/dba-expert/SKILL.md` |

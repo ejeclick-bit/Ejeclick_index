@@ -7,7 +7,7 @@ See root CLAUDE.md for shared rules, skills, context references, and protocol.
 ## Stack
 
 - **Frontend:** React 19 + Vite 8 + Tailwind v4 + React Router v7
-- **Backend:** FastAPI + SQLAlchemy + SQLite + JWT auth
+- **Backend:** FastAPI + SQLAlchemy + PostgreSQL + JWT auth
 - **Port:** Frontend :3003, Backend :8001
 
 ## Credenciales por defecto
@@ -33,7 +33,7 @@ npm run dev:admin             # Frontend :3003
 ```
 backend/app/
   main.py         # App + seed data
-  database.py     # SQLAlchemy + SQLite
+  database.py     # SQLAlchemy + PostgreSQL (SQLite fallback sin Docker)
   models.py       # User, Service, Appointment, Schedule, GalleryImage
   schemas.py      # Pydantic
   auth.py         # JWT

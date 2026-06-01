@@ -64,7 +64,47 @@
 *   [x] **Story 8.5**: Refactorizar `docker-compose.yml` y Dockerfile para soportar el contexto del Monorepo.
 *   [x] **Story 8.6**: Distribuir `CLAUDE.md` de manera jerárquica (Root = Orchestrator, apps/ = Workers).
 
+## SPRINT 9: Flow Flow — Barbería Ecosystem
+*   [x] **Story 9.1**: Crear landing Flow Flow pública (Hero, Servicios, Galería, Testimonios, Contacto).
+*   [x] **Story 9.2**: Crear admin panel Flow Flow (login, dashboard, servicios CRUD, citas, horarios, galería).
+*   [x] **Story 9.3**: Migrar admin de SQLite a PostgreSQL.
+*   [x] **Story 9.4**: HashRouter + BackTrap para navegación mobile sin salir de la app.
+*   [x] **Story 9.5**: Empaquetar landing + admin bajo `apps/flow-flow/`.
+
+## SPRINT 10: Agent Protocol Fix
+*   [x] **Story 10.1**: Mover agent loop al inicio de CLAUDE.md como instrucción obligatoria.
+*   [x] **Story 10.2**: Remover YAML frontmatter de AGENTS.md (no aporta valor al agente).
+*   [x] **Story 10.3**: Documentar ADR-006 (Agent Loop como primera instrucción).
+*   [x] **Story 10.4**: Auditoría de seguridad y calidad del admin panel (CORS, logging, rate limiting, validación upload, tests backend).
+*   [x] **Story 10.5**: Integración completa admin ↔ landing: servicios, galería y testimonios desde API.
+*   [x] **Story 10.6**: Agregar gestión de testimonios en admin panel (CRUD + ruta).
+*   [x] **Story 10.7**: Categorías de imágenes en galería (hero, services, gallery) con selector en admin y filtro en landing.
+*   [x] **Story 10.8**: Booking widget en landing (calendario + horarios + email confirmación + conflict check).
+*   [x] **Story 10.9**: Sistema de disponibilidad dinámica (DayOverrides + TimeBlocks + calendario admin).
+*   [x] **Story 10.10**: Slots cada 30 minutos + endpoint cancelación de citas (1h límite) + formulario cancelar en landing.
+
+## SPRINT 11: Skill Frontmatter Standardization
+*   [x] **Story 11.1**: Migrar frontmatter de 9 skills al estándar oficial de Anthropic (remover `version`, `triggers`, `related_skills`; agregar `when_to_use`).
+*   [x] **Story 11.2**: Documentar ADR-007 (Skill Frontmatter Standardization).
+
+## SPRINT 12: Multi-Tenant SaaS Platform
+*   [x] **Story 12.1**: Crear modelo `Barbershop` con slug, name, tagline, logo, palette JSON, social JSON, contact.
+*   [x] **Story 12.2**: Agregar `barbershop_id` FK a todas las tablas existentes (services, appointments, schedules, testimonials, gallery_images, day_overrides, time_blocks, users).
+*   [x] **Story 12.3**: Crear middleware de resolución de tenant (subdominio + X-Tenant-Slug header + default).
+*   [x] **Story 12.4**: Crear dependency `get_tenant_id()` para FastAPI (deps.py).
+*   [x] **Story 12.5**: Crear rol `super_admin` (barbershop_id=null) con seed data.
+*   [x] **Story 12.6**: Endpoint público `GET /api/tenant` — devuelve nombre, tagline, logo, palette.
+*   [x] **Story 12.7**: Endpoint admin `PUT /api/tenant/branding` — guarda paleta, logo, datos.
+*   [x] **Story 12.8**: Auto-provisioning: al crear Barbershop, schedule + sections + admin + 6 servicios base.
+*   [x] **Story 12.9**: Landing 100% dinámica: nombre, tagline, logo, colores desde GET /api/tenant.
+*   [x] **Story 12.10**: CSS custom properties inyectadas desde paleta del tenant (sin colores hardcodeados).
+*   [x] **Story 12.11**: Admin > página "Apariencia" con color pickers + formulario de negocio + vista previa.
+*   [x] **Story 12.12**: Gestión de usuarios (super admin crea admin manual, admin crea barberos).
+*   [x] **Story 12.13**: Seguridad de contraseñas (validación backend + frontend, mínimo 8 chars, mayúscula, minúscula, número).
+*   [x] **Story 12.14**: Documentar ADR-008 + actualizar project.md + mission.md + task.md.
+
 ## BACKLOG (Futuro)
+*   [ ] Extraer `ui-components` a un package compartido.
 *   [ ] Extraer `ui-components` a un package compartido.
 *   [ ] SEO/CRO: Google Analytics 4, Meta Pixel, sitemap.xml, robots.txt, Message Match.
 *   [ ] Pruebas A/B de titulares y CTAs.

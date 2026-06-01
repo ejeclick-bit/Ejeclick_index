@@ -4,23 +4,10 @@ description: >
   Especialista en seguridad para EjeClick. Audita y configura Content
   Security Policy, headers HTTP, CORS, rate limiting, dependencias, y
   prepara el checklist pre-deploy de seguridad.
-version: 1.0.0
-triggers:
-  - seguridad
-  - csp
-  - content security policy
-  - cors
-  - rate limiting
-  - auditoria seguridad
-  - pre-deploy
-  - headers http
-  - hsts
-  - dependencias vulnerables
-  - npm audit
-related_skills:
-  - devops-expert
-  - fastapi-expert
-  - react-expert
+when_to_use: >
+  seguridad, csp, content security policy, cors, rate limiting,
+  auditoria seguridad, pre-deploy, headers http, hsts,
+  dependencias vulnerables, npm audit
 ---
 
 # Skill: security-expert

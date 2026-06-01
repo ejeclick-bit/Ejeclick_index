@@ -3,22 +3,10 @@ name: react-expert
 description: >
   Especialista en frontend React para EjeClick. Crea y mantiene componentes
   Atomic Design con TypeScript estricto, animaciones, 3D y accesibilidad WCAG.
-version: 1.0.0
-triggers:
-  - componente react
-  - UI / UX
-  - animacion
-  - three.js / 3d
-  - atomic design
-  - framer motion
-  - tailwind
-  - wcag / accesibilidad
-  - formulario react
-  - performance frontend
-related_skills:
-  - testing-expert
-  - security-expert
-  - seo-cro-expert
+when_to_use: >
+  componente react, UI, UX, animacion, three.js, 3d, atomic design,
+  framer motion, tailwind, wcag, accesibilidad, formulario react,
+  performance frontend
 ---
 
 # Skill: react-expert

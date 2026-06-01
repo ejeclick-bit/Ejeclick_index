@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { api, type ScheduleDay } from '../../lib/api';
+import { cn } from '../../utils/cn';
 
 const dayNames = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
 
@@ -67,6 +68,4 @@ export function SchedulePage() {
   );
 }
 
-function cn(...classes: (string | boolean | undefined | null)[]) {
-  return classes.filter(Boolean).join(' ');
-}
+

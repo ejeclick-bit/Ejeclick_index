@@ -1,9 +1,17 @@
+import { useState, useEffect } from 'react';
 import { Container } from '../atoms/Container';
 import { Badge } from '../atoms/Badge';
 import { GalleryImage } from '../molecules/GalleryImage';
-import { SITE } from '../../lib/data';
+import { api, type GalleryImage as GalleryItem } from '../../lib/api';
 
 export function Gallery() {
+  const [images, setImages] = useState<GalleryItem[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    api.gallery('gallery').then(setImages).finally(() => setLoading(false));
+  }, []);
+
   return (
     <section id="galeria" className="bg-brand-surface py-24">
       <Container>
@@ -17,11 +25,23 @@ export function Gallery() {
           </p>
         </div>
 
-        <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3">
-          {SITE.gallery.map((img, i) => (
-            <GalleryImage key={img.src} {...img} index={i} />
-          ))}
-        </div>
+        {loading ? (
+          <p className="text-center text-neutral-500">Cargando galería...</p>
+        ) : images.length === 0 ? (
+          <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3">
+            {[...Array(3)].map((_, i) => (
+              <div key={i} className="aspect-square rounded-lg bg-neutral-800 flex items-center justify-center text-neutral-600 text-sm">
+                Próximamente
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3">
+            {images.map((img, i) => (
+              <GalleryImage key={img.id} src={img.url} alt={img.alt_text} index={i} />
+            ))}
+          </div>
+        )}
       </Container>
     </section>
   );

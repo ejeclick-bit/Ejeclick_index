@@ -4,29 +4,12 @@ description: >
   Arquitecto de software para EjeClick. Gobierna decisiones arquitectónicas,
   trade-offs, consistencia del sistema, ADRs, y la interacción entre skills.
   No resuelve tareas tácticas — resuelve problemas estructurales.
-version: 1.0.0
-triggers:
-  - arquitectura / architecture
-  - decision / decision
-  - trade-off
-  - escalabilidad / scalability
-  - refactor / refactorizacion
-  - estructura / structure
-  - patron / pattern
-  - adr
-  - costo cloud / cloud cost
-  - rendimiento / performance
-  - migracion / migration
-  - consistencia / consistency
-  - deuda tecnica / technical debt
-related_skills:
-  - react-expert
-  - fastapi-expert
-  - dba-expert
-  - security-expert
-  - devops-expert
-  - testing-expert
-  - seo-cro-expert
+when_to_use: >
+  arquitectura, architecture, decision, trade-off, escalabilidad,
+  scalability, refactor, estructura, structure, patron, pattern,
+  adr, costo cloud, cloud cost, rendimiento, performance,
+  migracion, migration, consistencia, consistency,
+  deuda tecnica, technical debt
 ---
 
 # Skill: software-architect
@@ -171,7 +154,7 @@ Cuando una decisión arquitectónica afecta múltiples skills:
 |---|---|---|
 | Frontend framework | React 19 + Vite 8 | Solo si hay caso de negocio fuerte |
 | Backend framework | FastAPI + SQLAlchemy | Solo si hay caso de negocio fuerte |
-| Base de datos | PostgreSQL 16 | Sí, evaluar según carga futura |
+| Base de datos | PostgreSQL 16 (todos los proyectos) | No |
 | Despliegue | Docker Compose + VPS | Sí, Cloud Run / Fly.io evaluables |
 | Cache | Ninguna implementada | Pendiente si hay necesidad |
 | Colas / Jobs | Ninguna implementada | Pendiente si hay necesidad |

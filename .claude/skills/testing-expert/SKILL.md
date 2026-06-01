@@ -4,20 +4,9 @@ description: >
   Especialista en testing para EjeClick. Escribe y mantiene tests unitarios
   y de integración con Vitest + React Testing Library para componentes React
   y APIs de FastAPI. Asegura cobertura mínima del 80%.
-version: 1.0.0
-triggers:
-  - test / testing
-  - vitest
-  - react testing library
-  - test unitario
-  - test integracion
-  - cobertura
-  - msw
-  - mock api
-  - componente test
-related_skills:
-  - react-expert
-  - fastapi-expert
+when_to_use: >
+  test, testing, vitest, react testing library, test unitario,
+  test integracion, cobertura, msw, mock api, componente test
 ---
 
 # Skill: testing-expert

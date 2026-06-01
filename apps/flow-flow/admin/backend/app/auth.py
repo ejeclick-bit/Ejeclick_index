@@ -1,3 +1,5 @@
+import os
+import re
 from datetime import datetime, timedelta, timezone
 from jose import JWTError, jwt
 import bcrypt as _bcrypt
@@ -7,7 +9,7 @@ from sqlalchemy.orm import Session
 from .database import get_db
 from .models import User
 
-SECRET_KEY = "barberia-flow-flow-secret-key-change-in-production"
+SECRET_KEY = os.getenv("FLOW_JWT_SECRET", "dev-secret-change-in-production")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE = 24
 
@@ -42,3 +44,21 @@ def get_current_user(
     if not user or not user.is_active:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Usuario inactivo")
     return user
+
+
+FORBIDDEN_PASSWORDS = {"12345678", "password", "admin123", "contraseña", "abc12345", "qwerty123", "123456789", "barberia123"}
+
+
+def validate_password(password: str) -> tuple[bool, str]:
+    errors = []
+    if len(password) < 8:
+        errors.append("Mínimo 8 caracteres")
+    if not re.search(r"[A-Z]", password):
+        errors.append("Debe contener al menos una mayúscula")
+    if not re.search(r"[a-z]", password):
+        errors.append("Debe contener al menos una minúscula")
+    if not re.search(r"\d", password):
+        errors.append("Debe contener al menos un número")
+    if password.lower() in FORBIDDEN_PASSWORDS:
+        errors.append("Contraseña muy común o insegura")
+    return (len(errors) == 0, "; ".join(errors))

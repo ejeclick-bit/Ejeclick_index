@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
 import { api } from './api';
 
-interface User { id: number; username: string; name: string; role: string; }
+interface User { id: number; username: string; name: string; role: string; barbershop_slug?: string; }
 
 interface AuthContextType {
   user: User | null;
@@ -28,6 +28,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setToken(res.access_token);
     const me = await api.getMe();
     setUser(me);
+    if (me.barbershop_slug) {
+      localStorage.setItem('tenantSlug', me.barbershop_slug);
+      localStorage.removeItem('superAdminViewing');
+    }
   }
 
   function logout() {

@@ -2,10 +2,12 @@ from datetime import date
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from sqlalchemy import func
+from typing import Optional
 from ..database import get_db
 from ..models import Appointment, Service, User
 from ..schemas import DashboardResponse, AppointmentResponse
 from ..auth import get_current_user
+from ..deps import get_tenant_id
 
 router = APIRouter(prefix="/api/dashboard", tags=["dashboard"])
 
@@ -14,26 +16,35 @@ router = APIRouter(prefix="/api/dashboard", tags=["dashboard"])
 def get_dashboard(
     db: Session = Depends(get_db),
     user: User = Depends(get_current_user),
+    tenant_id: Optional[int] = Depends(get_tenant_id),
 ):
     today = str(date.today())
 
-    today_count = db.query(func.count(Appointment.id)).filter(
+    def filtered(q):
+        return q.filter(Appointment.barbershop_id == tenant_id) if tenant_id else q
+
+    today_count = filtered(db.query(func.count(Appointment.id)).filter(
         Appointment.date == today
-    ).scalar() or 0
+    )).scalar() or 0
 
-    pending_count = db.query(func.count(Appointment.id)).filter(
+    pending_count = filtered(db.query(func.count(Appointment.id)).filter(
         Appointment.status == "pending"
-    ).scalar() or 0
+    )).scalar() or 0
 
-    service_count = db.query(func.count(Service.id)).filter(
-        Service.is_active == True
-    ).scalar() or 0
+    query = db.query(func.count(Service.id)).filter(Service.is_active == True)
+    if tenant_id:
+        query = query.filter(Service.barbershop_id == tenant_id)
+    service_count = query.scalar() or 0
 
-    client_count = db.query(func.count(func.distinct(Appointment.client_phone))).scalar() or 0
+    client_q = db.query(func.count(func.distinct(Appointment.client_phone)))
+    if tenant_id:
+        client_q = client_q.filter(Appointment.barbershop_id == tenant_id)
+    client_count = client_q.scalar() or 0
 
-    upcoming = db.query(Appointment).filter(
-        Appointment.date >= today
-    ).order_by(Appointment.date, Appointment.time).limit(10).all()
+    up_q = db.query(Appointment).filter(Appointment.date >= today)
+    if tenant_id:
+        up_q = up_q.filter(Appointment.barbershop_id == tenant_id)
+    upcoming = up_q.order_by(Appointment.date, Appointment.time).limit(10).all()
 
     return DashboardResponse(
         today_appointments=today_count,

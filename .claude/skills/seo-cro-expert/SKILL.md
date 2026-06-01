@@ -4,25 +4,10 @@ description: >
   Especialista en SEO técnico y optimización de conversión (CRO) para
   EjeClick. Optimiza meta tags, schemas JSON-LD, modelo AIDCA, Lighthouse
   scores, analítica (GA4, Meta Pixel) y pruebas A/B.
-version: 1.0.0
-triggers:
-  - seo
-  - cro
-  - conversion
-  - json-ld / schema
-  - open graph
-  - twitter card
-  - lighthouse
-  - analitica / analytics
-  - ga4 / google analytics
-  - meta pixel
-  - a/b testing
-  - meta tags
-  - copy / titular / cta
-  - aidca
-related_skills:
-  - react-expert
-  - devops-expert
+when_to_use: >
+  seo, cro, conversion, json-ld, schema, open graph, twitter card,
+  lighthouse, analitica, analytics, ga4, google analytics,
+  meta pixel, a/b testing, meta tags, copy, titular, cta, aidca
 ---
 
 # Skill: seo-cro-expert
