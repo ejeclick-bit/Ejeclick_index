@@ -1,3 +1,4 @@
+import { MainLayout } from '../templates/MainLayout';
 import { Hero } from '../organisms/Hero';
 import { Services } from '../organisms/Services';
 import { Gallery } from '../organisms/Gallery';
@@ -7,13 +8,13 @@ import { CancelBooking } from '../organisms/CancelBooking';
 
 export function LandingPage() {
   return (
-    <>
+    <MainLayout>
       <Hero />
       <Contact />
       <CancelBooking />
       <Services />
       <Gallery />
       <Testimonials />
-    </>
+    </MainLayout>
   );
 }

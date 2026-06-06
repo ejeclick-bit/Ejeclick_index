@@ -103,6 +103,11 @@
 *   [x] **Story 12.13**: Seguridad de contraseñas (validación backend + frontend, mínimo 8 chars, mayúscula, minúscula, número).
 *   [x] **Story 12.14**: Documentar ADR-008 + actualizar project.md + mission.md + task.md.
 
+## SPRINT 13: Dynamic Landing + Branding
+*   [x] **Story 13.1**: Landing 100% dinámica: nombre, tagline, logo, colores y horarios desde API.
+*   [x] **Story 13.2**: CSS custom properties inyectadas desde paleta del tenant (sin colores hardcodeados).
+*   [ ] **Story 13.3**: Admin > página "Apariencia" con color pickers + formulario de negocio + vista previa.
+
 ## BACKLOG (Futuro)
 *   [ ] Extraer `ui-components` a un package compartido.
 *   [ ] Extraer `ui-components` a un package compartido.

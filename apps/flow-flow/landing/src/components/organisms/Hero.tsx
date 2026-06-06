@@ -11,8 +11,8 @@ export function Hero() {
   return (
     <section className="relative flex min-h-screen items-center overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-brand-dark via-brand-dark to-brand-surface" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--brand-primary)_0%,_transparent_50%)] opacity-20" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_var(--brand-primary)_0%,_transparent_50%)] opacity-10" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--color-brand-gold)_0%,_transparent_50%)] opacity-20" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_var(--color-brand-gold)_0%,_transparent_50%)] opacity-10" />
 
       <Container className="relative z-10 pt-24">
         <div className="mx-auto max-w-3xl text-center">

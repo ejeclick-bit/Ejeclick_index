@@ -1,12 +1,21 @@
+import { useState, useEffect } from 'react';
 import { Container } from '../atoms/Container';
 import { Badge } from '../atoms/Badge';
 import { Button } from '../atoms/Button';
 import { BookingWidget } from '../organisms/BookingWidget';
 import { useTenant } from '../../lib/tenant';
+import { api, type Schedule } from '../../lib/api';
+
+const dayNames = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
 
 export function Contact() {
   const { tenant } = useTenant();
   const t = tenant;
+  const [schedule, setSchedule] = useState<Schedule[]>([]);
+
+  useEffect(() => {
+    api.schedule().then(setSchedule);
+  }, []);
 
   return (
     <section id="reservas" className="bg-brand-surface py-24">
@@ -27,11 +36,23 @@ export function Contact() {
               <h3 className="font-semibold text-white">📍 Ubicación</h3>
               <p className="mt-1 text-sm text-neutral-400">{t?.address || ''}</p>
             </div>
+            
             <div className="rounded-xl border border-neutral-800 bg-brand-dark p-5">
               <h3 className="font-semibold text-white">🕐 Horarios</h3>
-              <p className="mt-1 text-sm text-neutral-400">Lun - Sáb: 9:00 AM - 8:00 PM</p>
-              <p className="text-sm text-neutral-400">Dom: 10:00 AM - 5:00 PM</p>
+              <div className="mt-2 space-y-1">
+                {schedule.length > 0 ? (
+                  schedule.map((s) => (
+                    <div key={s.day_of_week} className="flex justify-between text-sm text-neutral-400">
+                      <span>{dayNames[s.day_of_week]}</span>
+                      <span>{s.is_active ? `${s.open_time} - ${s.close_time}` : 'Cerrado'}</span>
+                    </div>
+                  ))
+                ) : (
+                  <p className="text-sm text-neutral-500">Cargando horarios...</p>
+                )}
+              </div>
             </div>
+
             <div className="rounded-xl border border-neutral-800 bg-brand-dark p-5">
               <h3 className="font-semibold text-white">📱 Contacto Directo</h3>
               <p className="mt-1 text-sm text-neutral-400">{t?.phone || ''}</p>

@@ -3,13 +3,14 @@ import { Calendar as CalendarIcon } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Calendar } from '../molecules/Calendar';
 import { Button } from '../atoms/Button';
-import { api, type Service } from '../../lib/api';
+import { api, type Service, type Schedule } from '../../lib/api';
 
 type Step = 'service' | 'date' | 'time' | 'info' | 'confirm';
 
 export function BookingWidget() {
   const [step, setStep] = useState<Step>('service');
   const [services, setServices] = useState<Service[]>([]);
+  const [schedule, setSchedule] = useState<Schedule[]>([]);
   const [selectedService, setSelectedService] = useState<Service | null>(null);
   const [selectedDate, setSelectedDate] = useState('');
   const [timeSlots, setTimeSlots] = useState<string[]>([]);
@@ -21,19 +22,27 @@ export function BookingWidget() {
 
   const [form, setForm] = useState({ name: '', phone: '', email: '' });
 
-  useEffect(() => { api.services().then(setServices); }, []);
+  useEffect(() => { 
+    api.services().then(setServices);
+    api.schedule().then(setSchedule);
+  }, []);
 
   useEffect(() => {
     if (!selectedDate) return;
-    setLoadingSlots(true);
-    setSelectedTime('');
+    let active = true;
     api.availability(selectedDate)
       .then((r) => {
+        if (!active) return;
         setTimeSlots(r.slots || []);
         if (!r.available) setTimeSlots([]);
       })
-      .catch(() => setTimeSlots([]))
-      .finally(() => setLoadingSlots(false));
+      .catch(() => {
+        if (active) setTimeSlots([]);
+      })
+      .finally(() => {
+        if (active) setLoadingSlots(false);
+      });
+    return () => { active = false; };
   }, [selectedDate]);
 
   function canNext(): boolean {
@@ -79,7 +88,8 @@ export function BookingWidget() {
   function disabledDays(dateStr: string): boolean {
     const d = new Date(dateStr);
     const day = d.getDay();
-    return day === 0;
+    const daySchedule = schedule.find(s => s.day_of_week === day);
+    return daySchedule ? !daySchedule.is_active : false;
   }
 
   if (done) {
@@ -152,7 +162,15 @@ export function BookingWidget() {
           {step === 'date' && (
             <div>
               <h3 className="text-lg font-semibold text-white mb-4">Elige una fecha</h3>
-              <Calendar selected={selectedDate} onChange={setSelectedDate} disabledDays={disabledDays} />
+              <Calendar 
+                selected={selectedDate} 
+                onChange={(date) => {
+                  setSelectedDate(date);
+                  setLoadingSlots(true);
+                  setSelectedTime('');
+                }} 
+                disabledDays={disabledDays} 
+              />
             </div>
           )}
 

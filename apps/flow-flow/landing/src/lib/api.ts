@@ -12,6 +12,11 @@ export interface Testimonial {
   id: number; quote: string; author: string; role: string;
 }
 
+export interface Schedule {
+  id: number; day_of_week: number; is_active: boolean;
+  open_time: string; close_time: string;
+}
+
 interface AvailabilityResponse {
   date: string; available: boolean; slots: string[];
 }
@@ -50,6 +55,7 @@ async function post<T>(path: string, body: unknown): Promise<T> {
 
 export const api = {
   services: () => get<Service[]>('/api/services'),
+  schedule: () => get<Schedule[]>('/api/schedule'),
   gallery: (sectionSlug?: string) =>
     get<GalleryImage[]>(`/api/gallery${sectionSlug ? `?section_slug=${sectionSlug}` : ''}`),
   testimonials: () => get<Testimonial[]>('/api/testimonials'),

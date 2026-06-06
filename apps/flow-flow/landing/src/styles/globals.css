@@ -3,9 +3,10 @@
 @theme {
   --color-brand-dark: var(--brand-bg, #0a0a0a);
   --color-brand-surface: var(--brand-surface, #141414);
-  --color-brand-card: #1a1a1a;
+  --color-brand-card: var(--brand-card, color-mix(in srgb, var(--brand-surface, #141414) 96%, white));
   --color-brand-gold: var(--brand-primary, #c9953c);
-  --color-brand-gold-light: var(--brand-accent, #e0b660);
+  --color-brand-gold-light: var(--brand-accent, color-mix(in srgb, var(--brand-primary, #c9953c) 85%, white));
+  --color-brand-gold-dark: var(--brand-primary-dark, color-mix(in srgb, var(--brand-primary, #c9953c) 85%, black));
   --font-family-display: 'Playfair Display', Georgia, serif;
   --font-family-body: 'Inter', system-ui, sans-serif;
 }

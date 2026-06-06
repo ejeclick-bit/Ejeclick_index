@@ -18,6 +18,21 @@ export function TenantProvider({ children }: { children: ReactNode }) {
     api.tenant(slug).then((t) => {
       if (t) {
         setTenantSlug(t.slug);
+        
+        // Dynamic Title
+        document.title = `${t.name} | ${t.tagline}`;
+        
+        // Dynamic Favicon
+        if (t.favicon_url) {
+          let link: HTMLLinkElement | null = document.querySelector("link[rel*='icon']");
+          if (!link) {
+            link = document.createElement('link');
+            link.rel = 'icon';
+            document.head.appendChild(link);
+          }
+          link.href = t.favicon_url;
+        }
+
         const root = document.documentElement;
         Object.entries(t.palette).forEach(([key, value]) => {
           root.style.setProperty(`--brand-${key}`, String(value));
@@ -36,6 +51,7 @@ export function TenantProvider({ children }: { children: ReactNode }) {
   );
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useTenant() {
   return useContext(TenantContext);
 }
