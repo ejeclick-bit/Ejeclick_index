@@ -106,7 +106,7 @@
 ## SPRINT 13: Dynamic Landing + Branding
 *   [x] **Story 13.1**: Landing 100% dinámica: nombre, tagline, logo, colores y horarios desde API.
 *   [x] **Story 13.2**: CSS custom properties inyectadas desde paleta del tenant (sin colores hardcodeados).
-*   [ ] **Story 13.3**: Admin > página "Apariencia" con color pickers + formulario de negocio + vista previa.
+*   [x] **Story 13.3**: Admin > página "Apariencia" con color pickers + formulario de negocio + vista previa.
 
 ## BACKLOG (Futuro)
 *   [ ] Extraer `ui-components` a un package compartido.

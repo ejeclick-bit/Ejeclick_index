@@ -19,7 +19,12 @@ export function SuperAdminPage() {
       .finally(() => setLoading(false));
   }
 
-  useEffect(() => { load(); }, []);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      load();
+    }, 0);
+    return () => clearTimeout(timer);
+  }, []);
 
   function switchTenant(shopSlug: string) {
     localStorage.setItem('tenantSlug', shopSlug);

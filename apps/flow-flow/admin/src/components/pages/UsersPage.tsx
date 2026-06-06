@@ -12,7 +12,12 @@ export function UsersPage() {
   const [passErrors, setPassErrors] = useState<string[]>([]);
 
   function load() { setLoading(true); api.listUsers().then(setUsers).catch(() => setError('Error al cargar usuarios')).finally(() => setLoading(false)); }
-  useEffect(() => { load(); }, []);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      load();
+    }, 0);
+    return () => clearTimeout(timer);
+  }, []);
 
   function validatePass(pw: string): string[] {
     const e: string[] = [];

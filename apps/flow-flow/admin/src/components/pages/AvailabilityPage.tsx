@@ -125,7 +125,7 @@ export function AvailabilityPage() {
                 const past = new Date(dateStr) < new Date(fmt(today));
                 const ov = overrides[dateStr];
                 const isSelected = selectedDate === dateStr;
-                let bg = 'hover:bg-white/5';
+                let bg: string;
                 let border = '';
                 if (!ov || ov.is_active) bg = 'hover:bg-green-500/10 bg-green-500/5';
                 else bg = 'hover:bg-red-500/10 bg-red-500/5';
