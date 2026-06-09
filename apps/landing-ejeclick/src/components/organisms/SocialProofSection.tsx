@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
-import { Typography } from '@/components/atoms/Typography';
-import { GlassCard } from '@/components/molecules/GlassCard';
+import { Typography } from '@ejeclick/ui-components';
+import { GlassCard } from '@ejeclick/ui-components';
 import { Check, X } from 'lucide-react';
 
 const metrics = [
@@ -39,14 +39,14 @@ export function SocialProofSection() {
         {/* Comparison Table */}
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
-            <Typography variant="h2" className="text-white mb-4">
+            <Typography variant="h2" className="text-foreground mb-4">
               Por qué <span className="text-gradient">EjeClick</span>
             </Typography>
           </div>
 
           <GlassCard className="p-0 overflow-hidden" glowOnHover={false}>
             <div role="table" aria-label="Comparativa EjeClick vs Agencias Tradicionales">
-              <div role="row" className="grid grid-cols-2 bg-white/5 border-b border-white/10">
+              <div role="row" className="grid grid-cols-2 bg-foreground/5 border-b border-white/10">
                 <div role="columnheader" className="p-6 text-center">
                   <Typography className="font-semibold text-text-secondary text-lg">Agencias Tradicionales</Typography>
                 </div>
@@ -69,7 +69,7 @@ export function SocialProofSection() {
                     </div>
                     <div role="cell" className="p-6 flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-3 bg-accent-primary/5">
                       <Check className="w-5 h-5 text-accent-primary shrink-0" aria-hidden="true" />
-                      <Typography className="text-white font-medium text-sm sm:text-base text-center sm:text-left">{row.good}</Typography>
+                      <Typography className="text-foreground font-medium text-sm sm:text-base text-center sm:text-left">{row.good}</Typography>
                     </div>
                   </div>
                 ))}

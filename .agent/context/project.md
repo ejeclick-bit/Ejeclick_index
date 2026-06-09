@@ -22,7 +22,7 @@
 
 | Regla | Explicación |
 |---|---|
-| **Tenant Isolation** | barbershop_id en TODAS las tablas. Un tenant nunca ve datos de otro. |
+| **Tenant Isolation (RLS)** | Aislamiento estricto por PostgreSQL Row-Level Security (ADR-010). Un tenant nunca lee/escribe datos de otro. |
 | **Resolución por subdominio** | Host header → slug → barbershop_id en request.state |
 | **Super Admin** | Usuario con barbershop_id = null. Acceso total a todas las barberías. |
 | **Auto-Provisioning** | Al crear Barbershop: schedule + sections + admin user + servicios base por defecto. |

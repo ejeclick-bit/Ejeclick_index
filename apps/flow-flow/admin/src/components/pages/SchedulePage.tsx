@@ -21,11 +21,11 @@ export function SchedulePage() {
 
   return (
     <div>
-      <h2 className="text-xl font-bold text-white mb-6">Horarios de Atención</h2>
+      <h2 className="text-xl font-bold text-foreground mb-6">Horarios de Atención</h2>
 
       <div className="space-y-2">
         {schedule.map((s) => (
-          <div key={s.id} className="flex items-center gap-4 rounded-xl border border-neutral-800 bg-brand-card p-4">
+          <div key={s.id} className="flex items-center gap-4 rounded-xl border border-subtle bg-brand-card p-4">
             <button
               onClick={() => toggleDay(s)}
               className={cn(
@@ -37,7 +37,7 @@ export function SchedulePage() {
             </button>
 
             <div className="flex-1">
-              <p className={cn('font-medium', s.is_active ? 'text-white' : 'text-neutral-600')}>
+              <p className={cn('font-medium', s.is_active ? 'text-foreground' : 'text-neutral-600')}>
                 {dayNames[s.day_of_week]}
               </p>
             </div>
@@ -48,14 +48,14 @@ export function SchedulePage() {
                   type="time"
                   value={s.open_time}
                   onChange={(e) => updateTime(s, 'open_time', e.target.value)}
-                  className="rounded-lg border border-neutral-700 bg-brand-dark px-3 py-2 text-sm text-white focus:border-brand-gold focus:outline-none"
+                  className="rounded-lg border border-subtle bg-background px-3 py-2 text-sm text-foreground focus:border-brand-gold focus:outline-none"
                 />
-                <span className="text-neutral-500">a</span>
+                <span className="text-muted/80">a</span>
                 <input
                   type="time"
                   value={s.close_time}
                   onChange={(e) => updateTime(s, 'close_time', e.target.value)}
-                  className="rounded-lg border border-neutral-700 bg-brand-dark px-3 py-2 text-sm text-white focus:border-brand-gold focus:outline-none"
+                  className="rounded-lg border border-subtle bg-background px-3 py-2 text-sm text-foreground focus:border-brand-gold focus:outline-none"
                 />
               </div>
             ) : (

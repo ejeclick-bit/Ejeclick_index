@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { Code2, Megaphone, MonitorSmartphone, Rocket, Headphones } from 'lucide-react';
-import { Typography } from '@/components/atoms/Typography';
-import { ServiceCard } from '@/components/molecules/ServiceCard';
+import { Typography } from '@ejeclick/ui-components';
+import { ServiceCard } from '@ejeclick/ui-components';
 
 const services = [
   {
@@ -62,7 +62,7 @@ export function ServicesGrid() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <Typography variant="h2" className="text-white mb-4 text-4xl">
+          <Typography variant="h2" className="text-foreground mb-4 text-4xl">
             Soluciones Tecnológicas de <span className="text-gradient">Alto Impacto</span>
           </Typography>
           <Typography variant="lead" className="text-text-secondary">

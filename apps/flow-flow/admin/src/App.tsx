@@ -13,6 +13,7 @@ import { AvailabilityPage } from './components/pages/AvailabilityPage';
 import { BrandingPage } from './components/pages/BrandingPage';
 import { SuperAdminPage } from './components/pages/SuperAdminPage';
 import { UsersPage } from './components/pages/UsersPage';
+import { useCursorSpotlight } from './hooks/useCursorSpotlight';
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { token } = useAuth();
@@ -22,8 +23,12 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
 
 function AppRoutes() {
   const { token } = useAuth();
+  useCursorSpotlight();
+
   return (
     <>
+      {/* Spotlight que sigue al cursor — solo desktop (pointer: fine) */}
+      <div className="cursor-spotlight" aria-hidden="true" />
       <BackTrap />
       <Routes>
         <Route path="/login" element={token ? <Navigate to="/" replace /> : <LoginPage />} />

@@ -36,12 +36,12 @@ export function AppointmentsPage() {
   return (
     <div>
       <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
-        <h2 className="text-xl font-bold text-white">Citas</h2>
+        <h2 className="text-xl font-bold text-foreground">Citas</h2>
         <div className="flex gap-3">
           <input type="date" value={date} onChange={(e) => setDate(e.target.value)}
-            className="rounded-lg border border-neutral-700 bg-brand-card px-3 py-2 text-sm text-white focus:border-brand-gold focus:outline-none" />
+            className="rounded-lg border border-subtle bg-brand-card px-3 py-2 text-sm text-foreground focus:border-brand-gold focus:outline-none" />
           <select value={filter} onChange={(e) => setFilter(e.target.value)}
-            className="rounded-lg border border-neutral-700 bg-brand-card px-3 py-2 text-sm text-white focus:border-brand-gold focus:outline-none">
+            className="rounded-lg border border-subtle bg-brand-card px-3 py-2 text-sm text-foreground focus:border-brand-gold focus:outline-none">
             <option value="">Todas</option>
             <option value="pending">Pendientes</option>
             <option value="confirmed">Confirmadas</option>
@@ -53,18 +53,18 @@ export function AppointmentsPage() {
 
       <div className="space-y-3">
         {appointments.length === 0 ? (
-          <p className="text-sm text-neutral-500">No hay citas para esta fecha</p>
+          <p className="text-sm text-muted/80">No hay citas para esta fecha</p>
         ) : (
           appointments.map((a) => (
-            <div key={a.id} className={cn('rounded-xl border p-4', statusColors[a.status] || 'border-neutral-800 bg-brand-card')}>
+            <div key={a.id} className={cn('rounded-xl border p-4', statusColors[a.status] || 'border-subtle bg-brand-card')}>
               <div className="flex items-start justify-between">
                 <div>
-                  <p className="font-medium text-white">{a.client_name}</p>
-                  <p className="text-xs text-neutral-400">{a.client_phone} {a.client_email && `— ${a.client_email}`}</p>
-                  <p className="mt-1 text-sm text-neutral-300">
+                  <p className="font-medium text-foreground">{a.client_name}</p>
+                  <p className="text-xs text-muted">{a.client_phone} {a.client_email && `— ${a.client_email}`}</p>
+                  <p className="mt-1 text-sm text-foreground/80">
                     {a.service_name} — <span className="text-brand-gold-light">{a.date}</span> a las <span className="text-brand-gold-light">{a.time}</span>
                   </p>
-                  {a.notes && <p className="mt-1 text-xs text-neutral-500 italic">{a.notes}</p>}
+                  {a.notes && <p className="mt-1 text-xs text-muted/80 italic">{a.notes}</p>}
                 </div>
                 <div className="flex items-center gap-2">
                   <span className={cn('rounded-full px-2.5 py-0.5 text-xs font-medium', a.status === 'pending' && 'text-yellow-400', a.status === 'confirmed' && 'text-blue-400', a.status === 'completed' && 'text-green-400', a.status === 'cancelled' && 'text-red-400')}>

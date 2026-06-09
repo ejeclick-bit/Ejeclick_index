@@ -1,5 +1,5 @@
-import { Typography } from '@/components/atoms/Typography';
-import { SocialLink } from '@/components/molecules/SocialLink';
+import { Typography } from '@ejeclick/ui-components';
+import { SocialLink } from '@ejeclick/ui-components';
 import { Globe, Briefcase, MessageCircle, Mail } from 'lucide-react';
 
 export function Footer() {
@@ -11,7 +11,7 @@ export function Footer() {
         
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
           <div className="md:col-span-2">
-            <Typography variant="h3" className="font-extrabold tracking-tighter text-white mb-4">
+            <Typography variant="h3" className="font-extrabold tracking-tighter text-foreground mb-4">
               Eje<span className="text-gradient">Click</span>
             </Typography>
             <Typography className="text-text-secondary max-w-sm mb-6">
@@ -26,7 +26,7 @@ export function Footer() {
           </div>
 
           <nav aria-label="Servicios">
-            <Typography variant="h4" className="text-white text-lg mb-4">Servicios</Typography>
+            <Typography variant="h4" className="text-foreground text-lg mb-4">Servicios</Typography>
             <ul className="space-y-3">
               <li><a href="#" className="text-text-secondary hover:text-accent-primary transition-colors">Diseño Web</a></li>
               <li><a href="#" className="text-text-secondary hover:text-accent-primary transition-colors">SEO Local</a></li>
@@ -36,7 +36,7 @@ export function Footer() {
           </nav>
 
           <nav aria-label="Compañía">
-            <Typography variant="h4" className="text-white text-lg mb-4">Compañía</Typography>
+            <Typography variant="h4" className="text-foreground text-lg mb-4">Compañía</Typography>
             <ul className="space-y-3">
               <li><a href="#proceso" className="text-text-secondary hover:text-accent-primary transition-colors">Proceso</a></li>
               <li><a href="#casos" className="text-text-secondary hover:text-accent-primary transition-colors">Casos de Éxito</a></li>
@@ -51,8 +51,8 @@ export function Footer() {
             &copy; {currentYear} EjeClick. Todos los derechos reservados.
           </Typography>
           <div className="flex gap-6">
-            <a href="#" className="text-sm text-text-muted hover:text-white transition-colors">Términos de Servicio</a>
-            <a href="#" className="text-sm text-text-muted hover:text-white transition-colors">Política de Privacidad</a>
+            <a href="#" className="text-sm text-text-muted hover:text-foreground transition-colors">Términos de Servicio</a>
+            <a href="#" className="text-sm text-text-muted hover:text-foreground transition-colors">Política de Privacidad</a>
           </div>
         </div>
         

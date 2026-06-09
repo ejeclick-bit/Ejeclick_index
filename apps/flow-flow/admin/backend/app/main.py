@@ -57,11 +57,27 @@ def provision_barbershop(db, slug, name, tagline="", admin_pass="admin123"):
     logger.info("provisioned barbershop=%s", slug)
 
 
+from sqlalchemy import text
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     Base.metadata.create_all(bind=engine)
     db = SessionLocal()
     try:
+        tables = ["services", "appointments", "schedules", "testimonials", "image_sections", "gallery_images", "day_overrides", "time_blocks", "users"]
+        for table in tables:
+            db.execute(text(f"ALTER TABLE {table} ENABLE ROW LEVEL SECURITY;"))
+            db.execute(text(f"DROP POLICY IF EXISTS tenant_isolation_policy ON {table};"))
+            db.execute(text(f"""
+                CREATE POLICY tenant_isolation_policy ON {table}
+                AS PERMISSIVE FOR ALL
+                USING (
+                    coalesce(current_setting('app.current_tenant', true), '') = '' 
+                    OR barbershop_id::text = current_setting('app.current_tenant', true)
+                );
+            """))
+        db.commit()
+
         if not db.query(Barbershop).first():
             provision_barbershop(db, "flowflow", "Barbería Flow Flow", "Estilo que habla por sí solo")
         if not db.query(User).filter(User.barbershop_id == None, User.role == "super_admin").first():

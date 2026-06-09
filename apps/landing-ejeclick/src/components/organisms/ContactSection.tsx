@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { Typography } from '@/components/atoms/Typography';
-import { Button } from '@/components/atoms/Button';
-import { FormField } from '@/components/molecules/FormField';
-import { GlassCard } from '@/components/molecules/GlassCard';
+import { Typography } from '@ejeclick/ui-components';
+import { Button } from '@ejeclick/ui-components';
+import { FormField } from '@ejeclick/ui-components';
+import { GlassCard } from '@ejeclick/ui-components';
 
 const API_URL = import.meta.env.VITE_API_URL || '/api/v1';
 
@@ -71,7 +71,7 @@ export function ContactSection() {
         <div className="max-w-5xl mx-auto flex flex-col lg:flex-row gap-12 items-center">
           
           <div className="w-full lg:w-1/2">
-            <Typography variant="h2" className="text-white mb-6">
+            <Typography variant="h2" className="text-foreground mb-6">
               El primer paso hacia tu <span className="text-gradient">transformación digital</span>
             </Typography>
             <Typography variant="lead" className="text-text-secondary mb-8">
@@ -86,7 +86,7 @@ export function ContactSection() {
                   </svg>
                 </div>
                 <div>
-                  <Typography variant="h4" className="text-white text-base">Respuesta Rápida</Typography>
+                  <Typography variant="h4" className="text-foreground text-base">Respuesta Rápida</Typography>
                   <Typography className="text-text-muted text-sm">En menos de 24 horas hábiles</Typography>
                 </div>
               </div>

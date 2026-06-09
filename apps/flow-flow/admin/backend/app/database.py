@@ -1,5 +1,6 @@
 import os
-from sqlalchemy import create_engine
+from fastapi import Request
+from sqlalchemy import create_engine, text
 from sqlalchemy.orm import DeclarativeBase, sessionmaker
 
 DATABASE_URL = os.getenv(
@@ -19,8 +20,17 @@ class Base(DeclarativeBase):
     pass
 
 
-def get_db():
+def get_db(request: Request = None):
     db = SessionLocal()
+    if request:
+        tenant_id = getattr(request.state, "barbershop_id", None)
+        if tenant_id is not None:
+            db.execute(text(f"SET LOCAL app.current_tenant = '{tenant_id}'"))
+        else:
+            db.execute(text("SET LOCAL app.current_tenant = ''"))
+    else:
+        db.execute(text("SET LOCAL app.current_tenant = ''"))
+        
     try:
         yield db
     finally:

@@ -1,5 +1,5 @@
 import { type HTMLAttributes, forwardRef } from 'react';
-import { cn } from '@/utils/cn';
+import { cn } from '../../utils/cn';
 
 export interface GlassCardProps extends HTMLAttributes<HTMLDivElement> {
   glowOnHover?: boolean;

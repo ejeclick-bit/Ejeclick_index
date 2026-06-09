@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Typography } from '@/components/atoms/Typography';
+import { Typography } from '@ejeclick/ui-components';
 import { Search, PenTool, Code2, Rocket } from 'lucide-react';
 
 const steps = [
@@ -31,7 +31,7 @@ export function ProcessSection() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <Typography variant="h2" className="text-white mb-4">
+          <Typography variant="h2" className="text-foreground mb-4">
             Proceso de Trabajo <span className="text-gradient">Iterativo</span>
           </Typography>
           <Typography variant="lead" className="text-text-secondary">
@@ -41,7 +41,7 @@ export function ProcessSection() {
 
         <div className="max-w-4xl mx-auto relative">
           {/* Vertical Line */}
-          <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-px bg-white/10 transform md:-translate-x-1/2" aria-hidden="true" />
+          <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-px bg-foreground/10 transform md:-translate-x-1/2" aria-hidden="true" />
 
           <ol className="space-y-12" role="list">
             {steps.map((step, index) => {
@@ -61,7 +61,7 @@ export function ProcessSection() {
                   >
                     {isEven && (
                       <>
-                        <Typography variant="h3" className="text-white mb-2">{step.title}</Typography>
+                        <Typography variant="h3" className="text-foreground mb-2">{step.title}</Typography>
                         <Typography className="text-text-secondary">{step.description}</Typography>
                       </>
                     )}
@@ -84,7 +84,7 @@ export function ProcessSection() {
                   >
                     {/* Mobile content always visible */}
                     <div className="md:hidden" aria-hidden={isEven ? undefined : undefined}>
-                      <Typography variant="h3" className="text-white mb-2 text-xl">{step.title}</Typography>
+                      <Typography variant="h3" className="text-foreground mb-2 text-xl">{step.title}</Typography>
                       <Typography className="text-text-secondary">{step.description}</Typography>
                     </div>
 
@@ -92,7 +92,7 @@ export function ProcessSection() {
                     <div className="hidden md:block" aria-hidden={!isEven ? undefined : true}>
                       {!isEven && (
                         <>
-                          <Typography variant="h3" className="text-white mb-2">{step.title}</Typography>
+                          <Typography variant="h3" className="text-foreground mb-2">{step.title}</Typography>
                           <Typography className="text-text-secondary">{step.description}</Typography>
                         </>
                       )}

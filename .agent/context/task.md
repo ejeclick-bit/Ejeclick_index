@@ -76,8 +76,10 @@
 *   [x] **Story 10.2**: Remover YAML frontmatter de AGENTS.md (no aporta valor al agente).
 *   [x] **Story 10.3**: Documentar ADR-006 (Agent Loop como primera instrucción).
 *   [x] **Story 10.4**: Auditoría de seguridad y calidad del admin panel (CORS, logging, rate limiting, validación upload, tests backend).
-*   [x] **Story 10.5**: Integración completa admin ↔ landing: servicios, galería y testimonios desde API.
-*   [x] **Story 10.6**: Agregar gestión de testimonios en admin panel (CRUD + ruta).
+*   [x] **Story 10.5**: 
+    - [x] Extraer logica RLS a middleware.
+    - [x] Validar que las transiciones a modo claro/oscuro sean de calidad Premium con View Transitions.
+    - [x] Actualizar documentación con decisiones de arquitectura (ADR-011).
 *   [x] **Story 10.7**: Categorías de imágenes en galería (hero, services, gallery) con selector en admin y filtro en landing.
 *   [x] **Story 10.8**: Booking widget en landing (calendario + horarios + email confirmación + conflict check).
 *   [x] **Story 10.9**: Sistema de disponibilidad dinámica (DayOverrides + TimeBlocks + calendario admin).
@@ -108,9 +110,26 @@
 *   [x] **Story 13.2**: CSS custom properties inyectadas desde paleta del tenant (sin colores hardcodeados).
 *   [x] **Story 13.3**: Admin > página "Apariencia" con color pickers + formulario de negocio + vista previa.
 
+## SPRINT 14: Security & Row-Level Security
+*   [x] **Story 14.1**: Documentar ADR-010 para implementar Row-Level Security.
+*   [x] **Story 14.2**: Inyectar variable de entorno `app.current_tenant` en las sesiones SQLAlchemy (`get_db`).
+*   [x] **Story 14.3**: Habilitar RLS e implementar `tenant_isolation_policy` en el evento de inicio de la aplicación.
+*   [x] **Story 14.4**: Actualizar documentación del proyecto (`project.md`).
+
+## SPRINT 15: UX Premium — Temas & Cursor Spotlight
+*   [x] **Story 15.1**: Refactorizar todos los colores hardcodeados (`text-white`, `bg-brand-dark`) a tokens semánticos (`text-foreground`, `bg-background`) en los 3 frontends.
+*   [x] **Story 15.2**: Implementar `ThemeToggle` con morphing SVG via Framer Motion y View Transitions API (curva `cubic-bezier(0.8,0,0.2,1)` 700ms).
+*   [x] **Story 15.3**: Investigar y aplicar paleta Premium Barbershop 2025. Dark: "Midnight Opulence" (`#13111A` + `#1C1928`). Light: "Porcelain Editorial" (`#FAF8F5` + `#F2EDE6`). Documentado en ADR-011.
+*   [x] **Story 15.4**: Implementar efecto Cursor Spotlight en ambas landings (desktop only via `pointer: fine`). Hook `useCursorSpotlight` con `requestAnimationFrame` + radial-gradient CSS variable. Tono azul en dark mode, dorado/ambar en light mode.
+## SPRINT 16: Rediseño Absoluto UI/UX (Landing Barbería)
+*   [x] **Story 16.1**: Refactorizar Navbar y Hero para soportar transiciones de tema sin parpadeos, implementar light/dark brand accent y backdrop-blurs.
+*   [x] **Story 16.2**: Rediseñar BookingWidget de contacto a formato "Stepper" guiado con íconos, recibos detallados de confirmación y selección interactiva visual.
+*   [x] **Story 16.3**: Añadir micro-interacciones a todas las tarjetas (Services, Testimonials, Gallery) usando framer-motion (elevación, scale, sombras radiales en hover).
+*   [x] **Story 16.4**: Implementar "Empty States" elegantes (con loaders tipo pulse en vez de textos de carga) y soportes modulares para estados vacíos en la Galería y Testimonios.
+*   [x] **Story 16.5**: Refinar sistema tonal de temas: Ajustar modo Claro a un Lino/Vintage (cero blanco puro #FFF) y Modo Oscuro a Midnight Blue (azul profundo #0A0F18 en lugar de carbón/gris).
+
 ## BACKLOG (Futuro)
-*   [ ] Extraer `ui-components` a un package compartido.
-*   [ ] Extraer `ui-components` a un package compartido.
+*   [x] Extraer `ui-components` a un package compartido.
 *   [ ] SEO/CRO: Google Analytics 4, Meta Pixel, sitemap.xml, robots.txt, Message Match.
 *   [ ] Pruebas A/B de titulares y CTAs.
 *   [ ] Ampliar tests a todos los componentes.

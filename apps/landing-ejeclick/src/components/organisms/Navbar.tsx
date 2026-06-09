@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
-import { Button } from '@/components/atoms/Button';
+import { Button } from '@ejeclick/ui-components';
+import { ThemeToggle } from '@ejeclick/ui-components';
 import { cn } from '@/utils/cn';
 import { scrollToSection } from '@/utils/lenis';
 
@@ -56,7 +57,7 @@ export function Navbar() {
             transition={{ duration: 0.5 }}
             whileHover={{ scale: 1.05 }}
           >
-            <span className="text-2xl md:text-3xl font-extrabold tracking-tighter text-white">
+            <span className="text-2xl md:text-3xl font-extrabold tracking-tighter text-foreground">
               Eje<span className="text-gradient">Click</span>
             </span>
           </motion.a>
@@ -67,7 +68,7 @@ export function Navbar() {
               <motion.a
                 key={link.name}
                 href={link.href}
-                className="text-base lg:text-lg font-medium text-text-secondary transition-colors hover:text-white outline-none focus-visible:ring-2 focus-visible:ring-accent-primary rounded-md px-3 py-2"
+                className="text-base lg:text-lg font-medium text-text-secondary transition-colors hover:text-foreground outline-none focus-visible:ring-2 focus-visible:ring-accent-primary rounded-md px-3 py-2"
                 variants={linkVariants}
                 initial="initial"
                 animate="animate"
@@ -81,7 +82,8 @@ export function Navbar() {
           </nav>
 
           {/* CTA & Mobile Toggle */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 sm:gap-4">
+            <ThemeToggle />
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -95,7 +97,7 @@ export function Navbar() {
             
             <button
               type="button"
-              className="md:hidden p-3 text-text-secondary hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary rounded-md"
+              className="md:hidden p-3 text-text-secondary hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary rounded-md"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label={isMobileMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
               aria-controls="mobile-menu"
@@ -125,7 +127,7 @@ export function Navbar() {
                 <a
                   key={link.name}
                   href={link.href}
-                  className="text-lg font-medium text-text-secondary hover:text-white transition-colors"
+                  className="text-lg font-medium text-text-secondary hover:text-foreground transition-colors"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {link.name}

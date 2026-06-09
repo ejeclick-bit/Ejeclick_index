@@ -1,8 +1,8 @@
 import { type HTMLAttributes, forwardRef } from 'react';
-import { cn } from '@/utils/cn';
+import { cn } from '../../utils/cn';
 
 export interface BadgeProps extends HTMLAttributes<HTMLDivElement> {
-  variant?: 'default' | 'glow' | 'outline';
+  variant?: 'default' | 'glow' | 'outline' | 'gold';
 }
 
 const Badge = forwardRef<HTMLDivElement, BadgeProps>(
@@ -13,7 +13,8 @@ const Badge = forwardRef<HTMLDivElement, BadgeProps>(
     const variants = {
       default: "bg-bg-elevated text-text-primary border border-white/10",
       glow: "bg-accent-primary/10 text-accent-primary border border-accent-primary/20 shadow-[0_0_10px_hsla(217,91%,60%,0.2)]",
-      outline: "text-text-primary border border-white/20"
+      outline: "text-text-primary border border-white/20",
+      gold: "bg-amber-500/10 text-amber-500 border border-amber-500/20 shadow-[0_0_10px_hsla(35,100%,50%,0.2)]"
     };
 
     return (

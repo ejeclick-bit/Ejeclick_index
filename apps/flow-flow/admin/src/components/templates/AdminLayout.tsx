@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Outlet, NavLink, useNavigate } from 'react-router-dom';
 import { Menu, X, LayoutDashboard, Scissors, Calendar, Clock, Image, MessageCircle, LogOut, ToggleLeft, Palette, Building2, Users, ExternalLink } from 'lucide-react';
 import { useAuth } from '../../lib/auth';
+import { ThemeToggle } from '@ejeclick/ui-components';
 import { cn } from '../../utils/cn';
 
 const nav = [
@@ -33,7 +34,7 @@ export function AdminLayout() {
       {!sidebarOpen && (
         <button
           onClick={() => setSidebarOpen(true)}
-          className="fixed top-4 left-4 z-[60] rounded-lg border border-neutral-800 bg-brand-card p-2.5 text-neutral-300 hover:text-white transition-colors md:hidden"
+          className="fixed top-4 left-4 z-[60] rounded-lg border border-subtle bg-brand-card p-2.5 text-foreground/80 hover:text-foreground transition-colors md:hidden"
           aria-label="Abrir menú"
         >
           <Menu size={20} />
@@ -50,21 +51,24 @@ export function AdminLayout() {
 
       <aside
         className={cn(
-          'fixed left-0 top-0 bottom-0 z-50 w-60 border-r border-neutral-800 bg-brand-card p-4 flex flex-col transition-transform duration-200',
+          'fixed left-0 top-0 bottom-0 z-50 w-60 border-r border-subtle bg-brand-card p-4 flex flex-col transition-transform duration-200',
           'md:translate-x-0',
           sidebarOpen ? 'translate-x-0' : '-translate-x-full',
         )}
       >
         <div className="mb-8 flex items-center justify-between px-2">
-          <div>
-            <h1 className="text-lg font-bold text-white">
+          <div className="flex-1">
+            <h1 className="text-lg font-bold text-foreground">
               <span className="text-brand-gold">✦</span> Flow Flow
             </h1>
-            <p className="text-xs text-neutral-500 mt-0.5">Panel Admin</p>
+            <p className="text-xs text-muted/80 mt-0.5">Panel Admin</p>
+          </div>
+          <div className="mr-2">
+            <ThemeToggle />
           </div>
           <button
             onClick={closeSidebar}
-            className="rounded-lg p-1.5 text-neutral-500 hover:text-white transition-colors md:hidden"
+            className="rounded-lg p-1.5 text-muted/80 hover:text-foreground transition-colors md:hidden"
             aria-label="Cerrar menú"
           >
             <X size={18} />
@@ -79,7 +83,7 @@ export function AdminLayout() {
               className={({ isActive }) =>
                 cn(
                   'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors',
-                  isActive ? 'bg-brand-gold/10 text-brand-gold-light font-medium' : 'text-neutral-400 hover:text-white hover:bg-white/5',
+                  isActive ? 'bg-brand-gold/10 text-brand-gold-light font-medium' : 'text-muted hover:text-foreground hover:bg-foreground/5',
                 )
               }
             >
@@ -96,7 +100,7 @@ export function AdminLayout() {
                 className={({ isActive }) =>
                   cn(
                     'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors',
-                    isActive ? 'bg-brand-gold/10 text-brand-gold-light font-medium' : 'text-neutral-400 hover:text-white hover:bg-white/5',
+                    isActive ? 'bg-brand-gold/10 text-brand-gold-light font-medium' : 'text-muted hover:text-foreground hover:bg-foreground/5',
                   )
                 }
               >
@@ -107,10 +111,10 @@ export function AdminLayout() {
           )}
         </nav>
 
-        <div className="border-t border-neutral-800 pt-4 mt-4">
+        <div className="border-t border-subtle pt-4 mt-4">
           <div className="px-3 mb-3">
-            <p className="text-sm text-white">{user?.name}</p>
-            <p className="text-xs text-neutral-500 capitalize">{user?.role}</p>
+            <p className="text-sm text-foreground">{user?.name}</p>
+            <p className="text-xs text-muted/80 capitalize">{user?.role}</p>
           </div>
           {showAdminSidebar && (
             <a
@@ -133,7 +137,7 @@ export function AdminLayout() {
           )}
           <button
             onClick={() => { logout(); navigate('/login'); }}
-            className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-neutral-400 hover:text-red-400 hover:bg-red-500/5 transition-colors"
+            className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-muted hover:text-red-400 hover:bg-red-500/5 transition-colors"
           >
             <LogOut size={18} />
             Cerrar Sesión

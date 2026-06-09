@@ -1,8 +1,8 @@
 import { lazy, Suspense } from 'react';
 import { motion } from 'framer-motion';
-import { Typography } from '@/components/atoms/Typography';
-import { Button } from '@/components/atoms/Button';
-import { Badge } from '@/components/atoms/Badge';
+import { Typography } from '@ejeclick/ui-components';
+import { Button } from '@ejeclick/ui-components';
+import { Badge } from '@ejeclick/ui-components';
 import { scrollToSection } from '@/utils/lenis';
 
 const Scene3D = lazy(() =>

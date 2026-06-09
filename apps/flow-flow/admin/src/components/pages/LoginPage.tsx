@@ -25,13 +25,13 @@ export function LoginPage() {
     <div className="flex min-h-screen items-center justify-center p-4">
       <div className="w-full max-w-sm">
         <div className="mb-8 text-center">
-          <h1 className="text-2xl font-bold text-white">
+          <h1 className="text-2xl font-bold text-foreground">
             <span className="text-brand-gold">✦</span> Flow Flow
           </h1>
-          <p className="mt-1 text-sm text-neutral-500">Panel de Administración</p>
+          <p className="mt-1 text-sm text-muted/80">Panel de Administración</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4 rounded-xl border border-neutral-800 bg-brand-card p-6">
+        <form onSubmit={handleSubmit} className="space-y-4 rounded-xl border border-subtle bg-brand-card p-6">
           {error && (
             <div className="rounded-lg bg-red-900/20 px-4 py-2.5 text-sm text-red-400" role="alert">
               {error}
@@ -39,27 +39,27 @@ export function LoginPage() {
           )}
 
           <div>
-            <label htmlFor="username" className="block text-sm font-medium text-neutral-300">Usuario</label>
+            <label htmlFor="username" className="block text-sm font-medium text-foreground/80">Usuario</label>
             <input
               id="username"
               type="text"
               required
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="mt-1 w-full rounded-lg border border-neutral-700 bg-brand-dark px-4 py-2.5 text-sm text-white placeholder-neutral-500 focus:border-brand-gold focus:outline-none focus:ring-1 focus:ring-brand-gold"
+              className="mt-1 w-full rounded-lg border border-subtle bg-background px-4 py-2.5 text-sm text-foreground placeholder-neutral-500 focus:border-brand-gold focus:outline-none focus:ring-1 focus:ring-brand-gold"
               placeholder="admin"
             />
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-neutral-300">Contraseña</label>
+            <label htmlFor="password" className="block text-sm font-medium text-foreground/80">Contraseña</label>
             <input
               id="password"
               type="password"
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="mt-1 w-full rounded-lg border border-neutral-700 bg-brand-dark px-4 py-2.5 text-sm text-white placeholder-neutral-500 focus:border-brand-gold focus:outline-none focus:ring-1 focus:ring-brand-gold"
+              className="mt-1 w-full rounded-lg border border-subtle bg-background px-4 py-2.5 text-sm text-foreground placeholder-neutral-500 focus:border-brand-gold focus:outline-none focus:ring-1 focus:ring-brand-gold"
               placeholder="••••••"
             />
           </div>

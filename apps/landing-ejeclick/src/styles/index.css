@@ -1,34 +1,84 @@
 @import "tailwindcss";
+@source "../../../packages/ui-components/src";
 
 @theme {
-  /* Color Palette - B2B Neutral & Trustworthy */
-  --color-bg-primary: #0A0F1A;     /* Deep slate blue */
-  --color-bg-secondary: #0F172A;   /* Slate 900 */
-  --color-bg-card: #1E293B;        /* Slate 800 */
-  --color-bg-elevated: #334155;    /* Slate 700 */
+  /* Semantic Tokens */
+  --color-background: var(--theme-background);
+  --color-surface: var(--theme-surface);
+  --color-card: var(--theme-card);
+  --color-elevated: var(--theme-elevated);
+  --color-foreground: var(--theme-foreground);
+  --color-text-secondary: var(--theme-text-secondary);
+  --color-muted: var(--theme-muted);
+  --color-border-subtle: var(--theme-border-subtle);
 
-  --color-accent-primary: #3B82F6;   /* Blue 500 - Confianza */
-  --color-accent-secondary: #0EA5E9; /* Sky 500 - Tecnología */
-  --color-accent-tertiary: #6366F1;  /* Indigo 500 - Innovación */
-
-  --color-text-primary: #F8FAFC;     /* Slate 50 */
-  --color-text-secondary: #94A3B8;   /* Slate 400 */
-  --color-text-muted: #64748B;       /* Slate 500 */
-
-  --color-border-subtle: hsla(215, 20%, 30%, 0.4);
+  /* Brand Tokens */
+  --color-accent-primary: #3B82F6;
+  --color-accent-secondary: #0EA5E9;
+  --color-accent-tertiary: #6366F1;
 
   /* Typography */
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
 
   /* Box Shadows / Glows */
-  --shadow-glow-primary: 0 0 30px hsla(217, 91%, 60%, 0.2);
-  --shadow-glow-secondary: 0 0 30px hsla(199, 89%, 48%, 0.2);
+  --shadow-glow-primary: var(--theme-shadow-glow-primary);
+  --shadow-glow-secondary: var(--theme-shadow-glow-secondary);
+}
+
+/* Dark Mode (Default) — Deep Midnight Navy */
+/* Investigado: #0B1120 profundo con capas slate-azul. SaaS B2B premium 2025 */
+/* Evita negro puro (#000) que crea halos OLED y se percibe como barato */
+:root {
+  --theme-background: #0B0F1C;          /* Deep Midnight Navy — base de app shell */
+  --theme-surface: #111827;             /* Dark Slate Surface — paneles y cards */
+  --theme-card: #1A2235;                /* Elevated Card — percepcion de profundidad */
+  --theme-elevated: #243047;            /* Active / hover state */
+  --theme-foreground: #EDE9E0;          /* Warm Cream — no blanco puro, sin halos */
+  --theme-text-secondary: #94A3B8;      /* Cool Slate secondary */
+  --theme-muted: #64748B;               /* Slate 500 */
+  --theme-border-subtle: hsla(215, 30%, 25%, 0.5); /* Subtle navy border */
+  --theme-shadow-glow-primary: 0 0 40px hsla(217, 91%, 60%, 0.18);
+  --theme-shadow-glow-secondary: 0 0 40px hsla(199, 89%, 48%, 0.18);
+}
+
+/* Light Mode — Porcelain Editorial */
+/* Investigado: warm cream #FAF8F5 para sitios premium/luxury 2025 */
+/* Fondo porcelana calido tipo papel artesanal. Texto espresso, nunca negro puro */
+:root.light {
+  --theme-background: #FAF8F5 !important;          /* Porcelain — warm, invitante */
+  --theme-surface: #F2EDE6 !important;             /* Warm Linen — profundidad sutil */
+  --theme-card: #FFFEFB !important;                /* Ivory Card — suave y limpio */
+  --theme-elevated: #EAE3D9 !important;            /* Sandy elevated */
+  --theme-foreground: #1C1110 !important;          /* Espresso — no negro puro */
+  --theme-text-secondary: #4A3F3B !important;      /* Warm Dark Brown secondary */
+  --theme-muted: #7A6F68 !important;               /* Warm Taupe muted */
+  --theme-border-subtle: hsla(25, 20%, 60%, 0.25) !important; /* Sandy border */
+  --theme-shadow-glow-primary: 0 4px 24px hsla(217, 91%, 60%, 0.10) !important;
+  --theme-shadow-glow-secondary: 0 4px 24px hsla(199, 89%, 48%, 0.10) !important;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-old(root) {
+  z-index: 1;
+}
+::view-transition-new(root) {
+  z-index: 9999;
+}
+.light::view-transition-old(root) {
+  z-index: 9999;
+}
+.light::view-transition-new(root) {
+  z-index: 1;
 }
 
 @layer base {
   body {
-    background-color: var(--color-bg-primary);
-    color: var(--color-text-primary);
+    background-color: var(--color-background);
+    color: var(--color-foreground);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -38,10 +88,10 @@
 
 @layer utilities {
   .glass-card {
-    background: hsla(222, 47%, 11%, 0.6);
+    background: hsla(215, 30%, 12%, 0.6);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 1px solid hsla(0, 0%, 100%, 0.08);
+    border: 1px solid var(--color-border-subtle);
     border-radius: 1rem;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
@@ -59,6 +109,41 @@
     background-clip: text;
   }
 }
+
+/* === Cursor Spotlight Effect (desktop only) === */
+/* Variables set dynamically by useCursorSpotlight hook via JS */
+:root {
+  --cursor-x: 50%;
+  --cursor-y: 50%;
+}
+
+@media (pointer: fine) {
+  .cursor-spotlight {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    /* Radial gradient que sigue al cursor */
+    background: radial-gradient(
+      600px circle at var(--cursor-x) var(--cursor-y),
+      hsla(217, 91%, 60%, 0.06) 0%,
+      hsla(217, 91%, 60%, 0.03) 40%,
+      transparent 70%
+    );
+    transition: background 0.05s ease-out;
+  }
+
+  /* En modo claro el spotlight es más suave y dorado/ambar */
+  .light .cursor-spotlight {
+    background: radial-gradient(
+      500px circle at var(--cursor-x) var(--cursor-y),
+      hsla(35, 85%, 55%, 0.07) 0%,
+      hsla(35, 85%, 55%, 0.03) 40%,
+      transparent 70%
+    );
+  }
+}
+
 
 /* === Aurora Background Effect === */
 .aurora-container {

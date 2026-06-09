@@ -1,14 +1,14 @@
-import { type LucideIcon } from 'lucide-react';
-import { Typography } from '@/components/atoms/Typography';
-import { GlassCard } from '@/components/molecules/GlassCard';
-import { cn } from '@/utils/cn';
+import { Typography } from '../atoms/Typography';
+import { GlassCard } from '../molecules/GlassCard';
+import { cn } from '../../utils/cn';
 
 export interface ServiceCardProps {
   title: string;
   description: string;
-  icon: LucideIcon;
+  icon: any;
   colSpan?: 1 | 2;
   highlightColor?: 'primary' | 'secondary' | 'tertiary';
+  price?: string;
 }
 
 export function ServiceCard({
@@ -17,6 +17,7 @@ export function ServiceCard({
   icon: Icon,
   colSpan = 1,
   highlightColor = 'primary',
+  price,
 }: ServiceCardProps) {
   
   const colorMap = {
@@ -35,12 +36,17 @@ export function ServiceCard({
       <div className={cn("w-14 h-14 rounded-2xl flex items-center justify-center mb-6", colorMap[highlightColor])}>
         <Icon className="w-7 h-7" />
       </div>
-      <Typography variant="h3" className="mb-3 text-white">
+      <Typography variant="h3" className="mb-3 text-foreground">
         {title}
       </Typography>
-      <Typography className="text-text-secondary leading-relaxed">
+      <Typography className="text-text-secondary leading-relaxed flex-grow">
         {description}
       </Typography>
+      {price && (
+        <div className="mt-6 pt-6 border-t border-white/5 font-semibold text-accent-primary">
+          {price}
+        </div>
+      )}
     </GlassCard>
   );
 }

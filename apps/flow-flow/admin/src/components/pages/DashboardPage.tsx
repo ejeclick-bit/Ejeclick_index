@@ -67,33 +67,33 @@ export function DashboardPage() {
 
   return (
     <div>
-      <h2 className="text-xl font-bold text-white mb-6">Dashboard</h2>
+      <h2 className="text-xl font-bold text-foreground mb-6">Dashboard</h2>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-8">
         {cards.map((c) => (
-          <div key={c.label} className="rounded-xl border border-neutral-800 bg-brand-card p-5">
+          <div key={c.label} className="rounded-xl border border-subtle bg-brand-card p-5">
             <div className="flex items-center gap-3">
               <c.icon size={24} className={c.color} />
               <div>
-                <p className="text-2xl font-bold text-white">{c.value}</p>
-                <p className="text-xs text-neutral-500">{c.label}</p>
+                <p className="text-2xl font-bold text-foreground">{c.value}</p>
+                <p className="text-xs text-muted/80">{c.label}</p>
               </div>
             </div>
           </div>
         ))}
       </div>
 
-      <div className="rounded-xl border border-neutral-800 bg-brand-card p-5">
-        <h3 className="font-semibold text-white mb-4">Próximas Citas</h3>
+      <div className="rounded-xl border border-subtle bg-brand-card p-5">
+        <h3 className="font-semibold text-foreground mb-4">Próximas Citas</h3>
         {data.upcoming_appointments.length === 0 ? (
-          <p className="text-sm text-neutral-500 py-8 text-center">No hay citas próximas</p>
+          <p className="text-sm text-muted/80 py-8 text-center">No hay citas próximas</p>
         ) : (
           <div className="space-y-3">
             {data.upcoming_appointments.map((a: Appointment) => (
-              <div key={a.id} className="flex items-center justify-between rounded-lg border border-neutral-800 bg-brand-dark p-3">
+              <div key={a.id} className="flex items-center justify-between rounded-lg border border-subtle bg-background p-3">
                 <div>
-                  <p className="text-sm font-medium text-white">{a.client_name}</p>
-                  <p className="text-xs text-neutral-500">{a.service_name} — {a.date} a las {a.time}</p>
+                  <p className="text-sm font-medium text-foreground">{a.client_name}</p>
+                  <p className="text-xs text-muted/80">{a.service_name} — {a.date} a las {a.time}</p>
                 </div>
                 <span className={cn('rounded-full px-2.5 py-0.5 text-xs font-medium', statusColors[a.status] || '')}>
                   {statusLabels[a.status] || a.status}

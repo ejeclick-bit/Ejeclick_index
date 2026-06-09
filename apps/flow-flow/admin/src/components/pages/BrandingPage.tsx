@@ -87,7 +87,7 @@ export function BrandingPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <Loader2 size={24} className="animate-spin text-neutral-500" />
+        <Loader2 size={24} className="animate-spin text-muted/80" />
       </div>
     );
   }
@@ -95,7 +95,7 @@ export function BrandingPage() {
   return (
     <div className="max-w-4xl">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-bold text-white">Apariencia y Marca</h2>
+        <h2 className="text-xl font-bold text-foreground">Apariencia y Marca</h2>
         <button
           onClick={handleSave}
           disabled={saving}
@@ -119,49 +119,49 @@ export function BrandingPage() {
       )}
 
       <div className="space-y-8">
-        <div className="rounded-xl border border-neutral-800 bg-brand-card p-6">
-          <h3 className="font-semibold text-white mb-4">Información del Negocio</h3>
+        <div className="rounded-xl border border-subtle bg-brand-card p-6">
+          <h3 className="font-semibold text-foreground mb-4">Información del Negocio</h3>
           <div className="grid gap-4 sm:grid-cols-2">
             <div>
-              <label className="block text-sm text-neutral-300 mb-1">Nombre</label>
+              <label className="block text-sm text-foreground/80 mb-1">Nombre</label>
               <input type="text" value={form.name} onChange={(e) => updateField('name', e.target.value)}
-                className="w-full rounded-lg border border-neutral-700 bg-brand-dark px-3 py-2 text-sm text-white focus:border-brand-gold focus:outline-none" />
+                className="w-full rounded-lg border border-subtle bg-background px-3 py-2 text-sm text-foreground focus:border-brand-gold focus:outline-none" />
             </div>
             <div>
-              <label className="block text-sm text-neutral-300 mb-1">Eslogan</label>
+              <label className="block text-sm text-foreground/80 mb-1">Eslogan</label>
               <input type="text" value={form.tagline} onChange={(e) => updateField('tagline', e.target.value)}
-                className="w-full rounded-lg border border-neutral-700 bg-brand-dark px-3 py-2 text-sm text-white focus:border-brand-gold focus:outline-none" />
+                className="w-full rounded-lg border border-subtle bg-background px-3 py-2 text-sm text-foreground focus:border-brand-gold focus:outline-none" />
             </div>
             <div className="sm:col-span-2">
-              <label className="block text-sm text-neutral-300 mb-1">Descripción</label>
+              <label className="block text-sm text-foreground/80 mb-1">Descripción</label>
               <textarea value={form.description} onChange={(e) => updateField('description', e.target.value)} rows={2}
-                className="w-full rounded-lg border border-neutral-700 bg-brand-dark px-3 py-2 text-sm text-white focus:border-brand-gold focus:outline-none" />
+                className="w-full rounded-lg border border-subtle bg-background px-3 py-2 text-sm text-foreground focus:border-brand-gold focus:outline-none" />
             </div>
             <div>
-              <label className="block text-sm text-neutral-300 mb-1">WhatsApp</label>
+              <label className="block text-sm text-foreground/80 mb-1">WhatsApp</label>
               <input type="text" value={form.whatsapp} onChange={(e) => updateField('whatsapp', e.target.value)} placeholder="573001234567"
-                className="w-full rounded-lg border border-neutral-700 bg-brand-dark px-3 py-2 text-sm text-white focus:border-brand-gold focus:outline-none" />
+                className="w-full rounded-lg border border-subtle bg-background px-3 py-2 text-sm text-foreground focus:border-brand-gold focus:outline-none" />
             </div>
             <div>
-              <label className="block text-sm text-neutral-300 mb-1">Teléfono</label>
+              <label className="block text-sm text-foreground/80 mb-1">Teléfono</label>
               <input type="text" value={form.phone} onChange={(e) => updateField('phone', e.target.value)}
-                className="w-full rounded-lg border border-neutral-700 bg-brand-dark px-3 py-2 text-sm text-white focus:border-brand-gold focus:outline-none" />
+                className="w-full rounded-lg border border-subtle bg-background px-3 py-2 text-sm text-foreground focus:border-brand-gold focus:outline-none" />
             </div>
             <div>
-              <label className="block text-sm text-neutral-300 mb-1">Email</label>
+              <label className="block text-sm text-foreground/80 mb-1">Email</label>
               <input type="email" value={form.email} onChange={(e) => updateField('email', e.target.value)}
-                className="w-full rounded-lg border border-neutral-700 bg-brand-dark px-3 py-2 text-sm text-white focus:border-brand-gold focus:outline-none" />
+                className="w-full rounded-lg border border-subtle bg-background px-3 py-2 text-sm text-foreground focus:border-brand-gold focus:outline-none" />
             </div>
             <div>
-              <label className="block text-sm text-neutral-300 mb-1">Dirección</label>
+              <label className="block text-sm text-foreground/80 mb-1">Dirección</label>
               <input type="text" value={form.address} onChange={(e) => updateField('address', e.target.value)}
-                className="w-full rounded-lg border border-neutral-700 bg-brand-dark px-3 py-2 text-sm text-white focus:border-brand-gold focus:outline-none" />
+                className="w-full rounded-lg border border-subtle bg-background px-3 py-2 text-sm text-foreground focus:border-brand-gold focus:outline-none" />
             </div>
           </div>
         </div>
 
-        <div className="rounded-xl border border-neutral-800 bg-brand-card p-6">
-          <h3 className="font-semibold text-white mb-4">Paleta de Colores</h3>
+        <div className="rounded-xl border border-subtle bg-brand-card p-6">
+          <h3 className="font-semibold text-foreground mb-4">Paleta de Colores</h3>
           <div className="grid gap-4 sm:grid-cols-2">
             {PALETTE_FIELDS.map((f) => (
               <div key={f.key} className="flex items-center gap-3">
@@ -169,27 +169,27 @@ export function BrandingPage() {
                   type="color"
                   value={form.palette[f.key] || '#000000'}
                   onChange={(e) => updatePalette(f.key, e.target.value)}
-                  className="h-10 w-10 cursor-pointer rounded border border-neutral-700 bg-transparent"
+                  className="h-10 w-10 cursor-pointer rounded border border-subtle bg-transparent"
                   aria-label={f.label}
                 />
                 <div>
-                  <p className="text-sm text-white">{f.label}</p>
-                  <p className="text-xs text-neutral-500">{form.palette[f.key] || '#000000'}</p>
+                  <p className="text-sm text-foreground">{f.label}</p>
+                  <p className="text-xs text-muted/80">{form.palette[f.key] || '#000000'}</p>
                 </div>
               </div>
             ))}
           </div>
 
-          <div className="mt-6 rounded-xl border border-neutral-800 p-4" style={{
+          <div className="mt-6 rounded-xl border border-subtle p-4" style={{
             backgroundColor: form.palette.bg || '#0a0a0a',
           }}>
-            <p className="text-xs text-neutral-400 mb-3">Vista previa</p>
+            <p className="text-xs text-muted mb-3">Vista previa</p>
             <div className="rounded-lg p-4 flex items-center gap-3"
               style={{ backgroundColor: form.palette.surface || '#141414' }}>
               <div className="h-8 w-8 rounded" style={{ backgroundColor: form.palette.primary || '#c9953c' }} />
               <div>
-                <p className="text-sm font-bold text-white">{form.name || 'Mi Barbería'}</p>
-                <p className="text-xs text-neutral-400">{form.tagline || 'Estilo y profesionalismo'}</p>
+                <p className="text-sm font-bold text-foreground">{form.name || 'Mi Barbería'}</p>
+                <p className="text-xs text-muted">{form.tagline || 'Estilo y profesionalismo'}</p>
               </div>
             </div>
             <div className="mt-3 flex gap-2">
@@ -205,16 +205,16 @@ export function BrandingPage() {
           </div>
         </div>
 
-        <div className="rounded-xl border border-neutral-800 bg-brand-card p-6">
-          <h3 className="font-semibold text-white mb-4">Redes Sociales</h3>
+        <div className="rounded-xl border border-subtle bg-brand-card p-6">
+          <h3 className="font-semibold text-foreground mb-4">Redes Sociales</h3>
           <div className="grid gap-4 sm:grid-cols-2">
             {SOCIAL_FIELDS.map((f) => (
               <div key={f.key}>
-                <label className="block text-sm text-neutral-300 mb-1">{f.label}</label>
+                <label className="block text-sm text-foreground/80 mb-1">{f.label}</label>
                 <input type="url" value={form.social[f.key] || ''}
                   onChange={(e) => updateSocial(f.key, e.target.value)}
                   placeholder={f.placeholder}
-                  className="w-full rounded-lg border border-neutral-700 bg-brand-dark px-3 py-2 text-sm text-white focus:border-brand-gold focus:outline-none" />
+                  className="w-full rounded-lg border border-subtle bg-background px-3 py-2 text-sm text-foreground focus:border-brand-gold focus:outline-none" />
               </div>
             ))}
           </div>

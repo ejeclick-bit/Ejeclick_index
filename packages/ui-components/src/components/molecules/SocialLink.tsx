@@ -1,5 +1,5 @@
 import { type AnchorHTMLAttributes } from 'react';
-import { cn } from '@/utils/cn';
+import { cn } from '../../utils/cn';
 import { type LucideIcon } from 'lucide-react';
 
 export interface SocialLinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
@@ -11,7 +11,7 @@ export function SocialLink({ icon: Icon, label, className, ...props }: SocialLin
   return (
     <a
       className={cn(
-        "flex h-10 w-10 items-center justify-center rounded-full bg-white/5 text-text-secondary transition-all hover:bg-white/10 hover:text-accent-primary hover:shadow-glow-primary hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-accent-primary",
+        "flex h-10 w-10 items-center justify-center rounded-full bg-foreground/5 text-text-secondary transition-all hover:bg-foreground/10 hover:text-accent-primary hover:shadow-glow-primary hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-accent-primary",
         className
       )}
       aria-label={label}

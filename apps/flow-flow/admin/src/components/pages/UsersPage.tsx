@@ -51,12 +51,12 @@ export function UsersPage() {
     } catch { setError('Error al actualizar'); }
   }
 
-  if (loading) return <div className="flex items-center justify-center py-20"><Loader2 size={24} className="animate-spin text-neutral-500" /></div>;
+  if (loading) return <div className="flex items-center justify-center py-20"><Loader2 size={24} className="animate-spin text-muted/80" /></div>;
 
   return (
     <div className="max-w-3xl">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-bold text-white">Usuarios</h2>
+        <h2 className="text-xl font-bold text-foreground">Usuarios</h2>
         <button onClick={() => setShowForm(true)} className="flex items-center gap-2 rounded-lg bg-brand-gold px-4 py-2 text-sm font-medium text-brand-dark hover:bg-brand-gold-light transition-colors">
           <Plus size={16} /> Nuevo Barbero
         </button>
@@ -66,26 +66,26 @@ export function UsersPage() {
 
       {showForm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4" onClick={() => setShowForm(false)}>
-          <div className="w-full max-w-sm rounded-xl border border-neutral-800 bg-brand-card p-6" onClick={(e) => e.stopPropagation()}>
-            <h3 className="font-semibold text-white mb-4">Nuevo Barbero</h3>
+          <div className="w-full max-w-sm rounded-xl border border-subtle bg-brand-card p-6" onClick={(e) => e.stopPropagation()}>
+            <h3 className="font-semibold text-foreground mb-4">Nuevo Barbero</h3>
             <div className="space-y-3">
               <div>
-                <label className="block text-sm text-neutral-300 mb-1">Usuario</label>
+                <label className="block text-sm text-foreground/80 mb-1">Usuario</label>
                 <input type="text" value={form.username} onChange={(e) => setForm({ ...form, username: e.target.value })}
-                  className="w-full rounded-lg border border-neutral-700 bg-brand-dark px-3 py-2 text-sm text-white focus:border-brand-gold focus:outline-none"
+                  className="w-full rounded-lg border border-subtle bg-background px-3 py-2 text-sm text-foreground focus:border-brand-gold focus:outline-none"
                   placeholder="juan_barber" />
               </div>
               <div>
-                <label className="block text-sm text-neutral-300 mb-1">Nombre Completo</label>
+                <label className="block text-sm text-foreground/80 mb-1">Nombre Completo</label>
                 <input type="text" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })}
-                  className="w-full rounded-lg border border-neutral-700 bg-brand-dark px-3 py-2 text-sm text-white focus:border-brand-gold focus:outline-none"
+                  className="w-full rounded-lg border border-subtle bg-background px-3 py-2 text-sm text-foreground focus:border-brand-gold focus:outline-none"
                   placeholder="Juan Pérez" />
               </div>
               <div>
-                <label className="block text-sm text-neutral-300 mb-1">Contraseña</label>
+                <label className="block text-sm text-foreground/80 mb-1">Contraseña</label>
                 <input type="password" value={form.password}
                   onChange={(e) => { setForm({ ...form, password: e.target.value }); setPassErrors(validatePass(e.target.value)); }}
-                  className="w-full rounded-lg border border-neutral-700 bg-brand-dark px-3 py-2 text-sm text-white focus:border-brand-gold focus:outline-none" />
+                  className="w-full rounded-lg border border-subtle bg-background px-3 py-2 text-sm text-foreground focus:border-brand-gold focus:outline-none" />
                 <div className="mt-2 space-y-1">
                   {['Mínimo 8 caracteres', 'Una mayúscula', 'Una minúscula', 'Un número'].map((r) => (
                     <div key={r} className={`text-xs flex items-center gap-1 ${passErrors.includes(r) ? 'text-red-400' : 'text-green-400'}`}>
@@ -96,7 +96,7 @@ export function UsersPage() {
               </div>
             </div>
             <div className="flex gap-2 mt-4">
-              <button onClick={() => setShowForm(false)} className="flex-1 rounded-lg border border-neutral-700 py-2 text-sm text-neutral-400 hover:text-white transition-colors">Cancelar</button>
+              <button onClick={() => setShowForm(false)} className="flex-1 rounded-lg border border-subtle py-2 text-sm text-muted hover:text-foreground transition-colors">Cancelar</button>
               <button onClick={handleCreate} disabled={creating || passErrors.length > 0}
                 className="flex-1 rounded-lg bg-brand-gold py-2 text-sm font-medium text-brand-dark hover:bg-brand-gold-light disabled:opacity-50 transition-colors">
                 {creating ? 'Creando...' : 'Crear'}
@@ -108,17 +108,17 @@ export function UsersPage() {
 
       <div className="space-y-2">
         {users.map((u) => (
-          <div key={u.id} className="flex items-center justify-between rounded-xl border border-neutral-800 bg-brand-card p-4">
+          <div key={u.id} className="flex items-center justify-between rounded-xl border border-subtle bg-brand-card p-4">
             <div>
-              <p className="font-medium text-white">{u.name}</p>
-              <p className="text-xs text-neutral-500">@{u.username} — {u.role}</p>
+              <p className="font-medium text-foreground">{u.name}</p>
+              <p className="text-xs text-muted/80">@{u.username} — {u.role}</p>
             </div>
             <div className="flex items-center gap-3">
               <span className={`rounded-full px-2 py-0.5 text-xs ${u.is_active ? 'bg-green-500/10 text-green-400' : 'bg-red-500/10 text-red-400'}`}>
                 {u.is_active ? 'Activo' : 'Inactivo'}
               </span>
               <button onClick={() => toggleActive(u)}
-                className="text-xs text-neutral-500 hover:text-white transition-colors">
+                className="text-xs text-muted/80 hover:text-foreground transition-colors">
                 {u.is_active ? 'Desactivar' : 'Activar'}
               </button>
             </div>

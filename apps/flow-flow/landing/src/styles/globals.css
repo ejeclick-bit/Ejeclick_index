@@ -1,39 +1,140 @@
 @import 'tailwindcss';
+@source "../../../packages/ui-components/src";
 
+/* ============================================================
+   DESIGN TOKENS — BARBERSHOP PREMIUM THEME SYSTEM
+   Dark  = "Barbería Clandestina" — carbón sofisticado, cuero, madera oscura
+   Light = "Barbería Clásica AM" — lino cálido, frescura, iluminación natural
+   ============================================================ */
+
+/* Token aliases in Tailwind */
 @theme {
-  --color-brand-dark: var(--brand-bg, #0a0a0a);
-  --color-brand-surface: var(--brand-surface, #141414);
-  --color-brand-card: var(--brand-card, color-mix(in srgb, var(--brand-surface, #141414) 96%, white));
-  --color-brand-gold: var(--brand-primary, #c9953c);
-  --color-brand-gold-light: var(--brand-accent, color-mix(in srgb, var(--brand-primary, #c9953c) 85%, white));
-  --color-brand-gold-dark: var(--brand-primary-dark, color-mix(in srgb, var(--brand-primary, #c9953c) 85%, black));
+  /* Semantic Tokens */
+  --color-background: var(--theme-background);
+  --color-surface: var(--theme-surface);
+  --color-card: var(--theme-card);
+  --color-foreground: var(--theme-foreground);
+  --color-muted: var(--theme-muted);
+  --color-border-subtle: var(--theme-border);
+
+  /* Brand — Dorado viejo / Bronce satinado */
+  --color-brand-primary: var(--brand-primary, #c5a880);
+  --color-brand-gold: var(--brand-primary, #c5a880);
+  --color-brand-gold-light: color-mix(in srgb, var(--brand-primary, #c5a880) 80%, white);
+  --color-brand-gold-dark: color-mix(in srgb, var(--brand-primary, #c5a880) 80%, black);
+
   --font-family-display: 'Playfair Display', Georgia, serif;
   --font-family-body: 'Inter', system-ui, sans-serif;
 }
 
-@font-face {
-  font-family: 'Playfair Display';
-  font-style: normal;
-  font-weight: 400 700;
-  src: url(https://fonts.gstatic.com/s/playfairdisplay/v37/nuFvD-vYSZviVYUb_rj3ij__anPXJzDwcbmjWBN2PKdFvXDXbtM.woff2) format('woff2');
+/* ── DARK MODE (Default): Barbería Clandestina Nocturna ── */
+:root {
+  --theme-background: #0a0f18;                   /* Navy profundo oscuro, elegante y moderno */
+  --theme-surface:    #121926;                   /* Azul pizarra oscuro para la superficie */
+  --theme-card:       #182133;                   /* Azul profundo ligeramente más claro para tarjetas */
+  --theme-foreground: #eef2ff;                   /* Blanco con levísimo tinte azul (Ice White) */
+  --theme-muted:      #94a3b8;                   /* Gris azulado apagado */
+  --theme-border:     #243049;                   /* Borde azul medianoche */
+
+  /* Acento bronce — identidad barber para ambos modos */
+  --theme-accent:     #c5a880;                       /* Bronce satinado / Dorado viejo */
+  --theme-accent-dim: rgba(197, 168, 128, 0.12);     /* Para fondos de badges / hover */
 }
 
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 300 600;
-  src: url(https://fonts.gstatic.com/s/inter/v18/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2ZL7W0Q5n-wU.woff2) format('woff2');
+/* ── LIGHT MODE: Barbería Clásica Mañana ── */
+:root.light {
+  --theme-background: #e9e3d9 !important;  /* Beige cálido / Lino crudo — mucho menos blanco */
+  --theme-surface:    #ded5c7 !important;  /* Arena oscura para crear profundidad */
+  --theme-card:       #f0ebdce6 !important;  /* Crema suave, NUNCA blanco puro (#ffffff) */
+  --theme-foreground: #27221d !important;  /* Café espresso oscuro */
+  --theme-muted:      #7c7365 !important;  /* Gris pardo cálido */
+  --theme-border:     #d1c5b4 !important;  /* Beige oscurecido para bordes */
+
+  --theme-accent:     #b45309 !important;  /* Ámbar whisky */
+  --theme-accent-dim: rgba(180, 83, 9, 0.08) !important;
 }
 
-html { scroll-behavior: smooth; }
+html { 
+  scroll-behavior: smooth; 
+  overflow-x: hidden;
+}
 
 body {
   font-family: var(--font-family-body);
-  background-color: var(--brand-bg, #0a0a0a);
-  color: #f5f5f5;
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  overflow-x: hidden;
+  /* ── Transición cinematográfica 400ms ── */
+  transition:
+    background-color 400ms cubic-bezier(0.4, 0, 0.2, 1),
+    color 400ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Aplicar transición a todos los elementos que cambian de color */
+*, *::before, *::after {
+  transition-property: background-color, border-color, color;
+  transition-duration: 400ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Excepción: elementos que tienen sus propias transiciones de animación */
+.no-theme-transition,
+[class*="animate-"],
+.cursor-spotlight {
+  transition: none !important;
 }
 
 ::selection {
-  background-color: var(--brand-primary, #c9953c);
-  color: var(--brand-bg, #0a0a0a);
+  background-color: var(--theme-accent);
+  color: var(--theme-background);
+}
+
+
+/* View transitions styles */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-old(root) {
+  z-index: 1;
+}
+::view-transition-new(root) {
+  z-index: 9999;
+}
+.light::view-transition-old(root) {
+  z-index: 9999;
+}
+.light::view-transition-new(root) {
+  z-index: 1;
+}
+
+/* === Cursor Spotlight Effect (desktop only) === */
+:root {
+  --cursor-x: 50%;
+  --cursor-y: 50%;
+}
+
+@media (pointer: fine) {
+  .cursor-spotlight {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    pointer-events: none;
+    background: radial-gradient(
+      550px circle at var(--cursor-x) var(--cursor-y),
+      hsla(36, 70%, 52%, 0.07) 0%,
+      hsla(36, 70%, 52%, 0.03) 40%,
+      transparent 70%
+    );
+  }
+
+  .light .cursor-spotlight {
+    background: radial-gradient(
+      450px circle at var(--cursor-x) var(--cursor-y),
+      hsla(36, 70%, 45%, 0.08) 0%,
+      hsla(36, 70%, 45%, 0.03) 40%,
+      transparent 70%
+    );
+  }
 }

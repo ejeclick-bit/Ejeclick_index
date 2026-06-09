@@ -2,8 +2,8 @@ import { useState, type FormEvent } from 'react';
 import { motion } from 'framer-motion';
 import { XCircle, Clock } from 'lucide-react';
 import { Container } from '../atoms/Container';
-import { Badge } from '../atoms/Badge';
-import { Button } from '../atoms/Button';
+import { Badge } from '@ejeclick/ui-components';
+import { Button } from '@ejeclick/ui-components';
 import { api } from '../../lib/api';
 
 export function CancelBooking() {
@@ -61,15 +61,15 @@ export function CancelBooking() {
   }
 
   return (
-    <section id="cancelar" className="bg-brand-dark py-24">
+    <section id="cancelar" className="bg-background py-24">
       <Container>
         <div className="mx-auto max-w-md">
           <div className="mb-8 text-center">
             <Badge variant="gold">Cancelar Cita</Badge>
-            <h2 className="mt-4 font-display text-3xl font-bold text-white sm:text-4xl">
+            <h2 className="mt-4 font-display text-3xl font-bold text-foreground sm:text-4xl">
               ¿No puedes asistir?
             </h2>
-            <p className="mt-3 text-neutral-400">
+            <p className="mt-3 text-muted">
               Cancela tu cita sin problema. Solo necesitas 1 hora de anticipación.
             </p>
           </div>
@@ -81,11 +81,11 @@ export function CancelBooking() {
               className="rounded-xl border border-green-500/20 bg-green-500/5 p-8 text-center"
             >
               <XCircle className="mx-auto mb-4 h-12 w-12 text-green-400" />
-              <h3 className="text-lg font-semibold text-white">Cita Cancelada</h3>
-              <p className="mt-2 text-sm text-neutral-400">
+              <h3 className="text-lg font-semibold text-foreground">Cita Cancelada</h3>
+              <p className="mt-2 text-sm text-muted">
                 Tu cita del {result?.date} a las {result?.time} ha sido cancelada.
               </p>
-              <p className="mt-1 text-xs text-neutral-500">El horario queda liberado para otros clientes.</p>
+              <p className="mt-1 text-xs text-muted/80">El horario queda liberado para otros clientes.</p>
               <Button variant="ghost" className="mt-6" onClick={reset}>
                 Cancelar otra cita
               </Button>
@@ -94,9 +94,9 @@ export function CancelBooking() {
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="rounded-xl border border-neutral-800 bg-brand-card p-6"
+              className="rounded-xl border border-subtle bg-brand-card p-6"
             >
-              <h3 className="font-semibold text-white mb-4">Tus citas activas</h3>
+              <h3 className="font-semibold text-foreground mb-4">Tus citas activas</h3>
 
               {error && (
                 <div className="mb-4">
@@ -113,10 +113,10 @@ export function CancelBooking() {
 
               <div className="space-y-3">
                 {appointments.map((a) => (
-                  <div key={a.id} className="flex items-center justify-between rounded-lg border border-neutral-800 bg-brand-dark p-4">
+                  <div key={a.id} className="flex items-center justify-between rounded-lg border border-subtle bg-background p-4">
                     <div>
-                      <p className="font-medium text-white">{a.service_name}</p>
-                      <p className="text-sm text-neutral-400">{a.date} a las {a.time}</p>
+                      <p className="font-medium text-foreground">{a.service_name}</p>
+                      <p className="text-sm text-muted">{a.date} a las {a.time}</p>
                     </div>
                     <Button
                       variant="ghost"
@@ -131,8 +131,8 @@ export function CancelBooking() {
                 ))}
               </div>
 
-              <div className="mt-4 border-t border-neutral-800 pt-4">
-                <p className="text-xs text-neutral-500 mb-2">La cancelación es reversible desde el admin.</p>
+              <div className="mt-4 border-t border-subtle pt-4">
+                <p className="text-xs text-muted/80 mb-2">La cancelación es reversible desde el admin.</p>
                 <Button variant="ghost" size="sm" onClick={reset}>
                   Volver
                 </Button>
@@ -143,7 +143,7 @@ export function CancelBooking() {
               onSubmit={handleFind}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="rounded-xl border border-neutral-800 bg-brand-card p-6 space-y-4"
+              className="rounded-xl border border-subtle bg-brand-card p-6 space-y-4"
             >
               {error && (
                 <div className="flex items-start gap-3 rounded-xl border border-red-500/20 bg-red-500/5 p-4 text-left" role="alert">
@@ -153,17 +153,17 @@ export function CancelBooking() {
               )}
 
               <div>
-                <label htmlFor="cancel-email" className="block text-sm font-medium text-neutral-300">Correo Electrónico</label>
+                <label htmlFor="cancel-email" className="block text-sm font-medium text-foreground/80">Correo Electrónico</label>
                 <input id="cancel-email" type="email" required value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="mt-1 w-full rounded-lg border border-neutral-700 bg-brand-dark px-4 py-2.5 text-sm text-white placeholder-neutral-500 focus:border-brand-gold focus:outline-none"
+                  className="mt-1 w-full rounded-lg border border-subtle bg-background px-4 py-2.5 text-sm text-foreground placeholder-neutral-500 focus:border-brand-gold focus:outline-none"
                   placeholder="El mismo que usaste al agendar" />
               </div>
               <div>
-                <label htmlFor="cancel-phone" className="block text-sm font-medium text-neutral-300">WhatsApp</label>
+                <label htmlFor="cancel-phone" className="block text-sm font-medium text-foreground/80">WhatsApp</label>
                 <input id="cancel-phone" type="tel" required value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  className="mt-1 w-full rounded-lg border border-neutral-700 bg-brand-dark px-4 py-2.5 text-sm text-white placeholder-neutral-500 focus:border-brand-gold focus:outline-none"
+                  className="mt-1 w-full rounded-lg border border-subtle bg-background px-4 py-2.5 text-sm text-foreground placeholder-neutral-500 focus:border-brand-gold focus:outline-none"
                   placeholder="El mismo que usaste al agendar" />
               </div>
               <Button type="submit" variant="primary" className="w-full" isLoading={loading}>

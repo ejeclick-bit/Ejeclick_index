@@ -1,5 +1,5 @@
 import { type ButtonHTMLAttributes, forwardRef } from 'react';
-import { cn } from '@/utils/cn';
+import { cn } from '../../utils/cn';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost';
@@ -14,9 +14,9 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     
     const variants = {
       primary: "bg-gradient-to-r from-accent-primary to-accent-secondary text-white shadow-[0_0_20px_hsla(217,91%,60%,0.2)] hover:shadow-[0_0_30px_hsla(217,91%,60%,0.4)] hover:scale-[1.02]",
-      secondary: "bg-bg-elevated text-white hover:bg-bg-elevated/80 border border-white/10 hover:border-white/20",
+      secondary: "bg-bg-elevated text-foreground hover:bg-bg-elevated/80 border border-border-subtle hover:border-foreground/20",
       outline: "border border-accent-primary text-accent-primary hover:bg-accent-primary/10 shadow-[0_0_10px_hsla(217,91%,60%,0.1)] hover:shadow-[0_0_20px_hsla(217,91%,60%,0.2)]",
-      ghost: "hover:bg-white/10 hover:text-white text-text-secondary"
+      ghost: "hover:bg-foreground/10 hover:text-foreground text-text-secondary"
     };
 
     const sizes = {

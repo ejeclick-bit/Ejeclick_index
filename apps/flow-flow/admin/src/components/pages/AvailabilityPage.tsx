@@ -97,25 +97,25 @@ export function AvailabilityPage() {
 
   return (
     <div>
-      <h2 className="text-xl font-bold text-white mb-6">Disponibilidad</h2>
+      <h2 className="text-xl font-bold text-foreground mb-6">Disponibilidad</h2>
 
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="lg:col-span-2">
-          <div className="rounded-xl border border-neutral-800 bg-brand-card p-5">
+          <div className="rounded-xl border border-subtle bg-brand-card p-5">
             <div className="flex items-center justify-between mb-6">
               <button onClick={() => { if (month === 0) { setYear(y => y - 1); setMonth(11); } else setMonth(m => m - 1); }}
-                className="rounded-lg p-2 text-neutral-400 hover:text-white hover:bg-white/5">
+                className="rounded-lg p-2 text-muted hover:text-foreground hover:bg-foreground/5">
                 <ChevronLeft size={20} />
               </button>
-              <span className="text-lg font-semibold text-white">{MONTHS[month]} {year}</span>
+              <span className="text-lg font-semibold text-foreground">{MONTHS[month]} {year}</span>
               <button onClick={() => { if (month === 11) { setYear(y => y + 1); setMonth(0); } else setMonth(m => m + 1); }}
-                className="rounded-lg p-2 text-neutral-400 hover:text-white hover:bg-white/5">
+                className="rounded-lg p-2 text-muted hover:text-foreground hover:bg-foreground/5">
                 <ChevronRight size={20} />
               </button>
             </div>
 
             <div className="grid grid-cols-7 gap-1 mb-2">
-              {DAYS.map(d => <div key={d} className="text-center text-xs font-medium text-neutral-500 py-1">{d}</div>)}
+              {DAYS.map(d => <div key={d} className="text-center text-xs font-medium text-muted/80 py-1">{d}</div>)}
             </div>
 
             <div className="grid grid-cols-7 gap-1">
@@ -135,7 +135,7 @@ export function AvailabilityPage() {
                   <button key={i} onClick={() => !past && selectDate(dateStr)} disabled={past}
                     className={cn(
                       'aspect-square rounded-lg text-sm transition-colors flex items-center justify-center',
-                      past ? 'text-neutral-700 cursor-not-allowed bg-transparent' : 'text-white cursor-pointer',
+                      past ? 'text-neutral-700 cursor-not-allowed bg-transparent' : 'text-foreground cursor-pointer',
                       bg, border,
                     )}>
                     {day}
@@ -148,10 +148,10 @@ export function AvailabilityPage() {
 
         <div>
           {selectedDate ? (
-            <div className="rounded-xl border border-neutral-800 bg-brand-card p-5 space-y-4">
+            <div className="rounded-xl border border-subtle bg-brand-card p-5 space-y-4">
               <div className="flex items-center justify-between">
-                <h3 className="font-semibold text-white">{selectedDate}</h3>
-                <button onClick={() => setSelectedDate('')} className="text-neutral-500 hover:text-white"><X size={18} /></button>
+                <h3 className="font-semibold text-foreground">{selectedDate}</h3>
+                <button onClick={() => setSelectedDate('')} className="text-muted/80 hover:text-foreground"><X size={18} /></button>
               </div>
 
               <div className="space-y-3">
@@ -164,17 +164,17 @@ export function AvailabilityPage() {
                 {form.isActive && (
                   <div className="flex items-center gap-2">
                     <input type="time" value={form.openTime} onChange={(e) => setForm({ ...form, openTime: e.target.value })}
-                      className="rounded-lg border border-neutral-700 bg-brand-dark px-3 py-2 text-sm text-white focus:border-brand-gold focus:outline-none" />
-                    <span className="text-neutral-500">a</span>
+                      className="rounded-lg border border-subtle bg-background px-3 py-2 text-sm text-foreground focus:border-brand-gold focus:outline-none" />
+                    <span className="text-muted/80">a</span>
                     <input type="time" value={form.closeTime} onChange={(e) => setForm({ ...form, closeTime: e.target.value })}
-                      className="rounded-lg border border-neutral-700 bg-brand-dark px-3 py-2 text-sm text-white focus:border-brand-gold focus:outline-none" />
+                      className="rounded-lg border border-subtle bg-background px-3 py-2 text-sm text-foreground focus:border-brand-gold focus:outline-none" />
                   </div>
                 )}
 
                 <div>
-                  <label className="text-xs text-neutral-500">Motivo (opcional)</label>
+                  <label className="text-xs text-muted/80">Motivo (opcional)</label>
                   <input type="text" value={form.reason} onChange={(e) => setForm({ ...form, reason: e.target.value })}
-                    className="mt-1 w-full rounded-lg border border-neutral-700 bg-brand-dark px-3 py-2 text-sm text-white placeholder-neutral-500 focus:border-brand-gold focus:outline-none"
+                    className="mt-1 w-full rounded-lg border border-subtle bg-background px-3 py-2 text-sm text-foreground placeholder-neutral-500 focus:border-brand-gold focus:outline-none"
                     placeholder="Ej: Cita médica, vacaciones..." />
                 </div>
               </div>
@@ -192,15 +192,15 @@ export function AvailabilityPage() {
                 )}
               </div>
 
-              <div className="border-t border-neutral-800 pt-4">
-                <h4 className="text-sm font-medium text-white mb-3">Bloqueos de tiempo (almuerzos, reuniones)</h4>
+              <div className="border-t border-subtle pt-4">
+                <h4 className="text-sm font-medium text-foreground mb-3">Bloqueos de tiempo (almuerzos, reuniones)</h4>
                 <div className="space-y-2 mb-3">
                   {blocks.map((b) => (
                     <div key={b.id} className="flex items-center justify-between rounded-lg bg-neutral-800/50 px-3 py-2">
-                      <span className="text-sm text-neutral-300">{b.start_time} - {b.end_time}</span>
+                      <span className="text-sm text-foreground/80">{b.start_time} - {b.end_time}</span>
                       <div className="flex items-center gap-2">
-                        {b.reason && <span className="text-xs text-neutral-500">{b.reason}</span>}
-                        <button onClick={() => removeBlock(b.id)} className="text-neutral-500 hover:text-red-400"><Trash2 size={14} /></button>
+                        {b.reason && <span className="text-xs text-muted/80">{b.reason}</span>}
+                        <button onClick={() => removeBlock(b.id)} className="text-muted/80 hover:text-red-400"><Trash2 size={14} /></button>
                       </div>
                     </div>
                   ))}
@@ -208,19 +208,19 @@ export function AvailabilityPage() {
 
                 <div className="flex gap-2">
                   <input type="time" value={blockForm.startTime} onChange={(e) => setBlockForm({ ...blockForm, startTime: e.target.value })}
-                    className="flex-1 rounded-lg border border-neutral-700 bg-brand-dark px-2 py-1.5 text-sm text-white focus:border-brand-gold focus:outline-none" />
+                    className="flex-1 rounded-lg border border-subtle bg-background px-2 py-1.5 text-sm text-foreground focus:border-brand-gold focus:outline-none" />
                   <input type="time" value={blockForm.endTime} onChange={(e) => setBlockForm({ ...blockForm, endTime: e.target.value })}
-                    className="flex-1 rounded-lg border border-neutral-700 bg-brand-dark px-2 py-1.5 text-sm text-white focus:border-brand-gold focus:outline-none" />
+                    className="flex-1 rounded-lg border border-subtle bg-background px-2 py-1.5 text-sm text-foreground focus:border-brand-gold focus:outline-none" />
                   <button onClick={addBlock}
-                    className="rounded-lg border border-neutral-700 p-1.5 text-neutral-400 hover:text-white hover:border-neutral-500">
+                    className="rounded-lg border border-subtle p-1.5 text-muted hover:text-foreground hover:border-neutral-500">
                     <Plus size={18} />
                   </button>
                 </div>
               </div>
             </div>
           ) : (
-            <div className="rounded-xl border border-dashed border-neutral-800 p-8 text-center">
-              <p className="text-neutral-500">Selecciona un día del calendario para configurar su disponibilidad</p>
+            <div className="rounded-xl border border-dashed border-subtle p-8 text-center">
+              <p className="text-muted/80">Selecciona un día del calendario para configurar su disponibilidad</p>
             </div>
           )}
         </div>

@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
-import { Typography } from '@/components/atoms/Typography';
-import { cn } from '@/utils/cn';
+import { Typography } from '../atoms/Typography';
+import { cn } from '../../utils/cn';
 
 export interface AccordionItemProps {
   question: string;
@@ -29,8 +29,8 @@ export function AccordionItem({ question, answer, defaultOpen = false }: Accordi
         </Typography>
         <div
           className={cn(
-            "flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/5 transition-transform duration-300",
-            isOpen ? "rotate-180 bg-accent-primary/10 text-accent-primary" : "text-text-secondary hover:bg-white/10"
+            "flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-foreground/5 transition-transform duration-300",
+            isOpen ? "rotate-180 bg-accent-primary/10 text-accent-primary" : "text-text-secondary hover:bg-foreground/10"
           )}
           aria-hidden="true"
         >

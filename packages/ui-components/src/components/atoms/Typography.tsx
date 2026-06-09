@@ -1,5 +1,5 @@
 import { type HTMLAttributes, type ElementType, createElement } from 'react';
-import { cn } from '@/utils/cn';
+import { cn } from '../../utils/cn';
 
 export interface TypographyProps extends HTMLAttributes<HTMLElement> {
   as?: ElementType;

@@ -1,7 +1,7 @@
 import { forwardRef, type InputHTMLAttributes } from 'react';
-import { Input } from '@/components/atoms/Input';
-import { Typography } from '@/components/atoms/Typography';
-import { cn } from '@/utils/cn';
+import { Input } from '../atoms/Input';
+import { Typography } from '../atoms/Typography';
+import { cn } from '../../utils/cn';
 
 export interface FormFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;

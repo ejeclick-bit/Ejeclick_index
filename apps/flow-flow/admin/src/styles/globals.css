@@ -1,13 +1,104 @@
 @import 'tailwindcss';
+@source "../../../packages/ui-components/src";
 
 @theme {
-  --color-brand-dark: #0a0a0a;
-  --color-brand-surface: #141414;
-  --color-brand-card: #1a1a1a;
+  /* Semantic Tokens */
+  --color-background: var(--theme-background);
+  --color-surface: var(--theme-surface);
+  --color-card: var(--theme-card);
+  --color-foreground: var(--theme-foreground);
+  --color-muted: var(--theme-muted);
+  --color-border-subtle: var(--theme-border-subtle);
+
+  /* Brand Tokens */
+  --color-brand-primary: var(--color-brand-gold);
+  --color-brand-dark: var(--theme-background);
+  --color-brand-surface: var(--theme-surface);
+  --color-brand-card: var(--theme-card);
+  
   --color-brand-gold: #c9953c;
   --color-brand-gold-light: #e0b660;
   --color-brand-gold-dark: #a6782e;
 }
 
-html { scroll-behavior: smooth; }
-body { background-color: var(--color-brand-dark); color: #f5f5f5; }
+/* Dark Mode (Default) — Midnight Navy Barbershop */
+:root {
+  --theme-background: #0a0f18;                   /* Navy profundo oscuro, elegante y moderno */
+  --theme-surface:    #121926;                   /* Azul pizarra oscuro para la superficie */
+  --theme-card:       #182133;                   /* Azul profundo ligeramente más claro para tarjetas */
+  --theme-foreground: #eef2ff;                   /* Blanco con levísimo tinte azul (Ice White) */
+  --theme-muted:      #94a3b8;                   /* Gris azulado apagado */
+  --theme-border-subtle: #243049;                /* Borde azul medianoche */
+}
+
+/* Light Mode — Classic Vintage AM */
+:root.light {
+  --theme-background: #e9e3d9 !important;  /* Beige cálido / Lino crudo — mucho menos blanco */
+  --theme-surface:    #ded5c7 !important;  /* Arena oscura para crear profundidad */
+  --theme-card:       #f0ebdce6 !important;  /* Crema suave, NUNCA blanco puro (#ffffff) */
+  --theme-foreground: #27221d !important;  /* Café espresso oscuro */
+  --theme-muted:      #7c7365 !important;  /* Gris pardo cálido */
+  --theme-border-subtle: #d1c5b4 !important; /* Beige oscurecido para bordes */
+}
+
+html { 
+  scroll-behavior: smooth; 
+  overflow-x: hidden;
+}
+
+body { 
+  background-color: var(--color-background); 
+  color: var(--color-foreground); 
+  overflow-x: hidden;
+}
+
+/* View transitions styles */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-old(root) {
+  z-index: 1;
+}
+::view-transition-new(root) {
+  z-index: 9999;
+}
+.light::view-transition-old(root) {
+  z-index: 9999;
+}
+.light::view-transition-new(root) {
+  z-index: 1;
+}
+
+/* === Cursor Spotlight Effect (desktop only) === */
+:root {
+  --cursor-x: 50%;
+  --cursor-y: 50%;
+}
+
+@media (pointer: fine) {
+  .cursor-spotlight {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    pointer-events: none;
+    /* Dorado suave — acorde al brand gold del admin panel */
+    background: radial-gradient(
+      500px circle at var(--cursor-x) var(--cursor-y),
+      hsla(36, 65%, 50%, 0.06) 0%,
+      hsla(36, 65%, 50%, 0.02) 40%,
+      transparent 70%
+    );
+  }
+
+  /* Light mode: spotlight más cálido y tenue */
+  .light .cursor-spotlight {
+    background: radial-gradient(
+      400px circle at var(--cursor-x) var(--cursor-y),
+      hsla(36, 65%, 45%, 0.07) 0%,
+      hsla(36, 65%, 45%, 0.02) 40%,
+      transparent 70%
+    );
+  }
+}

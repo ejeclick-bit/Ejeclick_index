@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import { Typography } from '@/components/atoms/Typography';
-import { AccordionItem } from '@/components/molecules/AccordionItem';
+import { Typography } from '@ejeclick/ui-components';
+import { AccordionItem } from '@ejeclick/ui-components';
 
 const faqs = [
   {
@@ -50,7 +50,7 @@ export function FAQSection() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <Typography variant="h2" className="text-white mb-4">
+          <Typography variant="h2" className="text-foreground mb-4">
             Preguntas Frecuentes
           </Typography>
           <Typography variant="lead" className="text-text-secondary">
