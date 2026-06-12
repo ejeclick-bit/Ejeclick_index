@@ -1,12 +1,11 @@
-import { useState, useEffect } from 'react';
-import { Save, Loader2 } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { Save, Loader2, ImagePlus, Trash2, Eye, AlertCircle, X } from 'lucide-react';
 import { api } from '../../lib/api';
+import { useConfirm } from '../../hooks/useConfirm';
 
 const PALETTE_FIELDS = [
   { key: 'primary', label: 'Color Principal' },
   { key: 'accent', label: 'Color Secundario (Hover)' },
-  { key: 'bg', label: 'Fondo' },
-  { key: 'surface', label: 'Superficie (cards)' },
 ];
 
 const SOCIAL_FIELDS = [
@@ -15,11 +14,28 @@ const SOCIAL_FIELDS = [
   { key: 'tiktok', label: 'TikTok', placeholder: 'https://tiktok.com/@...' },
 ];
 
+function isLightColor(hexColor: string) {
+  const hex = hexColor.replace('#', '');
+  const r = parseInt(hex.substr(0, 2), 16);
+  const g = parseInt(hex.substr(2, 2), 16);
+  const b = parseInt(hex.substr(4, 2), 16);
+  const brightness = ((r * 299) + (g * 587) + (b * 114)) / 1000;
+  return brightness > 155;
+}
+
 export function BrandingPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState('');
+  const { confirm, ModalComponent } = useConfirm();
+
+  // Estado para la imagen de portada del Hero
+  const [heroImageUrl, setHeroImageUrl] = useState('');
+  const [heroUploading, setHeroUploading] = useState(false);
+  const [heroDeleting, setHeroDeleting] = useState(false);
+  const [heroError, setHeroError] = useState('');
+  const heroInputRef = useRef<HTMLInputElement>(null);
 
   const [form, setForm] = useState({
     name: '', tagline: '', description: '',
@@ -37,6 +53,7 @@ export function BrandingPage() {
           palette: t.palette || {},
           social: t.social || {},
         });
+        setHeroImageUrl(t.hero_image_url || '');
       }
     }).catch(() => setError('Error al cargar datos de la barbería'))
       .finally(() => setLoading(false));
@@ -58,6 +75,45 @@ export function BrandingPage() {
       ...prev,
       social: { ...prev.social, [key]: value },
     }));
+  }
+
+  async function handleHeroUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (file.size > 5 * 1024 * 1024) {
+      setHeroError('La imagen excede el límite de 5MB. Por favor usa una imagen más ligera.');
+      if (heroInputRef.current) heroInputRef.current.value = '';
+      return;
+    }
+
+    setHeroUploading(true);
+    setHeroError('');
+    try {
+      const updated = await api.uploadHeroImage(file);
+      setHeroImageUrl(updated.hero_image_url || '');
+    } catch (err: unknown) {
+      setHeroError(err instanceof Error ? err.message : 'Error al subir la imagen.');
+    } finally {
+      setHeroUploading(false);
+      // Resetear input para permitir re-subir el mismo archivo
+      if (heroInputRef.current) heroInputRef.current.value = '';
+    }
+  }
+
+  function handleHeroDelete() {
+    confirm('¿Seguro que deseas eliminar la imagen de portada? La landing volverá al diseño por defecto.', async () => {
+      setHeroDeleting(true);
+      setHeroError('');
+      try {
+        await api.deleteHeroImage();
+        setHeroImageUrl('');
+      } catch {
+        setHeroError('Error al eliminar la imagen.');
+      } finally {
+        setHeroDeleting(false);
+      }
+    });
   }
 
   async function handleSave() {
@@ -94,6 +150,7 @@ export function BrandingPage() {
 
   return (
     <div className="max-w-4xl">
+      <ModalComponent />
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-xl font-bold text-foreground">Apariencia y Marca</h2>
         <button
@@ -107,18 +164,131 @@ export function BrandingPage() {
       </div>
 
       {saved && (
-        <div className="mb-4 rounded-lg bg-green-900/20 border border-green-900/30 px-4 py-3 text-sm text-green-400" role="alert">
-          Cambios guardados correctamente
+        <div className="mb-6 flex items-start gap-3 rounded-xl border border-green-500/30 bg-green-500/10 p-4 text-green-400 [.light_&]:text-green-600 animate-in fade-in slide-in-from-top-2">
+          <div className="flex-1">
+            <h3 className="text-sm font-semibold">Cambios guardados correctamente</h3>
+          </div>
         </div>
       )}
 
       {error && (
-        <div className="mb-4 rounded-lg bg-red-900/20 border border-red-900/30 px-4 py-3 text-sm text-red-400" role="alert">
-          {error}
+        <div className="mb-6 flex items-start gap-3 rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-red-400 [.light_&]:text-red-600 animate-in fade-in slide-in-from-top-2">
+          <AlertCircle className="mt-0.5 shrink-0" size={18} />
+          <div className="flex-1">
+            <h3 className="text-sm font-semibold">Error al guardar</h3>
+            <p className="mt-1 text-sm opacity-90">{error}</p>
+          </div>
+          <button onClick={() => setError('')} className="shrink-0 p-1 hover:bg-red-500/20 rounded-md transition-colors">
+            <X size={16} />
+          </button>
         </div>
       )}
 
       <div className="space-y-8">
+
+        {/* ── Panel: Imagen de Portada del Hero ── */}
+        <div className="rounded-xl border border-subtle bg-brand-card p-6">
+          <div className="flex items-start justify-between mb-4">
+            <div>
+              <h3 className="font-semibold text-foreground">Imagen de Portada</h3>
+              <p className="text-xs text-muted mt-1">
+                Foto de fondo para el Hero de tu landing. Opcional — sin imagen se muestra un diseño premium por defecto.
+                <br />Formatos: JPG, PNG, WebP · Máximo 10MB · Recomendado: 1920×1080px
+              </p>
+            </div>
+          </div>
+
+          {/* Error de hero */}
+          {heroError && (
+            <div className="mb-4 flex items-start gap-2 rounded-lg border border-red-500/30 bg-red-500/10 p-3 text-red-400 [.light_&]:text-red-600 animate-in fade-in slide-in-from-top-1">
+              <AlertCircle className="mt-0.5 shrink-0" size={16} />
+              <div className="flex-1">
+                <p className="text-sm font-medium">{heroError}</p>
+              </div>
+              <button onClick={() => setHeroError('')} className="shrink-0 p-0.5 hover:bg-red-500/20 rounded-md transition-colors">
+                <X size={14} />
+              </button>
+            </div>
+          )}
+
+          {heroImageUrl ? (
+            /* Preview de imagen existente */
+            <div className="relative group overflow-hidden rounded-xl border border-subtle" style={{ aspectRatio: '16/6' }}>
+              <img
+                src={heroImageUrl}
+                alt="Imagen de portada actual"
+                className="h-full w-full object-cover"
+              />
+              {/* Overlay con acciones */}
+              <div className="absolute inset-0 flex items-center justify-center gap-3 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                <a
+                  href={heroImageUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 rounded-lg bg-white/10 backdrop-blur-sm px-3 py-2 text-xs font-medium text-white border border-white/20 hover:bg-white/20 transition-colors"
+                >
+                  <Eye size={13} />
+                  Ver original
+                </a>
+                <button
+                  onClick={() => heroInputRef.current?.click()}
+                  disabled={heroUploading}
+                  className="flex items-center gap-1.5 rounded-lg bg-brand-gold/80 px-3 py-2 text-xs font-medium text-brand-dark hover:bg-brand-gold transition-colors disabled:opacity-50"
+                >
+                  <ImagePlus size={13} />
+                  Cambiar
+                </button>
+                <button
+                  onClick={handleHeroDelete}
+                  disabled={heroDeleting}
+                  className="flex items-center gap-1.5 rounded-lg bg-red-900/70 px-3 py-2 text-xs font-medium text-red-200 border border-red-800/40 hover:bg-red-900 transition-colors disabled:opacity-50"
+                >
+                  {heroDeleting ? <Loader2 size={13} className="animate-spin" /> : <Trash2 size={13} />}
+                  Eliminar
+                </button>
+              </div>
+              <div className="absolute bottom-2 left-3 rounded-md bg-black/60 px-2 py-1 text-[10px] text-white/70 backdrop-blur-sm">
+                Pasa el cursor para ver opciones
+              </div>
+            </div>
+          ) : (
+            /* Zona de upload vacía */
+            <button
+              type="button"
+              onClick={() => heroInputRef.current?.click()}
+              disabled={heroUploading}
+              className="w-full rounded-xl border-2 border-dashed border-subtle hover:border-brand-gold/50 transition-colors duration-200 flex flex-col items-center justify-center gap-3 py-12 text-muted hover:text-brand-gold disabled:opacity-50 group"
+            >
+              {heroUploading ? (
+                <>
+                  <Loader2 size={28} className="animate-spin text-brand-gold" />
+                  <p className="text-sm font-medium text-brand-gold">Subiendo imagen...</p>
+                </>
+              ) : (
+                <>
+                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-subtle bg-background group-hover:border-brand-gold/30 transition-colors">
+                    <ImagePlus size={24} />
+                  </div>
+                  <div className="text-center">
+                    <p className="text-sm font-medium">Subir imagen de portada</p>
+                    <p className="text-xs mt-0.5 text-muted/60">Sin imagen, la landing muestra el diseño premium por defecto</p>
+                  </div>
+                </>
+              )}
+            </button>
+          )}
+
+          {/* Input de archivo oculto */}
+          <input
+            ref={heroInputRef}
+            type="file"
+            accept=".jpg,.jpeg,.png,.webp"
+            className="hidden"
+            onChange={handleHeroUpload}
+            aria-label="Seleccionar imagen de portada"
+          />
+        </div>
+
         <div className="rounded-xl border border-subtle bg-brand-card p-6">
           <h3 className="font-semibold text-foreground mb-4">Información del Negocio</h3>
           <div className="grid gap-4 sm:grid-cols-2">
@@ -180,25 +350,42 @@ export function BrandingPage() {
             ))}
           </div>
 
-          <div className="mt-6 rounded-xl border border-subtle p-4" style={{
-            backgroundColor: form.palette.bg || '#0a0a0a',
-          }}>
+          {/* Vista previa — reacciona al tema del admin automáticamente */}
+          <div className="mt-6 rounded-xl border border-subtle bg-background p-4">
             <p className="text-xs text-muted mb-3">Vista previa</p>
-            <div className="rounded-lg p-4 flex items-center gap-3"
-              style={{ backgroundColor: form.palette.surface || '#141414' }}>
-              <div className="h-8 w-8 rounded" style={{ backgroundColor: form.palette.primary || '#c9953c' }} />
+            <div className="rounded-lg p-4 flex items-center gap-3 bg-brand-card shadow-sm border border-subtle">
+              <div
+                className="h-8 w-8 rounded flex-shrink-0"
+                style={{ backgroundColor: form.palette.primary || 'var(--theme-accent)' }}
+              />
               <div>
-                <p className="text-sm font-bold text-foreground">{form.name || 'Mi Barbería'}</p>
-                <p className="text-xs text-muted">{form.tagline || 'Estilo y profesionalismo'}</p>
+                <p className="text-sm font-bold text-foreground">
+                  {form.name || 'Mi Barbería'}
+                </p>
+                <p className="text-xs text-muted">
+                  {form.tagline || 'Estilo y profesionalismo'}
+                </p>
               </div>
             </div>
-            <div className="mt-3 flex gap-2">
-              <div className="h-6 w-16 rounded text-xs flex items-center justify-center font-medium"
-                style={{ backgroundColor: form.palette.primary || '#c9953c', color: form.palette.bg || '#0a0a0a' }}>
+            <div className="mt-4 flex gap-2">
+              <div
+                className="h-8 px-4 rounded-md text-xs flex items-center justify-center font-medium shadow-sm"
+                style={{
+                  backgroundColor: form.palette.primary || 'var(--theme-accent)',
+                  color: form.palette.primary
+                    ? (isLightColor(form.palette.primary) ? '#1a1a1a' : '#ffffff')
+                    : 'var(--theme-background)',
+                }}
+              >
                 Reservar
               </div>
-              <div className="h-6 w-16 rounded border text-xs flex items-center justify-center"
-                style={{ borderColor: form.palette.primary || '#c9953c', color: form.palette.primary || '#c9953c' }}>
+              <div
+                className="h-8 px-4 rounded-md border text-xs flex items-center justify-center bg-brand-card hover:bg-subtle transition-colors"
+                style={{
+                  borderColor: form.palette.primary || 'var(--theme-accent)',
+                  color: form.palette.primary || 'var(--theme-accent)',
+                }}
+              >
                 WhatsApp
               </div>
             </div>

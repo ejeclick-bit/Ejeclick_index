@@ -81,9 +81,10 @@ class AppointmentCreate(BaseModel):
     @field_validator("client_phone")
     @classmethod
     def phone_valid(cls, v: str) -> str:
-        if not PHONE_RE.match(v.strip()):
+        v_clean = re.sub(r"[\s\-\(\)]", "", v.strip())
+        if not PHONE_RE.match(v_clean):
             raise ValueError("Telefono invalido. Debe tener 7-15 digitos, opcional + al inicio")
-        return v.strip()
+        return v_clean
 
     @field_validator("date")
     @classmethod
@@ -143,6 +144,7 @@ class TestimonialCreate(BaseModel):
     quote: str
     author: str
     role: str = ""
+    rating: int = 5
     is_active: bool = True
     sort_order: int = 0
 
@@ -151,6 +153,7 @@ class TestimonialUpdate(BaseModel):
     quote: Optional[str] = None
     author: Optional[str] = None
     role: Optional[str] = None
+    rating: Optional[int] = None
     is_active: Optional[bool] = None
     sort_order: Optional[int] = None
 
@@ -160,11 +163,15 @@ class TestimonialResponse(BaseModel):
     quote: str
     author: str
     role: str
+    rating: int
     is_active: bool
     sort_order: int
 
     model_config = {"from_attributes": True}
 
+class ImageReorderItem(BaseModel):
+    id: int
+    sort_order: int
 
 class SectionResponse(BaseModel):
     id: int
@@ -221,6 +228,7 @@ class BarbershopResponse(BaseModel):
     description: str
     logo_url: str
     favicon_url: str
+    hero_image_url: str = ""  # Imagen de fondo del Hero (vacía = sin imagen, diseño CSS)
     palette: dict
     whatsapp: str
     phone: str
@@ -247,6 +255,7 @@ class BarbershopBrandingUpdate(BaseModel):
     tagline: Optional[str] = None
     description: Optional[str] = None
     logo_url: Optional[str] = None
+    hero_image_url: Optional[str] = None  # Se actualiza vía endpoint dedicado de upload
     palette: Optional[dict] = None
     whatsapp: Optional[str] = None
     phone: Optional[str] = None

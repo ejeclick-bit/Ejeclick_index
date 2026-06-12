@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Container } from '../atoms/Container';
 import { Badge } from '@ejeclick/ui-components';
-import { Button } from '@ejeclick/ui-components';
 import { BookingWidget } from '../organisms/BookingWidget';
 import { useTenant } from '../../lib/tenant';
 import { api, type Schedule } from '../../lib/api';
@@ -99,10 +98,14 @@ export function Contact() {
               </div>
             </div>
 
-            <Button variant="primary" size="lg" className="w-full mt-4"
+            <button className="group flex w-full items-center justify-center gap-2 rounded-lg px-8 py-3 text-sm font-medium transition-all duration-300 hover:scale-[1.02] mt-4"
+              style={{
+                background: 'var(--theme-accent)',
+                color: 'var(--theme-background)',
+              }}
               onClick={() => window.open(`https://wa.me/${t?.whatsapp || ''}`, '_blank')}>
               Escribir por WhatsApp
-            </Button>
+            </button>
           </motion.div>
 
           {/* Widget de Reservas */}

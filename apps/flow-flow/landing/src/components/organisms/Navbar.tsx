@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { Container } from '../atoms/Container';
-import { Button } from '@ejeclick/ui-components';
 import { ThemeToggle } from '@ejeclick/ui-components';
 import { cn } from '../../utils/cn';
 import { useTenant } from '../../lib/tenant';
@@ -56,38 +55,37 @@ export function Navbar() {
     >
       <Container>
         <nav
-          className="flex h-16 items-center justify-between"
+          className="flex h-20 items-center justify-between"
           aria-label="Navegación principal"
         >
           {/* Logotipo */}
           <a
             href="#"
-            className="flex items-center gap-2 text-lg font-semibold tracking-tight text-foreground no-underline"
+            className="flex items-center gap-2 text-xl font-bold tracking-tight text-foreground no-underline transition-transform hover:scale-[1.02]"
           >
             {/* Diamante de acento */}
             <span
-              className="text-base"
+              className="text-lg flex-shrink-0"
               style={{ color: 'var(--theme-accent)' }}
               aria-hidden="true"
             >
               ✦
             </span>
-            <span className="font-display">{tenant?.name || 'Barbería'}</span>
+            <span className="font-display truncate max-w-[160px] sm:max-w-[240px] md:max-w-[300px]">
+              {tenant?.name || 'Barbería'}
+            </span>
           </a>
 
           {/* Nav links — desktop */}
-          <ul className="hidden items-center gap-8 md:flex" role="list">
+          <ul className="hidden items-center gap-2 md:flex" role="list">
             {navItems.map((item) => (
               <li key={item.href}>
                 <a
                   href={item.href}
                   className={cn(
-                    'relative text-sm font-medium text-muted',
-                    'transition-colors duration-200 hover:text-foreground',
-                    // Subrayado animado con acento
-                    'after:absolute after:bottom-[-2px] after:left-0 after:h-px after:w-0',
-                    'after:bg-[var(--theme-accent)] after:transition-all after:duration-300',
-                    'hover:after:w-full',
+                    'relative rounded-full px-5 py-2.5 text-base font-semibold text-muted',
+                    'transition-all duration-300 hover:text-foreground',
+                    'hover:bg-[var(--theme-accent-dim)]',
                   )}
                 >
                   {item.label}
@@ -97,17 +95,21 @@ export function Navbar() {
           </ul>
 
           {/* Acciones derecha — desktop */}
-          <div className="hidden md:flex items-center gap-3">
+          <div className="hidden md:flex items-center gap-4">
             <ThemeToggle />
-            <Button
-              variant="primary"
-              size="sm"
+            <button
+              className="rounded-full px-7 py-3 text-base font-bold transition-all duration-300 hover:scale-105"
+              style={{
+                background: 'var(--theme-accent)',
+                color: 'var(--theme-background)',
+                boxShadow: '0 4px 24px var(--theme-accent-dim)',
+              }}
               onClick={() =>
                 window.open(`https://wa.me/${tenant?.whatsapp || ''}`, '_blank')
               }
             >
               Agenda tu Cita
-            </Button>
+            </button>
           </div>
 
           {/* Acciones derecha — mobile */}
@@ -163,15 +165,18 @@ export function Navbar() {
                   </li>
                 ))}
                 <li className="pt-3 border-t border-[var(--theme-border)] mt-2">
-                  <Button
-                    variant="primary"
-                    className="w-full"
+                  <button
+                    className="w-full rounded-lg px-4 py-2.5 text-sm font-medium transition-all duration-300 hover:scale-[1.02]"
+                    style={{
+                      background: 'var(--theme-accent)',
+                      color: 'var(--theme-background)',
+                    }}
                     onClick={() =>
                       window.open(`https://wa.me/${tenant?.whatsapp || ''}`, '_blank')
                     }
                   >
                     Agenda tu Cita
-                  </Button>
+                  </button>
                 </li>
               </ul>
             </Container>

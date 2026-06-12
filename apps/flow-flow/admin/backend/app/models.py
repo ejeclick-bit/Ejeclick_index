@@ -14,6 +14,7 @@ class Barbershop(Base):
     description = Column(Text, default="")
     logo_url = Column(String(500), default="")
     favicon_url = Column(String(500), default="")
+    hero_image_url = Column(String(500), default="")  # Imagen de fondo del Hero (opcional por tenant)
     palette = Column(JSON, default=lambda: {"primary": "#c9953c", "secondary": "#0a0a0a", "accent": "#e0b660", "bg": "#0a0a0a", "surface": "#141414"})
     whatsapp = Column(String(50), default="")
     phone = Column(String(50), default="")
@@ -93,6 +94,7 @@ class Testimonial(Base):
     quote = Column(Text, nullable=False)
     author = Column(String(255), nullable=False)
     role = Column(String(255), default="")
+    rating = Column(Integer, default=5)
     is_active = Column(Boolean, default=True)
     sort_order = Column(Integer, default=0)
     barbershop_id = Column(Integer, ForeignKey("barbershops.id"), nullable=False, index=True)
@@ -156,4 +158,37 @@ class TimeBlock(Base):
     reason = Column(String(255), default="")
     barbershop_id = Column(Integer, ForeignKey("barbershops.id"), nullable=False, index=True)
 
+    barbershop = relationship("Barbershop", lazy="joined")
+
+
+class BarberProfile(Base):
+    __tablename__ = "barber_profiles"
+
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False, unique=True)
+    commission_type = Column(String(50), default="percentage") # percentage, flat_fee
+    commission_rate = Column(Float, default=60.0)
+    is_active = Column(Boolean, default=True)
+    barbershop_id = Column(Integer, ForeignKey("barbershops.id"), nullable=False, index=True)
+
+    user = relationship("User", backref="barber_profile", lazy="joined")
+    barbershop = relationship("Barbershop", lazy="joined")
+
+
+class Transaction(Base):
+    __tablename__ = "transactions"
+
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    amount = Column(Float, nullable=False)
+    payment_method = Column(String(50), nullable=False) # CASH, TRANSFER, CARD
+    status = Column(String(50), default="COMPLETED") # COMPLETED, REFUNDED
+    gateway_provider_id = Column(String(255), nullable=True) # Para futura integración (ej. Wompi ID)
+    
+    appointment_id = Column(Integer, ForeignKey("appointments.id"), nullable=True)
+    barber_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+    barbershop_id = Column(Integer, ForeignKey("barbershops.id"), nullable=False, index=True)
+    created_at = Column(DateTime, default=datetime.utcnow, index=True)
+
+    appointment = relationship("Appointment", lazy="joined")
+    barber = relationship("User", lazy="joined")
     barbershop = relationship("Barbershop", lazy="joined")

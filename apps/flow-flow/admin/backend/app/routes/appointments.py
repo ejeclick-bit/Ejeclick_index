@@ -1,5 +1,6 @@
 import logging
 from datetime import date, datetime
+from zoneinfo import ZoneInfo
 from fastapi import APIRouter, Depends, HTTPException, status, Query, Request
 from sqlalchemy.orm import Session
 from typing import List, Optional
@@ -73,26 +74,47 @@ def get_availability(
     }
 
     slots = []
-    current_hour = int(open_time.split(":")[0])
-    end_hour = int(close_time.split(":")[0])
+    start_h, start_m = map(int, open_time.split(':'))
+    end_h, end_m = map(int, close_time.split(':'))
+    
+    current_mins = start_h * 60 + start_m
+    close_mins = end_h * 60 + end_m
 
-    for hour in range(current_hour, end_hour):
-        for minute in ("00", "30"):
-            time_str = f"{hour:02d}:{minute}"
-            blocked = any(
-                time_str >= b.start_time and time_str < b.end_time
-                for b in blocks
-            )
+    while current_mins + SLOT_DURATION <= close_mins:
+        hour = current_mins // 60
+        minute = current_mins % 60
+        time_str = f"{hour:02d}:{minute:02d}"
+        
+        slot_start = current_mins
+        slot_end = current_mins + SLOT_DURATION
+        
+        blocked = False
+        for b in blocks:
+            bh, bm = map(int, b.start_time.split(':'))
+            b_start = bh * 60 + bm
+            eh, em = map(int, b.end_time.split(':'))
+            b_end = eh * 60 + em
+            
+            if slot_start < b_end and slot_end > b_start:
+                blocked = True
+                break
+
         if time_str not in booked and not blocked:
             slots.append(time_str)
+            
+        # Increase by 30 mins (we only support 30 mins increments, or we could just use 30)
+        # But we must snap to 00 or 30 to prevent weird slots if open_time is 09:15
+        current_mins += 30
 
-    if request_date == str(date.today()):
-        now = datetime.now()
+    colombia_tz = ZoneInfo("America/Bogota")
+    today_str = str(datetime.now(colombia_tz).date())
+    if request_date == today_str:
+        now = datetime.now(colombia_tz)
         cutoff = f"{now.hour:02d}:{now.minute:02d}"
         slots = [s for s in slots if s > cutoff]
 
-    logger.info("availability date=%s open=%s close=%s total_slots=%d available=%d",
-                request_date, open_time, close_time, (end_hour - current_hour) * 2, len(slots))
+    logger.info("availability date=%s open=%s close=%s available=%d",
+                request_date, open_time, close_time, len(slots))
     return {"date": request_date, "available": len(slots) > 0, "slots": slots}
 
 
@@ -109,7 +131,8 @@ def list_appointments(
     if date_filter:
         query = query.filter(Appointment.date == date_filter)
     else:
-        query = query.filter(Appointment.date >= str(date.today()))
+        today_str = str(datetime.now(ZoneInfo("America/Bogota")).date())
+        query = query.filter(Appointment.date >= today_str)
     return [_to_response(a) for a in query.order_by(Appointment.date, Appointment.time).all()]
 
 
@@ -193,7 +216,7 @@ def search_appointments(
         Appointment.client_email.ilike(data.client_email.strip()),
         Appointment.client_phone == data.client_phone.strip(),
         Appointment.status.in_(["pending", "confirmed"]),
-        Appointment.date >= str(date.today()),
+        Appointment.date >= str(datetime.now(ZoneInfo("America/Bogota")).date()),
     ).order_by(Appointment.date, Appointment.time).all()
 
     return [
@@ -225,7 +248,7 @@ def cancel_appointment(
 
     try:
         appt_datetime = datetime.fromisoformat(f"{appointment.date}T{appointment.time}")
-        now = datetime.now()
+        now = datetime.now(ZoneInfo("America/Bogota")).replace(tzinfo=None)
         diff_hours = (appt_datetime - now).total_seconds() / 3600
         if diff_hours < 1:
             raise HTTPException(

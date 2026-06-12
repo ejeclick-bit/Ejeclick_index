@@ -1,4 +1,5 @@
-from datetime import date
+from datetime import datetime
+from zoneinfo import ZoneInfo
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from sqlalchemy import func
@@ -18,7 +19,7 @@ def get_dashboard(
     user: User = Depends(get_current_user),
     tenant_id: Optional[int] = Depends(get_tenant_id),
 ):
-    today = str(date.today())
+    today = str(datetime.now(ZoneInfo("America/Bogota")).date())
 
     def filtered(q):
         return q.filter(Appointment.barbershop_id == tenant_id) if tenant_id else q

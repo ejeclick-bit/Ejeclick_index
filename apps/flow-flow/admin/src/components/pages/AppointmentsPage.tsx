@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Check, X, Trash2 } from 'lucide-react';
 import { api, type Appointment } from '../../lib/api';
+import { useConfirm } from '../../hooks/useConfirm';
 import { cn } from '../../utils/cn';
 
 const statusColors: Record<string, string> = {
@@ -18,6 +19,7 @@ export function AppointmentsPage() {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [filter, setFilter] = useState('');
   const [date, setDate] = useState(() => new Date().toISOString().split('T')[0]);
+  const { confirm, ModalComponent } = useConfirm();
 
   function load() { api.listAppointments(filter || undefined, date).then(setAppointments); }
   useEffect(() => { load(); }, [filter, date]);
@@ -27,14 +29,16 @@ export function AppointmentsPage() {
     load();
   }
 
-  async function handleDelete(id: number) {
-    if (!confirm('¿Eliminar esta cita?')) return;
-    await api.deleteAppointment(id);
-    load();
+  function handleDelete(id: number) {
+    confirm('¿Seguro que deseas eliminar esta cita permanentemente?', async () => {
+      await api.deleteAppointment(id);
+      load();
+    });
   }
 
   return (
     <div>
+      <ModalComponent />
       <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
         <h2 className="text-xl font-bold text-foreground">Citas</h2>
         <div className="flex gap-3">

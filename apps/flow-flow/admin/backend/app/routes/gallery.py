@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 from typing import List, Optional
 from ..database import get_db
 from ..models import GalleryImage, ImageSection, User
-from ..schemas import GalleryResponse
+from ..schemas import GalleryResponse, ImageReorderItem
 from ..auth import get_current_user
 from ..deps import get_tenant_id
 
@@ -15,7 +15,7 @@ router = APIRouter(prefix="/api/gallery", tags=["gallery"])
 
 UPLOAD_DIR = "uploads"
 ALLOWED_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp", ".avif"}
-MAX_FILE_SIZE = 5 * 1024 * 1024
+MAX_FILE_SIZE = 10 * 1024 * 1024
 
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
@@ -89,6 +89,28 @@ def upload_image(
     logger.info("image_uploaded id=%s section=%s user=%s", image.id, section_slug, user.username)
     return _enrich(image)
 
+
+@router.put("/reorder", status_code=200)
+def reorder_gallery(
+    items: List[ImageReorderItem],
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+    tenant_id: Optional[int] = Depends(get_tenant_id),
+):
+    # Fetch all relevant images for the tenant
+    query = db.query(GalleryImage)
+    if tenant_id:
+        query = query.filter(GalleryImage.barbershop_id == tenant_id)
+    images = query.all()
+    image_dict = {img.id: img for img in images}
+
+    # Update sort orders
+    for item in items:
+        if item.id in image_dict:
+            image_dict[item.id].sort_order = item.sort_order
+
+    db.commit()
+    return {"message": "Reordenado correctamente"}
 
 @router.delete("/{image_id}", status_code=204)
 def delete_image(

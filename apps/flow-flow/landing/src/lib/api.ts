@@ -9,7 +9,7 @@ export interface GalleryImage {
 }
 
 export interface Testimonial {
-  id: number; quote: string; author: string; role: string;
+  id: number; quote: string; author: string; role: string; rating: number;
 }
 
 export interface Schedule {
@@ -66,6 +66,9 @@ export const api = {
     service_id?: number; service_name: string; date: string; time: string;
   }) => post('/api/appointments', data),
 
+  submitTestimonial: (data: { quote: string; author: string; role?: string; rating: number }) => 
+    post<Testimonial>('/api/testimonials/public', data),
+
   cancelAppointment: (id: number, email: string, phone: string) =>
     post<{ id: number; status: string; date: string; time: string }>(
       `/api/appointments/${id}/cancel`,
@@ -85,6 +88,7 @@ export const api = {
 export interface TenantData {
   id: number; slug: string; name: string; tagline: string;
   description: string; logo_url: string; favicon_url: string;
+  hero_image_url: string;  // Imagen de fondo del Hero. Vacía = diseño CSS por defecto
   palette: Record<string, string>;
   whatsapp: string; phone: string; email: string; address: string;
   social: Record<string, string>; is_active: boolean;

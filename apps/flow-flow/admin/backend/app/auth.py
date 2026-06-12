@@ -6,6 +6,7 @@ import bcrypt as _bcrypt
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from sqlalchemy.orm import Session
+from sqlalchemy import text
 from .database import get_db
 from .models import User
 
@@ -43,6 +44,19 @@ def get_current_user(
     user = db.query(User).filter(User.id == user_id).first()
     if not user or not user.is_active:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Usuario inactivo")
+        
+    if user.role == "super_admin":
+        db.info["is_super_admin"] = "1"
+        db.info["tenant_id"] = "-1"
+        if db.bind.name != "sqlite":
+            db.execute(text("SET LOCAL app.is_super_admin = '1'"))
+    else:
+        db.info["is_super_admin"] = "0"
+        db.info["tenant_id"] = str(user.barbershop_id)
+        if db.bind.name != "sqlite":
+            db.execute(text(f"SET LOCAL app.current_tenant = '{user.barbershop_id}'"))
+            db.execute(text("SET LOCAL app.is_super_admin = '0'"))
+        
     return user
 
 

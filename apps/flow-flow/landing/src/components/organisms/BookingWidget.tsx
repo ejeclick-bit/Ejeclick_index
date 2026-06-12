@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { Calendar as CalendarIcon, CheckCircle2, ChevronRight, Clock, User, Phone, Mail } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Calendar } from '../molecules/Calendar';
-import { Button } from '@ejeclick/ui-components';
 import { api, type Service, type Schedule } from '../../lib/api';
 import { cn } from '../../utils/cn';
 
@@ -167,12 +166,12 @@ export function BookingWidget() {
                   )}>
                     {isPast ? <CheckCircle2 size={16} /> : i + 1}
                   </div>
-                  <span className="hidden text-xs font-medium sm:block" style={{ color: isCurrent || isPast ? 'var(--theme-foreground)' : 'var(--theme-muted)' }}>
+                  <span className="hidden text-[10px] sm:text-xs font-medium sm:block" style={{ color: isCurrent || isPast ? 'var(--theme-foreground)' : 'var(--theme-muted)' }}>
                     {s.label}
                   </span>
                 </div>
                 {i < steps.length - 1 && (
-                  <div className="mx-2 h-px w-8 sm:w-12" style={{ background: isPast ? 'var(--theme-accent)' : 'var(--theme-border)' }} />
+                  <div className="mx-1 sm:mx-2 h-px w-4 sm:w-12" style={{ background: isPast ? 'var(--theme-accent)' : 'var(--theme-border)' }} />
                 )}
               </div>
             );
@@ -409,13 +408,23 @@ export function BookingWidget() {
         </button>
         
         {step === 'confirm' ? (
-          <Button variant="primary" onClick={handleConfirm} isLoading={sending} className="min-w-[160px]">
-            Confirmar Reserva
-          </Button>
+          <button 
+            onClick={handleConfirm} 
+            disabled={sending} 
+            className="rounded-lg px-6 py-2.5 text-sm font-medium transition-all min-w-[160px] disabled:opacity-50 flex items-center justify-center hover:scale-[1.02]"
+            style={{ background: 'var(--theme-accent)', color: 'var(--theme-background)' }}
+          >
+            {sending ? 'Confirmando...' : 'Confirmar Reserva'}
+          </button>
         ) : (
-          <Button variant="primary" onClick={next} disabled={!canNext()} className="min-w-[140px]">
+          <button 
+            onClick={next} 
+            disabled={!canNext()} 
+            className="rounded-lg px-6 py-2.5 text-sm font-medium transition-all min-w-[140px] flex items-center justify-center gap-1 disabled:opacity-50 disabled:pointer-events-none hover:scale-[1.02]"
+            style={{ background: 'var(--theme-accent)', color: 'var(--theme-background)' }}
+          >
             Continuar <ChevronRight size={16} />
-          </Button>
+          </button>
         )}
       </div>
     </div>

@@ -1,8 +1,23 @@
 const BASE = '';
 
 export class ApiError extends Error {
-  constructor(public status: number, message: string) {
-    super(message);
+  public status: number;
+
+  constructor(status: number, message: string) {
+    let parsedMessage = message;
+    try {
+      const data = JSON.parse(message);
+      parsedMessage = data.detail || data.message || message;
+    } catch {
+      // Si el servidor devuelve HTML (ej. Nginx 413 Payload Too Large)
+      if (status === 413) {
+        parsedMessage = 'El archivo es demasiado grande para el servidor (Max 1MB). Usa imágenes más pequeñas.';
+      } else {
+        parsedMessage = message.length > 100 ? `Error del servidor (${status})` : message;
+      }
+    }
+    super(parsedMessage);
+    this.status = status;
     this.name = 'ApiError';
   }
 }
@@ -110,6 +125,9 @@ export const api = {
 
   deleteImage: (id: number) => request<void>(`/api/gallery/${id}`, { method: 'DELETE' }),
 
+  reorderImages: (items: { id: number; sort_order: number }[]) => 
+    request<void>('/api/gallery/reorder', { method: 'PUT', body: JSON.stringify(items) }),
+
   listSections: () => request<Section[]>('/api/sections'),
 
   listBarbershops: () => request<TenantData[]>('/api/admin/barbershops'),
@@ -162,6 +180,29 @@ export const api = {
   saveBranding: (data: Record<string, unknown>) =>
     request<TenantData>('/api/tenant/branding', { method: 'PUT', body: JSON.stringify(data) }),
 
+  uploadHeroImage: async (file: File): Promise<TenantData> => {
+    const token = localStorage.getItem('token');
+    const tenantSlug = localStorage.getItem('tenantSlug') || '';
+    const form = new FormData();
+    form.append('file', file);
+    const res = await fetch(`${BASE}/api/tenant/hero-image`, {
+      method: 'POST',
+      headers: {
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        ...(tenantSlug ? { 'X-Tenant-Slug': tenantSlug } : {}),
+      },
+      body: form,
+    });
+    if (!res.ok) {
+      const text = await res.text().catch(() => 'Error de conexion');
+      throw new ApiError(res.status, text);
+    }
+    return res.json();
+  },
+
+  deleteHeroImage: () =>
+    request<TenantData>('/api/tenant/hero-image', { method: 'DELETE' }),
+
 };
 
 export interface Service {
@@ -181,7 +222,7 @@ export interface ScheduleDay {
 }
 
 export interface Testimonial {
-  id: number; quote: string; author: string; role: string;
+  id: number; quote: string; author: string; role: string; rating: number;
   is_active: boolean; sort_order: number;
 }
 
@@ -213,6 +254,7 @@ export interface TimeBlock {
 export interface TenantData {
   id: number; slug: string; name: string; tagline: string;
   description: string; logo_url: string; favicon_url: string;
+  hero_image_url: string;  // Imagen de portada del Hero. Vacía = diseño CSS por defecto
   palette: Record<string, string>;
   whatsapp: string; phone: string; email: string; address: string;
   social: Record<string, string>; is_active: boolean;

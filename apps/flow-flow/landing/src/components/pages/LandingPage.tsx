@@ -5,6 +5,7 @@ import { Gallery } from '../organisms/Gallery';
 import { Testimonials } from '../organisms/Testimonials';
 import { Contact } from '../organisms/Contact';
 import { CancelBooking } from '../organisms/CancelBooking';
+import { WhatsAppFAB } from '../organisms/WhatsAppFAB';
 
 export function LandingPage() {
   return (
@@ -15,6 +16,7 @@ export function LandingPage() {
       <Services />
       <Gallery />
       <Testimonials />
+      <WhatsAppFAB />
     </MainLayout>
   );
 }

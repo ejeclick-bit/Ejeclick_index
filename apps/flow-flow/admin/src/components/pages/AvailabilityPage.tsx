@@ -182,7 +182,7 @@ export function AvailabilityPage() {
               <div className="flex gap-2">
                 <button onClick={saveOverride}
                   className="flex-1 rounded-lg bg-brand-gold px-4 py-2 text-sm font-medium text-brand-dark hover:bg-brand-gold-light transition-colors">
-                  Guardar
+                  Guardar Horario General del Día
                 </button>
                 {overrides[selectedDate] && (
                   <button onClick={deleteOverride}
@@ -212,8 +212,8 @@ export function AvailabilityPage() {
                   <input type="time" value={blockForm.endTime} onChange={(e) => setBlockForm({ ...blockForm, endTime: e.target.value })}
                     className="flex-1 rounded-lg border border-subtle bg-background px-2 py-1.5 text-sm text-foreground focus:border-brand-gold focus:outline-none" />
                   <button onClick={addBlock}
-                    className="rounded-lg border border-subtle p-1.5 text-muted hover:text-foreground hover:border-neutral-500">
-                    <Plus size={18} />
+                    className="rounded-lg bg-brand-gold px-4 py-1.5 text-sm font-medium text-brand-dark hover:bg-brand-gold-light transition-colors">
+                    Guardar Bloqueo
                   </button>
                 </div>
               </div>

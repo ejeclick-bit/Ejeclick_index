@@ -166,9 +166,13 @@ export function CancelBooking() {
                   className="mt-1 w-full rounded-lg border border-subtle bg-background px-4 py-2.5 text-sm text-foreground placeholder-neutral-500 focus:border-brand-gold focus:outline-none"
                   placeholder="El mismo que usaste al agendar" />
               </div>
-              <Button type="submit" variant="primary" className="w-full" isLoading={loading}>
-                Buscar mi cita
-              </Button>
+              <button type="submit" disabled={loading} className="group flex w-full items-center justify-center gap-2 rounded-lg px-8 py-3 text-sm font-medium transition-all duration-300 hover:scale-[1.02] disabled:opacity-50"
+                style={{
+                  background: 'var(--theme-accent)',
+                  color: 'var(--theme-background)',
+                }}>
+                {loading ? 'Buscando...' : 'Buscar mi cita'}
+              </button>
             </motion.form>
           )}
         </div>

@@ -40,9 +40,9 @@ def provision_barbershop(db, slug, name, tagline="", admin_pass="admin123"):
                      barbershop_id=b.id)
         db.add(s)
 
-    for sec in [{"name": "Galería Principal", "slug": "gallery", "description": "Fotos en Nuestro Trabajo", "sort_order": 0},
-                {"name": "Hero", "slug": "hero", "description": "Imagen principal de la landing", "sort_order": 1},
-                {"name": "Servicios", "slug": "services", "description": "Fotos de cada tipo de corte", "sort_order": 2}]:
+    for sec in [{"name": "Galería Principal", "slug": "gallery", "description": "Fotos que aparecen en la grilla interactiva de la sección 'Nuestro Trabajo' en la página principal.", "sort_order": 0},
+                {"name": "Hero", "slug": "hero", "description": "Imagen principal de la landing page que se muestra en tamaño completo en la parte superior.", "sort_order": 1},
+                {"name": "Servicios", "slug": "services", "description": "Fotos de referencia que acompañan el menú de cortes y tratamientos.", "sort_order": 2}]:
         db.add(ImageSection(**sec, barbershop_id=b.id))
 
     for svc in [{"name": "Corte Clásico", "description": "Corte con tijera y máquina, acabado perfecto.", "price": "$25.000", "icon": "✂️", "sort_order": 0},
@@ -64,19 +64,21 @@ async def lifespan(app: FastAPI):
     Base.metadata.create_all(bind=engine)
     db = SessionLocal()
     try:
-        tables = ["services", "appointments", "schedules", "testimonials", "image_sections", "gallery_images", "day_overrides", "time_blocks", "users"]
-        for table in tables:
-            db.execute(text(f"ALTER TABLE {table} ENABLE ROW LEVEL SECURITY;"))
-            db.execute(text(f"DROP POLICY IF EXISTS tenant_isolation_policy ON {table};"))
-            db.execute(text(f"""
-                CREATE POLICY tenant_isolation_policy ON {table}
-                AS PERMISSIVE FOR ALL
-                USING (
-                    coalesce(current_setting('app.current_tenant', true), '') = '' 
-                    OR barbershop_id::text = current_setting('app.current_tenant', true)
-                );
-            """))
-        db.commit()
+        tables = ["services", "appointments", "schedules", "testimonials", "image_sections", "gallery_images", "day_overrides", "time_blocks", "barber_profiles", "transactions"]
+        if engine.name != "sqlite":
+            for table in tables:
+                db.execute(text(f"ALTER TABLE {table} ENABLE ROW LEVEL SECURITY;"))
+                db.execute(text(f"ALTER TABLE {table} FORCE ROW LEVEL SECURITY;"))
+                db.execute(text(f"DROP POLICY IF EXISTS tenant_isolation_policy ON {table};"))
+                db.execute(text(f"""
+                    CREATE POLICY tenant_isolation_policy ON {table}
+                    AS PERMISSIVE FOR ALL
+                    USING (
+                        current_setting('app.is_super_admin', true) = '1'
+                        OR barbershop_id::text = current_setting('app.current_tenant', true)
+                    );
+                """))
+            db.commit()
 
         if not db.query(Barbershop).first():
             provision_barbershop(db, "flowflow", "Barbería Flow Flow", "Estilo que habla por sí solo")

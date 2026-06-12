@@ -26,6 +26,23 @@ def list_testimonials(
     return query.order_by(Testimonial.sort_order).all()
 
 
+@router.post("/public", response_model=TestimonialResponse, status_code=201)
+def create_public_testimonial(
+    data: TestimonialCreate,
+    db: Session = Depends(get_db),
+    tenant_id: Optional[int] = Depends(get_tenant_id),
+):
+    t_data = data.model_dump()
+    t_data["is_active"] = False  # Siempre requiere aprobación del admin
+    
+    t = Testimonial(**t_data, barbershop_id=tenant_id)
+    db.add(t)
+    db.commit()
+    db.refresh(t)
+    logger.info("public_testimonial_submitted id=%d author=%s", t.id, t.author)
+    return t
+
+
 @router.post("", response_model=TestimonialResponse, status_code=201)
 def create_testimonial(
     data: TestimonialCreate,

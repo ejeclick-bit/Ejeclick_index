@@ -1,19 +1,21 @@
 import { useState, useEffect, type FormEvent } from 'react';
 import { Plus, Pencil, Trash2, X } from 'lucide-react';
 import { api, type Service } from '../../lib/api';
+import { useConfirm } from '../../hooks/useConfirm';
 import { cn } from '../../utils/cn';
 
 export function ServicesPage() {
   const [services, setServices] = useState<Service[]>([]);
   const [editing, setEditing] = useState<Service | null>(null);
   const [showForm, setShowForm] = useState(false);
-  const [form, setForm] = useState({ name: '', description: '', price: '', icon: '✂️' });
+  const [form, setForm] = useState({ name: '', description: '', price: '', icon: '✂️', is_active: true });
+  const { confirm, ModalComponent } = useConfirm();
 
   function load() { api.listServices(true).then(setServices); }
   useEffect(() => { load(); }, []);
 
-  function openEdit(s: Service) { setEditing(s); setForm({ name: s.name, description: s.description, price: s.price, icon: s.icon }); setShowForm(true); }
-  function openNew() { setEditing(null); setForm({ name: '', description: '', price: '', icon: '✂️' }); setShowForm(true); }
+  function openEdit(s: Service) { setEditing(s); setForm({ name: s.name, description: s.description, price: s.price, icon: s.icon, is_active: s.is_active }); setShowForm(true); }
+  function openNew() { setEditing(null); setForm({ name: '', description: '', price: '', icon: '✂️', is_active: true }); setShowForm(true); }
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -31,14 +33,16 @@ export function ServicesPage() {
     load();
   }
 
-  async function handleDelete(id: number) {
-    if (!confirm('¿Eliminar este servicio?')) return;
-    await api.deleteService(id);
-    load();
+  function handleDelete(id: number) {
+    confirm('¿Seguro que deseas eliminar este servicio permanentemente?', async () => {
+      await api.deleteService(id);
+      load();
+    });
   }
 
   return (
     <div>
+      <ModalComponent />
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-xl font-bold text-foreground">Servicios</h2>
         <button onClick={openNew} className="flex items-center gap-2 rounded-lg bg-brand-gold px-4 py-2 text-sm font-medium text-brand-dark hover:bg-brand-gold-light transition-colors">

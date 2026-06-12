@@ -128,8 +128,46 @@
 *   [x] **Story 16.4**: Implementar "Empty States" elegantes (con loaders tipo pulse en vez de textos de carga) y soportes modulares para estados vacíos en la Galería y Testimonios.
 *   [x] **Story 16.5**: Refinar sistema tonal de temas: Ajustar modo Claro a un Lino/Vintage (cero blanco puro #FFF) y Modo Oscuro a Midnight Blue (azul profundo #0A0F18 en lugar de carbón/gris).
 
+## SPRINT 17: UX Premium Landing — Impacto Visual Total
+*   [x] **Story 17.1**: Hero con imagen de fondo parallax (Unsplash barbería) + overlay cinematográfico dual-gradiente.
+*   [x] **Story 17.2**: Stats Bar en borde inferior del Hero (8+ años, 500+ clientes, 12k+ cortes, 6/7 días).
+*   [x] **Story 17.3**: CTA secundario WhatsApp con glassmorphism y ícono SVG nativo en el Hero.
+*   [x] **Story 17.4**: Services — datos de fallback premium cuando API está vacía (6 servicios con iconos Lucide, precios, badge Popular).
+*   [x] **Story 17.5**: Services — tarjetas con hover lift, línea de acento en top, brillo radial en hover.
+*   [x] **Story 17.6**: Gallery — imágenes Unsplash de fallback (6 fotos de barbería real) + Lightbox con teclado (Escape).
+*   [x] **Story 17.7**: Gallery — cards con expand icon en hover, overlay gradient, alt-text animado.
+*   [x] **Story 17.8**: Testimonials — 6 testimonios mock de fallback + rating stars + avatares con inicial.
+*   [x] **Story 17.9**: Testimonials — trust badges (4.9/5 Google, Verificados, Top Barbería 2024) + trust avatars apilados.
+*   [x] **Story 17.10**: WhatsAppFAB — botón flotante verde con entrada spring (3s delay), pulse de atención cada 8s, tooltip contextual.
+
+## SPRINT 18: Dynamic Branding & Responsive Polish
+*   [x] **Story 18.1**: Habilitar upload de imagen hero (multi-tenant) desde el panel admin y almacenamiento en DB.
+*   [x] **Story 18.2**: Componente Hero adaptativo (Dual-mode): renderiza parallax + overlay si hay foto, o diseño CSS premium responsivo (background variables) si no hay.
+*   [x] **Story 18.3**: Mejorar UX del Admin panel de Apariencia: auto-contraste de texto (YIQ) según el color principal seleccionado y soporte real para dark/light mode en la vista previa.
+*   [x] **Story 18.4**: Corrección integral del Responsive Design en la landing (Navbar truncation, redimensionamiento de botones en stack vertical, ajuste de anchos en step lines de reservas).
+*   [x] **Story 18.5**: Resolución de conflictos de contraste en transiciones de Light/Dark Mode (migración de botones estáticos UI a botones tailwind nativos inyectados con variables de tema).
+
+## SPRINT 19: Reservas, Reseñas y Mejoras UX
+*   [x] **Story 19.1**: Arreglar fallo en finalización de reservas mejorando la sanitización y validación regex del número de teléfono en el backend.
+*   [x] **Story 19.2**: Habilitar intervalos de reserva cada 30 minutos (corrección de lógica de generación de slots).
+*   [x] **Story 19.3**: Agrandar botones de navegación (Navbar) para mejorar la usabilidad y clickeabilidad.
+*   [x] **Story 19.4**: Implementar sistema de reseñas públicas (Formulario de cliente en la landing + Endpoint público con aprobación manual pendiente).
+*   [x] **Story 19.5**: Validar que el cliente no pueda cancelar la cita si falta menos de 1 hora.
+
+## SPRINT 20: Validaciones de Reseñas por Correo
+*   [ ] **Story 20.1**: Validación de reseñas: Solo los clientes (correos electrónicos) que tengan al menos una cita registrada en esa barbería específica pueden dejar una reseña.
+*   [ ] **Story 20.2**: Implementar UI en la Landing: Si el correo nunca ha sido atendido en la barbería, mostrar una alerta bonita indicando que no pueden opinar aún.
+
+## SPRINT 21: UI/UX Refinement en Admin (Galería y Horarios)
+*   [x] **Story 21.1**: Arreglar error "Alerta de subida" interceptando archivos >5MB en frontend (GalleryPage) y mejorando el manejo de errores HTTP 413.
+*   [x] **Story 21.2**: Mejorar descripciones de `ImageSection` en backend y DB para explicar exactamente en qué parte de la landing se usarán las fotos.
+*   [x] **Story 21.3**: Implementar reordenamiento drag-and-drop con `@dnd-kit` en la Galería, soportando táctil en móviles y cursor en PC, conectado a `PUT /api/gallery/reorder`.
+*   [x] **Story 21.4**: Mejorar la UX de `SchedulePage.tsx` agregando notificaciones visuales (toast/alert) al modificar la disponibilidad o los horarios de un día, para hacer evidente que se guardó.
+
 ## BACKLOG (Futuro)
 *   [x] Extraer `ui-components` a un package compartido.
+*   [ ] Mostrar fotos de la galería "Servicios" dentro de las tarjetas del menú de servicios en la Landing Page (imagen de fondo o destacada).
+*   [ ] Envío de mensajes de texto y correo a clientes (Recordatorios WhatsApp / Email transaccional).
 *   [ ] SEO/CRO: Google Analytics 4, Meta Pixel, sitemap.xml, robots.txt, Message Match.
 *   [ ] Pruebas A/B de titulares y CTAs.
 *   [ ] Ampliar tests a todos los componentes.
